@@ -16,7 +16,6 @@
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",
         "symfony/process": "4.2.*",
-        "symfony/security-bundle": "4.2.*",
         "symfony/serializer-pack": "*",
         "symfony/swiftmailer-bundle": "^3.1",
         "symfony/translation": "4.2.*",
@@ -29,6 +28,7 @@
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
+        "symfony/security-bundle": "4.2.*",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.2.*"
     },

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hi{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="semantic-ui/semantic.min.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,900" rel="stylesheet">
+    <link href='styles/main.css' rel='stylesheet' />
+    <link href='styles/map.css' rel='stylesheet' />
+{% endblock %}
+{% block body %}
+<div class="ui grid">   
+    <div class="two wide column">
+        <form class="ui form">
+            <div class="field">
+                <label>Email</label>
+                <input type="text" name="first-name" placeholder="Email">
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="text" name="last-name">
+            </div>
+            <button class="ui button" type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="fourteen wide column">
+        <div id="info"></div>
+        <div id="map"></div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="semantic-ui/semantic.min.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/map/map.js"></script>
+{% endblock %}
+
+
+
