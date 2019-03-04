@@ -6,13 +6,38 @@ body {
     font-family: 'Playfair Display', serif;
     margin: 0px;
     padding: 0px;
-}
-
-#map {
-    width: 100%;
+    background-color: #ffda00;
     height: 100vh;
 }
-.sidebar {
+.row {
+    margin: 0;
+}
+.container-fluid {
+    padding: 0;
+}
+.col-10 {
+    padding: 0;
+}
+.main-logo {
+    background: #000;
+    color: #ffda00;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.left-login a {
+    color: #000;
+}
+.form {
+    font-family: 'Playfair Display', serif;
+}
+.btn-login {
     background-color: #ffda00;
     color: #000;
+    border: 1px solid #000;
+    width: 100%
+}
+.btn-login:hover {
+    background: #000;
+    color: #ffda00;
 }

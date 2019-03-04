@@ -5,10 +5,12 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Entity\User;
+
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="root")
+     * @Route("/", name="home_root")
      */
     public function index()
     {
@@ -17,7 +19,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/home", name="home")
+     * @Route("/home", name="home_home")
      */
     public function home()
     {
