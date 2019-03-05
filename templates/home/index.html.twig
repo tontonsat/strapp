@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'skeleton.html.twig' %}
 
 {% block title %}Strapp - A weird social network{% endblock %}
 {% block stylesheets %}
@@ -19,7 +19,7 @@
                 <h1>Strapp.xyz</h1>
             </div>
             <h2>Login</h2>
-            {% if errors is defined %}
+            {% if errors is defined  and errors is not empty %}
                 <div class="alert alert-light" role="alert">
                 {{ errors.messageKey|trans(errors.messageData, 'security') }}
               </div>

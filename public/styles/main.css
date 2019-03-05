@@ -17,32 +17,32 @@ body {
 }
 .col {
     background-color: #ffda00;
-    color: #000;
+    color: #191919;
 }
 .col-10 {
     padding: 0;
 }
 .main-logo {
-    background: #000;
+    background: #191919;
     color: #ffda00;
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 .left-login a {
-    color: #000;
+    color: #191919;
 }
 .form {
     font-family: 'Playfair Display', serif;
 }
 .btn-login {
     background-color: #ffda00;
-    color: #000;
-    border: 1px solid #000;
+    color: #191919;
+    border: 1px solid #191919;
     width: 100%
 }
 .btn-login:hover {
-    background: #000;
+    background: #191919;
     color: #ffda00;
 }
 h1, h2 {
