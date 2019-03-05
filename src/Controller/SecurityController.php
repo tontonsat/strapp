@@ -7,7 +7,9 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -65,17 +67,13 @@ class SecurityController extends AbstractController
      * @return [type] [description]
      * @Route("/login", name="security_login")
      */
-    public function login() {
-        return $this->render('home/index.html.twig');   
-    }
-
-    /**
-     * [loginCheck description]
-     * @return [type] [description]
-     * @Route("/loginCheck", name="security_check")
-     */
-    public function loginCheck() {
-        return $this->render('home/home.html.twig');   
+    public function login(AuthenticationUtils $authenticationUtils) : Response {
+        
+        // get the login error if there is one
+        $errors = $authenticationUtils->getLastAuthenticationError();
+        return $this->render('home/index.html.twig',[
+                            'errors' => $errors
+        ]);
     }
 
     /**

@@ -22,7 +22,8 @@ security:
 
             form_login:
                 login_path: security_login
-                check_path: security_check
+                check_path: security_login
+                default_target_path: home_home
 
             logout:
                 path: security_logout
@@ -37,5 +38,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/home, roles: ROLE_USER }
+        #- { path: ^/admin, roles: ROLE_ADMIN }
+        #- { path: ^/home, roles: ROLE_USER }

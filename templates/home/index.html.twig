@@ -19,7 +19,12 @@
                 <h1>Strapp.xyz</h1>
             </div>
             <h2>Login</h2>
-            <form action="{{ path('security_check') }}" method="post">
+            {% if errors is defined %}
+                <div class="alert alert-light" role="alert">
+                {{ errors.messageKey|trans(errors.messageData, 'security') }}
+              </div>
+            {% endif %}
+            <form action="{{ path('security_login') }}" method="post">
                 <div class="form group">
                     <label for='email'>Email</label>
                     <input class="form-control" type="email" name="_username" placeholder="Email">
@@ -58,5 +63,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
 <script src="js/ui.js"></script>
-<script src="js/map/map.js"></script>
+<!-- <script src="js/map/map.js"></script> -->
 {% endblock %}
