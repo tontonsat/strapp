@@ -39,6 +39,10 @@ class SecurityController extends AbstractController
             $encoded = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encoded)
                 ->setDateSignup(new \Datetime())
+                ->setMood('hello there')
+                ->setAvatar('https://via.placeholder.com/150')
+                ->setRatingWriter(0)
+                ->setRatingReader(0);
 
             $logger->info("User register ok: ". $user->getUsername());
 
@@ -62,7 +66,16 @@ class SecurityController extends AbstractController
      * @Route("/login", name="security_login")
      */
     public function login() {
-        return $this->render('security/login.html.twig');
+        return $this->render('home/index.html.twig');   
+    }
+
+    /**
+     * [loginCheck description]
+     * @return [type] [description]
+     * @Route("/loginCheck", name="security_check")
+     */
+    public function loginCheck() {
+        return $this->render('home/home.html.twig');   
     }
 
     /**
