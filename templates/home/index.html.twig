@@ -41,8 +41,7 @@
             </form>
             <a href="{{ path('security_register') }}"> Pas encore inscrit?</a>
         </div>
-        <div class="col-10">
-            
+        <div class="col-10">           
             {% for message in app.flashes('notice') %}
                 <div class="alert alert-dismissible alert-success">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>

@@ -7,6 +7,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(
@@ -19,6 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *  errorPath="username",
  *  message = "username déjà pris",
  * )
+ * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -64,9 +68,16 @@ class User implements UserInterface
     private $dateSignup;
 
     /**
+     * @Vich\UploadableField(mapping="user_image", fileNameProperty="imageName", size="imageSize")
+     * 
+     * @var File
+     */
+    private $imageFile;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
-    private $avatar;
+    private $imageName;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -92,6 +103,11 @@ class User implements UserInterface
      * @ORM\Column(type="array", nullable=true)
      */
     private $roles = [];
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     public function __construct() {
         $this->roles[] = 'ROLE_USER';
@@ -162,16 +178,33 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAvatar(): ?string
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
     {
-        return $this->avatar;
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
-    public function setAvatar(string $avatar): self
+    public function getImageFile(): ?File
     {
-        $this->avatar = $avatar;
+        return $this->imageFile;
+    }
 
-        return $this;
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
     }
 
     public function getMood(): ?string
@@ -254,6 +287,18 @@ class User implements UserInterface
 
     public function getRoles() {
         return $this->roles;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
     
 }

@@ -24,7 +24,7 @@
     cursor: pointer;
 }
 .main-nav a:hover {
-    color: #000;
+    color: #191919;
 }
 .nav-item {
     border-top: 0.3px solid #464646;
@@ -33,9 +33,17 @@
 }
 .nav-item:hover {
     background: #ffda00;
-    color: #000;
+    color: #191919;
 }
 /** content **/
 .main-content {
     background: #fff;
+}
+.profile-card {
+    margin-bottom: 15px;
+}
+/** forms **/
+.input-group-text {
+    background: #ffda00;
+    color: #191919;
 }

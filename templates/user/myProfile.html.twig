@@ -4,34 +4,83 @@
 
 {% block body %}
 <div class="col-10 main-content">
-    Profile
-    {{ form_start(formProfile) }}
-    <div class="form-row">
-        <div class="col">
-            <div class="form-group">
-                {{ form_row(formProfile.name, {'attr': {'placeholder': "Name", 'class': 'form-control'}}) }}
-            </div>
+    <h2>Profile management</h2>
+
+    <div class="card profile-card">
+        {{ form_start(formProfile) }}
+        <div class="card-body">
+            <h5 class="card-title">Personnal information</h5>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        {{ form_row(formProfile.name, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        {{ form_row(formProfile.lastname, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>   
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        {{ form_row(formProfile.username, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>   
+                <div class="col">
+                    <div class="form-group">
+                        {{ form_row(formProfile.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div> 
+            </div>   
+            <button type="submit" class="btn btn-success form-control btn-login">
+                    Update information
+            </button>
         </div>
-        <div class="col">
-            <div class="form-group">
-                {{ form_row(formProfile.lastname, {'attr': {'placeholder': "Lastname", 'class': 'form-control'}}) }}
-            </div>
+        {{ form_end(formProfile) }}
+    </div>
+
+    <div class="card profile-card">
+        {{ form_start(formPassword) }}
+        <div class="card-body">
+            <h5 class="card-title">Password</h5>
+            <div class="form-row">
+                <div class="col-auto">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="addon-wrapping">New password</span>
+                        </div>
+                        <div class="form-input-container">
+                            {{ form_row(formPassword.password, {'attr': {'class': 'form-control form-password', 'placeholder': 'at least 8 characters', 'aria-describedby': 'addon-wrapping'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="addon-wrappingConfirm">Confirm</span>
+                        </div>
+                        {{ form_row(formPassword.confirmPassword, {'attr': {'class': 'form-control form-password', 'aria-describedby': 'addon-wrappingConfirm'}}) }}
+                    </div>
+                </div> 
+                <div class="col-auto"> 
+                    <button type="submit" class="btn btn-success form-control btn-login">
+                            Update password
+                    </button>
+                </div>
+            </div>   
         </div>
+        {{ form_end(formPassword) }}
     </div>
-    <div class="form-group">
-        {{ form_row(formProfile.username, {'attr': {'placeholder': "Username", 'class': 'form-control'}}) }}
+    <div class="card profile-card">
+        {{ form_start(formImage) }}
+        {{ form_row(formImage.imageFile) }}
+        {{ form_row(formImage.imageName) }}
+        <button type="submit" class="btn btn-success form-control btn-login">
+                Update avatar
+        </button>
+        {{ form_end(formImage) }}
     </div>
-    <div class="form-group">
-        {{ form_row(formProfile.email, {'attr': {'placeholder': "Email", 'class': 'form-control'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_row(formProfile.password, {'attr': {'placeholder': "Password", 'class': 'form-control'}}) }}
-    </div>
-    <div class="form-group">
-        {{ form_row(formProfile.mood, {'attr': { 'class': 'form-control'}}) }}
-    </div>
-    <div class="form-group">
-    </div>
-{{ form_end(formProfile) }}
 </div>
 {% endblock %}

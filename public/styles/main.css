@@ -25,6 +25,11 @@ body {
 .left-login a {
     color: #191919;
 }
+/** forms **/
+.form-control:focus {
+    border-color: #ffda00;
+    box-shadow: inset 0px 0px 2px #ffda00;
+}
 .form {
     font-family: 'Playfair Display', serif;
 }
