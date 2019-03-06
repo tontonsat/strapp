@@ -15,30 +15,40 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row">
+    <div class="row main-row">
         <div class="col">
-            <div class="main-logo text-center">
+            <div class="side-col text-center">
                 <h1>Strapp.xyz</h1>
                 <div class="profile-card">
                     <div class="avatar-container">
-                        <img src="{{ app.user.avatar }}" alt="profile picture" class="avatar">
+                        <a href="{{ path('home_myprofile') }}"><img src="{{ app.user.avatar }}" alt="profile picture" class="avatar">
+                        </a>
                     </div>
                     <div class="info">
-                        {{ app.user.name }} {{ app.user.lastname }}
+                        <a href="{{ path('home_myprofile') }}">{{ app.user.name }} {{ app.user.lastname }}</a>
                     </div>
                 </div>
-                <ul class="nav flex-column">
+                <ul class="nav flex-column main-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Active</a>
+                        <a class="nav-link" href="#">Map</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="#">Feed</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="#">Tracking</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        <a class="nav-link" href="#">Friends</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('security_logout') }}">Logout</a>
                     </li>
                 </ul>
             </div>

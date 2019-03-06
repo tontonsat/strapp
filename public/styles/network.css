@@ -1,6 +1,41 @@
-.avatar-container {
+/** profile card & nav **/
+.side-col {
+    height: 100vh;
+    background: #191919;
+    color: #ffda00;
+    margin-left: -15px;
 }
 .avatar-container .avatar {
     width: 100px;
     border-radius: 50px;
+}
+.profile-card .info {
+    margin-top: 10px;
+}
+.profile-card .info a {
+    color: #ffda00;
+    cursor: pointer;
+}
+.main-nav {
+    margin-top: 30px;
+}
+.main-nav a {  
+    color: #ffda00;
+    cursor: pointer;
+}
+.main-nav a:hover {
+    color: #000;
+}
+.nav-item {
+    border-top: 0.3px solid #464646;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.nav-item:hover {
+    background: #ffda00;
+    color: #000;
+}
+/** content **/
+.main-content {
+    background: #fff;
 }

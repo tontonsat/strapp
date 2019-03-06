@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'porto'; /*a name to be used later*/
-    src: url('fonts/porto.ttf'); /*URL to font*/
+    src: url('./fonts/porto.ttf'); /*URL to font*/
 }
 body {
     font-family: 'Playfair Display', serif;
@@ -9,25 +9,18 @@ body {
     background-color: #ffda00;
     height: 100vh;
 }
-.row {
-    margin: 0;
-}
-.container-fluid {
-    padding: 0;
-}
-.col {
-    background-color: #ffda00;
-    color: #191919;
-}
-.col-10 {
-    padding: 0;
-}
 .main-logo {
     background: #191919;
     color: #ffda00;
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+.left-login {
+    padding-left: 25px;
+    padding-right: 15px;
+    background-color: #ffda00;
+    color: #191919;
 }
 .left-login a {
     color: #191919;
@@ -47,5 +40,4 @@ body {
 }
 h1, h2 {
     font-family: 'porto';
-    font-weight: bold;
 }
