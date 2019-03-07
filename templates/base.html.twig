@@ -25,7 +25,8 @@
                         </a>
                     </div>
                     <div class="info">
-                        <a href="{{ path('home_myprofile') }}">{{ app.user.name }} {{ app.user.lastname }}</a>
+                        <a href="{{ path('home_myprofile') }}">{{ app.user.name }} {{ app.user.lastname }}</a><br />
+                        <a href="{{ path('home_myprofile') }}">@{{ app.user.username }}</a>
                     </div>
                 </div>
                 <ul class="nav flex-column main-nav">

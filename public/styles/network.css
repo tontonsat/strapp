@@ -52,3 +52,13 @@
     height: 120px;
     width: 120px;
 }
+#upload_imageFile_file {
+    background: #ffda00;
+    color: #191919;
+    padding: 5px;
+}
+/** alerts **/
+.main-alert {
+    color: #191919;
+    background: #ffda00;
+}
