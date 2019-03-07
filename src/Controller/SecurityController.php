@@ -14,6 +14,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use \App\Entity\User;
+use \App\Entity\Media;
 use \App\Form\RegistrationType;
 
 class SecurityController extends AbstractController
@@ -42,7 +43,6 @@ class SecurityController extends AbstractController
             $user->setPassword($encoded)
                 ->setDateSignup(new \Datetime())
                 ->setMood('hello there')
-                ->setAvatar('https://via.placeholder.com/150')
                 ->setRatingWriter(0)
                 ->setRatingReader(0);
 
