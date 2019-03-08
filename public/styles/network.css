@@ -10,6 +10,9 @@
     height: 100px;
     border-radius: 50px;
 }
+.avatar-container .avatar:hover {
+    box-shadow: 0 0 0px 2px #ffda00;
+}
 .profile-card .info {
     margin-top: 10px;
 }
@@ -56,9 +59,4 @@
     background: #ffda00;
     color: #191919;
     padding: 5px;
-}
-/** alerts **/
-.main-alert {
-    color: #191919;
-    background: #ffda00;
 }

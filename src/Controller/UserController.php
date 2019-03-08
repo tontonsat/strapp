@@ -26,7 +26,7 @@ class UserController extends AbstractController
 
         $user = $repo->findOneBy(['id' =>$this->getUser()->getId()]);
 
-        if(!$user->getMedia()) {
+        if($user->getMedia() == null) {
             $media = new Media();
         }
         else {

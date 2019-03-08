@@ -21,7 +21,12 @@
                 <h1>Strapp.xyz</h1>
                 <div class="profile-card">
                     <div class="avatar-container">
-                        <a href="{{ path('home_myprofile') }}"><img src="uploads/avatars/{{ app.user.media.imageName }}" alt="profile picture" class="avatar">
+                        <a href="{{ path('home_myprofile') }}">
+                            {% if app.user.media is null %}
+                            <img src="uploads/avatars/0.jpg" alt="profile picture" class="avatar">
+                            {% else %}
+                                <img src="uploads/avatars/{{ app.user.media.imageName }}" alt="profile picture" class="avatar">
+                            {% endif %}
                         </a>
                     </div>
                     <div class="info">

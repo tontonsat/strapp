@@ -46,3 +46,9 @@ body {
 h1, h2 {
     font-family: 'porto';
 }
+
+/** alerts **/
+.main-alert {
+    color: #191919;
+    background: #ffda00;
+}

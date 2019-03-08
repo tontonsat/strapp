@@ -31,13 +31,14 @@
                     </div>   
                     <div class="form-row">
                         <div class="col">
-                            <div class="form-group">          
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="addon-wrappingConfirm">@</span>
+                            <div class="form-group"> 
+                                <label>Username</label>       
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="addon-wrappingConfirm">@</span>
+                                    </div>
+                                    <input type="text" value="{{app.user.username}}" class="form-control" disabled />
                                 </div>
-                                <input type="text" value="{{app.user.username}}" class="form-control" disabled />
-                            </div>
                             </div>
                         </div>   
                         <div class="col">
@@ -88,7 +89,11 @@
         <div class="col">
             <div class="card profile-card text-center">
                 {{ form_start(formImage) }}
-                <img src="uploads/avatars/{{ app.user.media.imageName }}" alt="profile picture" class="avatar-form card-img-top">
+                {% if app.user.media is null %}
+                    <img src="uploads/avatars/0.jpg" alt="profile picture" class="avatar-form card-img-top">
+                {% else %}
+                    <img src="uploads/avatars/{{ app.user.media.imageName }}" alt="profile picture" class="avatar-form card-img-top">
+                {% endif %}
                 {{ form_row(formImage.imageFile, {'attr': {'class': 'form-control-file'}}) }}                           
                 {{ form_row(formImage.save, {'attr': {'class': 'btn btn-success form-control btn-login'}}) }}
                 {{ form_end(formImage) }}
