@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PasswdType extends AbstractType
 {
@@ -16,6 +17,7 @@ class PasswdType extends AbstractType
         $builder
             ->add('password', PasswordType::class, ['label' => false])
             ->add('confirmPassword', PasswordType::class, ['label' => false])
+            ->add('save', SubmitType::class, ['label' => 'Change password'])
         ;
     }
 

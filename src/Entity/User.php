@@ -215,6 +215,9 @@ class User implements UserInterface
 
     public function getConfirmPassword(): ?string
     {
+        if($this->confirmPassword == null){
+            return $this->password;
+        }
         return $this->confirmPassword;
     }
     

@@ -6,6 +6,8 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ProfileType extends AbstractType
 {
@@ -15,6 +17,8 @@ class ProfileType extends AbstractType
             ->add('name')
             ->add('lastname')
             ->add('email')
+            
+            ->add('save', SubmitType::class, ['label' => 'Update profile'])
         ;
     }
 

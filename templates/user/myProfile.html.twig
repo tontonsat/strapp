@@ -5,14 +5,14 @@
 {% block body %}
 <div class="col-10 main-content">
     <h2>Profile management</h2>
-    {% for message in app.flashes('notice-profile') %}
-        <div class="alert alert-dismissible alert-success main-alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <i class="fas fa-user-circle"></i> {{ message }}
-        </div>
-    {% endfor %}
     <div class="row">
         <div class="col">
+            {% for message in app.flashes('notice-profile') %}
+                <div class="alert alert-dismissible alert-success main-alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <i class="fas fa-user-circle"></i> {{ message }}
+                </div>
+            {% endfor %}
             <div class="card profile-card">
                 {{ form_start(formProfile) }}
                 <div class="card-body">
@@ -45,10 +45,8 @@
                                 {{ form_row(formProfile.email, {'attr': {'class': 'form-control'}}) }}
                             </div>
                         </div> 
-                    </div>   
-                    <button type="submit" class="btn btn-success form-control btn-login">
-                            Update information
-                    </button>
+                    </div>    
+                    {{ form_row(formProfile.save, {'attr': {'class': 'btn btn-success form-control btn-login'}}) }}
                 </div>
                 {{ form_end(formProfile) }}
             </div>
@@ -79,10 +77,8 @@
                                 {{ form_row(formPassword.confirmPassword, {'attr': {'class': 'form-control form-password', 'aria-describedby': 'addon-wrappingConfirm'}}) }}
                             </div>
                         </div> 
-                        <div class="col-auto"> 
-                            <button type="submit" class="btn btn-success form-control btn-login">
-                                    Update password
-                            </button>
+                        <div class="col-auto">                           
+                            {{ form_row(formPassword.save, {'attr': {'class': 'btn btn-success form-control btn-login'}}) }}
                         </div>
                     </div>   
                 </div>
@@ -93,10 +89,8 @@
             <div class="card profile-card text-center">
                 {{ form_start(formImage) }}
                 <img src="uploads/avatars/{{ app.user.media.imageName }}" alt="profile picture" class="avatar-form card-img-top">
-                {{ form_row(formImage.imageFile, {'attr': {'class': 'form-control-file'}}) }}
-                <button type="submit" class="btn btn-success form-control btn-login">
-                        Update avatar
-                </button>
+                {{ form_row(formImage.imageFile, {'attr': {'class': 'form-control-file'}}) }}                           
+                {{ form_row(formImage.save, {'attr': {'class': 'btn btn-success form-control btn-login'}}) }}
                 {{ form_end(formImage) }}
             </div>
         </div>
