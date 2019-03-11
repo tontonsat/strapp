@@ -49,6 +49,13 @@ class Media implements \Serializable
      */
     private $owner;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $webPath;
+
+    private $nameSlug;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,5 +143,22 @@ class Media implements \Serializable
         list (
             $this->id,
         ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    public function getWebPath(): ?string
+    {
+        return $this->webPath;
+    }
+
+    public function setWebPath(string $webPath): self
+    {
+        $this->webPath = $webPath;
+
+        return $this;
+    }
+
+    public function getNameSlug(): ?string
+    {
+        return $this->id ."256x256". $this->id;;
     }
 }

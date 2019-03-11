@@ -10,4 +10,5 @@ vich_uploader:
             delete_on_update: true
             delete_on_remove: true
 
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            namer:
+                service: Vich\UploaderBundle\Naming\UniqidNamer

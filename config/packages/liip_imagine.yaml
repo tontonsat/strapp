@@ -1,0 +1,13 @@
+liip_imagine:
+                
+  # As mentioned above, gd, imagick or gmagick are possible
+  driver: "gd"
+  # This is where all the filters sets are located
+  filter_sets: 
+    cache : ~
+    avatar: # The name of the filter, can be later used in the twig template 
+      quality: 75 # Compression quality, this image will be 75% the quality 
+      filters: 
+      # These are the filters of the filter set, many filters can be applied 
+      # Scale and shrink the image to the given size, with a possible crop of the image 
+        thumbnail: { size: [253, 253], mode: outbound }

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Cache\Simple\FilesystemCache;
 
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -42,7 +43,9 @@ class UserController extends AbstractController
         $formPassword->handleRequest($request);
 
         if($formImage->isSubmitted() && $formImage->isValid()) {
+
             $user->setMedia($media);
+            $user->getMedia()->setWebPath('uploads/avatars/'. $media->getImageName());
             $manager->persist($user);
             $manager->flush();
 

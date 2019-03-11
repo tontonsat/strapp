@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}My profile{% endblock %}
 
+{% form_theme formImage 'bootstrap_4_layout.html.twig' %}
 {% block body %}
 <div class="col-10 main-content">
     <h2>Profile management</h2>
@@ -101,4 +102,7 @@
         </div>
     </div>
 </div>
+<script src="/path/to/jquery.js"></script><!-- jQuery is required -->
+<link  href="/path/to/cropper.css" rel="stylesheet">
+<script src="/path/to/cropper.js"></script>
 {% endblock %}
