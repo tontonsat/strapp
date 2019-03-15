@@ -1,20 +1,92 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My profile{% endblock %}
+{% block title %}Profile - Strapp.xyz{% endblock %}
 
 {% form_theme formImage 'bootstrap_4_layout.html.twig' %}
 {% block body %}
 <div class="col-10 main-content">
     <h2>Profile management</h2>
-    <div class="row">
+    {% for message in app.flashes('notice-profile') %}
+    <div class="alert alert-dismissible alert-success main-alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fas fa-user-circle"></i> {{ message }}
+    </div>
+    {% endfor %}
+    <div class="row profile-card">
         <div class="col">
-            {% for message in app.flashes('notice-profile') %}
-                <div class="alert alert-dismissible alert-success main-alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <i class="fas fa-user-circle"></i> {{ message }}
+            <div class="card user-card title-card">
+                <div class="row no-gutters">
+                    <div class="col-md-auto">
+                        {% if app.user.media is null %}
+                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="card-img ser-card-avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="profile picture" class="card-img user-card-avatar">
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        <div class="card-body user-info">
+                            <h5 class="card-title">{{ app.user.name }} {{ app.user.lastname }}</h5>
+                            <p class="card-text"><small class="text-muted muted-mood">
+                                    {{ form_start(updateCoord) }}
+                                    {{ form_row(updateCoord.coord) }}
+                                    <a class="text-muted" href="#" onclick="document.form.submit();"><i class="fas fa-sync-alt"></i></a>
+                                    {{ form_end(updateCoord) }} {{ app.user.currentLocation.city }} - {{
+                                    app.user.currentLocation.country }}
+                                    {% if app.flashes('notice-coord') %}
+                                    <i class="fas fa-check"></i>
+                                    {% endif %}
+                                    <br />
+                                    {{ form_start(formMood) }}
+                                    <i class="fas fa-pen-nib"></i>
+                                    {{form_row(formMood.mood, {'attr': {'class': 'text-muted width-dynamic proba dva',
+                                    'maxLength': '30'}})}}
+                                    {% if app.flashes('notice-mood') %}
+                                    <i class="fas fa-check"></i>
+                                    {% endif %}
+                                </small></p>
+                            {{ form_end(formMood) }}
+                        </div>
+                    </div>
                 </div>
-            {% endfor %}
-            <div class="card profile-card">
+            </div>
+        </div>
+        <div class="col">
+            <div class="card user-card">
+                {{ form_start(formBio, {'attr': { 'name':'formBio' }}) }}
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="input-group form-group-bio">
+                            {{ form_row(formBio.bio, {'attr': {'class': 'form-control area-form-bio', 'rows': '3', 'maxlength': '225', 'aria-label': 'Update'}}) }}  
+                            <div class="input-group-append bio-update-submit" onclick="document.bio.submit();">
+                                <span class="input-group-text bio-update-submit"><i class="fas fa-caret-right"></i></span>  
+                            </div>        
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(formBio) }}
+            </div>
+        </div>
+    </div>
+    <div class="row profile-card">
+        <div class="col">
+            <div class="card user-card ">
+                <div class="card-body user-info">
+                    <div class="progress rating-profile">
+                        <div class="progress-bar progress-bar-writer" role="progressbar" style="width: {{ app.user.ratingWriter }}%" aria-valuenow="{{ app.user.ratingWriter }}" aria-valuemin="0" aria-valuemax="100">{{ app.user.ratingWriter }}</div>
+                        <div class="progress-bar progress-bar-reader" role="progressbar" style="width: {{ 100 - app.user.ratingWriter }}%" aria-valuenow="{{ 100 - app.user.ratingWriter }}" aria-valuemin="0" aria-valuemax="100">{{ 100 - app.user.ratingWriter }}</div>
+                      </div><br />
+                    <div class="progress rating-profile">
+                        <div class="progress-bar progress-bar-writer" role="progressbar" style="width: {{ app.user.ratingReader }}%" aria-valuenow="{{ app.user.ratingReader }}" aria-valuemin="0" aria-valuemax="100">{{ app.user.ratingReader }}</div>
+                        <div class="progress-bar progress-bar-reader" role="progressbar" style="width: {{ 100 - app.user.ratingReader }}%" aria-valuenow="{{ 100 - app.user.ratingReader }}" aria-valuemin="0" aria-valuemax="100">{{ 100 - app.user.ratingReader }}</div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row profile-card">
+        <div class="col">
+            <div class="card">
                 {{ form_start(formProfile) }}
                 <div class="card-body">
                     <h5 class="card-title">Personnal information</h5>
@@ -29,25 +101,39 @@
                                 {{ form_row(formProfile.lastname, {'attr': {'class': 'form-control'}}) }}
                             </div>
                         </div>
-                    </div>   
+                    </div>
                     <div class="form-row">
                         <div class="col">
-                            <div class="form-group"> 
-                                <label>Username</label>       
+                            <div class="form-group">
+                                <label>Username</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="addon-wrappingConfirm">@</span>
+                                        <span class="input-group-text" id="addon-wrappingConfirm"><i class="fas fa-at"></i></span>
                                     </div>
                                     <input type="text" value="{{app.user.username}}" class="form-control" disabled />
                                 </div>
                             </div>
-                        </div>   
+                        </div>
                         <div class="col">
                             <div class="form-group">
                                 {{ form_row(formProfile.email, {'attr': {'class': 'form-control'}}) }}
                             </div>
-                        </div> 
-                    </div>    
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Current location</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="addon-wrappingConfirm"><i class="fas fa-search-location"></i></span>
+                                    </div>
+                                    <input type="text" value="{{app.user.currentLocation.city}}, {{app.user.currentLocation.country}}, [ {{app.user.currentLocation.coord}} ]"
+                                        class="form-control" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {{ form_row(formProfile.save, {'attr': {'class': 'btn btn-success form-control btn-login'}}) }}
                 </div>
                 {{ form_end(formProfile) }}
@@ -67,7 +153,8 @@
                                     <span class="input-group-text" id="addon-wrapping">New password</span>
                                 </div>
                                 <div class="form-input-container">
-                                    {{ form_row(formPassword.password, {'attr': {'class': 'form-control form-password', 'placeholder': 'at least 8 characters', 'aria-describedby': 'addon-wrapping'}}) }}
+                                    {{ form_row(formPassword.password, {'attr': {'class': 'form-control form-password',
+                                    'placeholder': 'at least 8 characters', 'aria-describedby': 'addon-wrapping'}}) }}
                                 </div>
                             </div>
                         </div>
@@ -76,33 +163,47 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="addon-wrappingConfirm">Confirm</span>
                                 </div>
-                                {{ form_row(formPassword.confirmPassword, {'attr': {'class': 'form-control form-password', 'aria-describedby': 'addon-wrappingConfirm'}}) }}
+                                {{ form_row(formPassword.confirmPassword, {'attr': {'class': 'form-control
+                                form-password', 'aria-describedby': 'addon-wrappingConfirm'}}) }}
                             </div>
-                        </div> 
-                        <div class="col-auto">                           
-                            {{ form_row(formPassword.save, {'attr': {'class': 'btn btn-success form-control btn-login'}}) }}
                         </div>
-                    </div>   
+                        <div class="col-auto">
+                            {{ form_row(formPassword.save, {'attr': {'class': 'btn btn-success form-control
+                            btn-login'}}) }}
+                        </div>
+                    </div>
                 </div>
                 {{ form_end(formPassword) }}
             </div>
         </div>
         <div class="col">
             <div class="card profile-card text-center">
+                <h5 class="card-title">Profile picture</h5>
                 {{ form_start(formImage) }}
                 {% if app.user.media is null %}
-                    <img src="uploads/avatars/0.jpg" alt="profile picture" class="avatar-form card-img-top">
+                <img src="uploads/avatars/0.jpg" alt="profile picture" class="avatar-form card-img-top">
                 {% else %}
-                    <img src="uploads/avatars/{{ app.user.media.imageName }}" alt="profile picture" class="avatar-form card-img-top">
+                <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}" alt="profile picture"
+                    class="avatar-form card-img-top">
                 {% endif %}
-                {{ form_row(formImage.imageFile, {'attr': {'class': 'form-control-file'}}) }}                           
+                {{ form_row(formImage.imageFile, {'attr': {'class': 'form-control-file'}}) }}
                 {{ form_row(formImage.save, {'attr': {'class': 'btn btn-success form-control btn-login'}}) }}
                 {{ form_end(formImage) }}
             </div>
         </div>
     </div>
 </div>
-<script src="/path/to/jquery.js"></script><!-- jQuery is required -->
-<link  href="/path/to/cropper.css" rel="stylesheet">
-<script src="/path/to/cropper.js"></script>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+<script src="js/ui.js"></script>
+<script src="js/upload.js"></script>
+<script src="js/autoExpand.js"></script>
+<script src="js/locateMe.js"></script>
 {% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users list - Strapp.xyz{% endblock %}
+{% block body %}
+<div class="col-10 main-content">
+    <div class="row user-list-row">
+        {% for user in listUser %}
+        <div class="user-container">
+            <div class="card user-card">
+                <div class="row no-gutters">
+                    <div class="col-md-auto">
+                        {% if user.media is null %}
+                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="user-card-avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="profile picture" class="card-img user-card-avatar">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-auto basic-info-col">
+                        <div class="card-body user-info">
+                            <h5 class="card-title">{{ user.name }} {{ user.lastname }} <span class="badge badge-pill badge-rating-writer">{{ user.ratingWriter }}</span> <span class="badge badge-pill badge-rating-reader">{{ user.ratingReader }}</span></h5>
+                            <p class="card-text"><small class="text-muted">{{ user.currentLocation.city }} - {{
+                                    user.currentLocation.country }}<br />
+                                    {{ user.mood }}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

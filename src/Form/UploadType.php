@@ -20,7 +20,9 @@ class UploadType extends AbstractType
             'download_label' => false,
             'image_uri' => false,
             'download_uri' => true,
-            'label' => false])         
+            'label' => false,
+            'attr' => ['placeholder' => 'Choose a file',
+                    'onChange' => 'getOutputFile()']])         
             ->add('save', SubmitType::class, ['label' => 'Upload']);
     }
 }

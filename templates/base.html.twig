@@ -18,7 +18,7 @@
     <div class="row main-row">
         <div class="col">
             <div class="side-col text-center">
-                <h1>Strapp.xyz</h1>
+                <a class='homeBtn' href="{{ path('home_home') }}"><h1>Strapp.xyz</h1></a>
                 <div class="profile-card">
                     <div class="avatar-container">
                         <a href="{{ path('home_myprofile') }}">
@@ -45,7 +45,7 @@
                         <a class="nav-link" href="#">Tracking</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Friends</a>
+                        <a class="nav-link" href="{{ path('home_listuser') }}">Friends</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Messages</a>
@@ -68,6 +68,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
         <script src="js/ui.js"></script>
+        <script src="js/locateMe.js"></script>
         {% endblock %}
     </div>
 </div>

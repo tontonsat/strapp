@@ -66,7 +66,7 @@ class User implements UserInterface
     private $dateSignup;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $mood;
 
@@ -96,7 +96,18 @@ class User implements UserInterface
      */
     private $Media;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $currentLocation = [];
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bio;
+
     public function __construct() {
+        $this->setCurrentLocation();
         $this->roles[] = 'ROLE_USER';
     }
 
@@ -170,9 +181,14 @@ class User implements UserInterface
         return $this->mood;
     }
 
-    public function setMood(string $mood): self
+    public function setMood(string $mood = NULL): self
     {
-        $this->mood = $mood;
+        if($mood == NULL) {
+            $this->mood = 'I like trains';
+        }
+        else {
+            $this->mood = $mood;
+        }
 
         return $this;
     }
@@ -258,6 +274,36 @@ class User implements UserInterface
     public function setMedia(Media $Media): self
     {
         $this->Media = $Media;
+
+        return $this;
+    }
+
+    public function getCurrentLocation(): ?array
+    {
+        return $this->currentLocation;
+    }
+
+    public function setCurrentLocation(?string $coord = NULL): self
+    {
+        if($coord != NULL) {
+            $data = json_decode(file_get_contents("https://api.mapbox.com/geocoding/v5/mapbox.places/{$coord}.json?access_token=pk.eyJ1IjoidG9udG9uc2F0IiwiYSI6ImNqc25jNTIwNjA5bDc0M280dGt4ejJtNXkifQ.h_Ox7WHHtfhpQK9Qr0oTlw"));
+    
+            $this->currentLocation['city'] = $data->features[2]->text;
+            $this->currentLocation['state'] = $data->features[3]->text;
+            $this->currentLocation['country'] = $data->features[4]->text;
+            $this->currentLocation['coord'] = $coord;  
+        }
+        return $this;
+    }
+
+    public function getBio(): ?string
+    {
+        return $this->bio;
+    }
+
+    public function setBio(?string $bio): self
+    {
+        $this->bio = $bio;
 
         return $this;
     }

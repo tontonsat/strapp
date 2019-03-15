@@ -14,7 +14,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use \App\Entity\User;
-use \App\Entity\Media;
 use \App\Form\RegistrationType;
 
 class SecurityController extends AbstractController
@@ -39,10 +38,15 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+
+            $coord = $request->request->get('registration')['coord'];
+
             $encoded = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encoded)
                 ->setDateSignup(new \Datetime())
-                ->setMood('hello there')
+                ->setCurrentLocation($coord)
+                ->setMood('I like trains')
+                ->setBio('Bio - I am a lovely turtle and I like big trains.')
                 ->setRatingWriter(0)
                 ->setRatingReader(0);
 
@@ -68,7 +72,6 @@ class SecurityController extends AbstractController
      * @Route("/login", name="security_login")
      */
     public function login(AuthenticationUtils $authenticationUtils) : Response {
-        
         // get the login error if there is one
         $errors = $authenticationUtils->getLastAuthenticationError();
         return $this->render('home/index.html.twig',[

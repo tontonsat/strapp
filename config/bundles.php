@@ -16,5 +16,4 @@ return [
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
     Liip\ImagineBundle\LiipImagineBundle::class => ['all' => true],
-    Presta\ImageBundle\PrestaImageBundle::class => ['all' => true],
 ];
