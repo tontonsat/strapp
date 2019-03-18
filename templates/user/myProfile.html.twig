@@ -18,7 +18,7 @@
                 <div class="row no-gutters">
                     <div class="col-md-auto">
                         {% if app.user.media is null %}
-                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="card-img ser-card-avatar">
+                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="card-img user-card-avatar">
                         {% else %}
                         <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}"
                             alt="profile picture" class="card-img user-card-avatar">
