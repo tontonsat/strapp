@@ -4,7 +4,7 @@
 
 {% form_theme formImage 'bootstrap_4_layout.html.twig' %}
 {% block body %}
-<div class="col-10 main-content">
+<main role="main" class="container-fluid main-content">
     <h2>Profile management</h2>
     {% for message in app.flashes('notice-profile') %}
     <div class="alert alert-dismissible alert-success main-alert">
@@ -26,7 +26,7 @@
                     </div>
                     <div class="col">
                         <div class="card-body user-info">
-                            <h5 class="card-title">{{ app.user.name }} {{ app.user.lastname }}</h5>
+                            <h5 class="card-title">{{ app.user.name }} {{ app.user.lastname }} <span class="badge badge-pill badge-rating-writer">{{ app.user.ratingWriter }}</span> <span class="badge badge-pill badge-rating-reader">{{ app.user.ratingReader }}</span></h5>
                             <p class="card-text"><small class="text-muted muted-mood">
                                     {{ form_start(updateCoord) }}
                                     {{ form_row(updateCoord.coord) }}
@@ -192,7 +192,7 @@
             </div>
         </div>
     </div>
-</div>
+</main>
 {% endblock %}
 
 {% block javascripts %}

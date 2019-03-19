@@ -1,51 +1,60 @@
 {% extends 'skeleton.html.twig' %}
 {% block stylesheets %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+    crossorigin="anonymous">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     crossorigin="anonymous">
 <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
 <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,900" rel="stylesheet">
 <link href='styles/main.css' rel='stylesheet' />
 <link href='styles/register.css' rel='stylesheet' />
+<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=no">
 {% endblock %}
 {% block title %}Registration - Strapp.xyz{% endblock %}
 {% block body %}
-<div class="container-fluid h-100">
+<main role="main" class="container-fluid h-100">
     <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-6 register-container">
+            <div class="main-logo text-center">
+                <h1><a href="{{ path('home_root') }}" ><i class="fas fa-caret-left"></i> Strapp.xyz</h1></a>
+            </div>
+        <div class="col-10 register-container">
             <h1>Register</h1>
             {{ form_start(formUser) }}
-                <div class="form-row">
-                    <div class="col">
-                        <div class="form-group">
-                            {{ form_row(formUser.name, {'attr': {'placeholder': "Name", 'class': 'form-control'}}) }}
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            {{ form_row(formUser.lastname, {'attr': {'placeholder': "Lastname", 'class': 'form-control'}}) }}
-                        </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        {{ form_row(formUser.name, {'attr': {'placeholder': "Name", 'class': 'form-control'}}) }}
                     </div>
                 </div>
-                <div class="form-group">
-                    {{ form_row(formUser.username, {'attr': {'placeholder': "Username", 'class': 'form-control'}}) }}
+                <div class="col">
+                    <div class="form-group">
+                        {{ form_row(formUser.lastname, {'attr': {'placeholder': "Lastname", 'class': 'form-control'}})
+                        }}
+                    </div>
                 </div>
-                <div class="form-group">
-                    {{ form_row(formUser.email, {'attr': {'placeholder': "Email", 'class': 'form-control'}}) }}
-                </div>
-                <div class="form-group">
-                    {{ form_row(formUser.password, {'attr': {'placeholder': "Password", 'class': 'form-control'}}) }}
-                </div>
-                <div class="form-group">
-                    {{ form_row(formUser.confirmPassword, {'attr': {'placeholder': "Confirm password", 'class': 'form-control'}}) }}
-                    {{ form_row(formUser.coord) }}
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success form-control btn-login">
-                            Register
-                    </button>
-                </div>
+            </div>
+            <div class="form-group">
+                {{ form_row(formUser.username, {'attr': {'placeholder': "Username", 'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(formUser.email, {'attr': {'placeholder': "Email", 'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(formUser.password, {'attr': {'placeholder': "Password", 'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(formUser.confirmPassword, {'attr': {'placeholder': "Confirm password", 'class':
+                'form-control'}}) }}
+                {{ form_row(formUser.coord) }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success form-control btn-login">
+                    Register
+                </button>
+            </div>
             {{ form_end(formUser) }}
         </div>
     </div>
-</div>
+</main>
 {% endblock %}

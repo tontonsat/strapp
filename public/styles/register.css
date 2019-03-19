@@ -5,3 +5,33 @@ body {
     background: #ffda00;
     padding: 10px;
 }
+.main-logo {
+    top: 5px;
+    left: 5px;
+    position: fixed;
+    padding: 10px;
+}
+.main-logo h1 a {
+    color: #ffda00;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.5s;
+}
+.main-logo h1 a:hover {
+    color: #fff;
+    cursor: pointer;
+    transition: 0.5s;
+}
+/** responsive **/
+@media screen and (max-width: 768px) {
+    .register-container {
+        width: 100%;
+        padding: 5px;
+    }
+    .main-logo {
+        position: relative;
+        padding: 10px;
+        width: 100%;
+        margin-left: -10px;
+    }
+}

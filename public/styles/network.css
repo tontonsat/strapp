@@ -1,9 +1,22 @@
+/** content **/
+.main-content {
+    background: rgb(232, 236, 239);
+    padding-top: 4rem;
+    min-height: 100vh;
+}
 /** profile card & nav **/
-.side-col {
-    height: 100vh;
+.navbar-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,218,0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+.dropdown .dropdown-item {
+    color: #191919;
+}
+  .navbar-toggler.navbar-toggler {
+    border-color: rgb(255,218,0);
+  } 
+nav {
     background: #191919;
     color: #ffda00;
-    margin-left: -15px;
 }
 .homeBtn {
     color: #ffda00;
@@ -22,12 +35,12 @@
     background: #ffda00;
     color: #191919;
 }
-.avatar-container .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
+.nav-item .avatar {
+    width: 25px;
+    height: 25px;
+    border-radius: 20px;
 }
-.avatar-container .avatar:hover {
+.nav-item .avatar:hover {
     box-shadow: 0 0 0px 2px #ffda00;
 }
 .profile-card .info {
@@ -37,9 +50,6 @@
     color: #ffda00;
     cursor: pointer;
 }
-.main-nav {
-    padding-top: 10px;
-}
 .main-nav a {  
     color: #ffda00;
     cursor: pointer;
@@ -48,14 +58,14 @@
     color: #191919;
 }
 .nav-item {
-    border-top: 0.3px solid #464646;
-    padding-top: 15px;
-    padding-bottom: 15px;
     transition: 0.2s;
 }
 .nav-item:hover {
     background: #ffda00;
     color: #191919;
+}
+.item-avatar:hover {
+    background: #191919;
 }
 .rating-profile {
     height: 25px;
@@ -71,10 +81,6 @@
 }
 .rating-bar-vertical {
     margin-bottom: 5px;
-}
-/** content **/
-.main-content {
-    background: rgb(232, 236, 239);
 }
 .profile-card {
     padding-bottom: 10px;
@@ -132,8 +138,6 @@
 /** friend list **/
 .user-container {
     padding: 5px;   
-    width: 50%;
-    min-width: 440px;
 }
 .user-container .user-card:hover {
     cursor: pointer;
@@ -143,7 +147,6 @@
     width: auto;
 }
 .user-container .row {
-    min-width: 448px;
 }
 .user-card {
     height: 122px;
@@ -156,12 +159,8 @@
     background: #191919;
     color: #ffda00;
 }
-.title-card {
-    min-width: 430px;
-}
 .user-card .user-info {
     padding-bottom: 0px;
-    min-width: 302px;
 }
 .user-card-avatar {
     width: 120px;
