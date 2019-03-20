@@ -7,11 +7,8 @@
 /** profile card & nav **/
 .navbar-toggler .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,218,0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-  }
-.dropdown .dropdown-item {
-    color: #191919;
 }
-  .navbar-toggler.navbar-toggler {
+.navbar-toggler.navbar-toggler {
     border-color: rgb(255,218,0);
   } 
 nav {
@@ -54,15 +51,13 @@ nav {
     color: #ffda00;
     cursor: pointer;
 }
-.main-nav a:hover {
-    color: #191919;
-}
 .nav-item {
     transition: 0.2s;
+    border-top: 1px solid #191919;
 }
 .nav-item:hover {
-    background: #ffda00;
-    color: #191919;
+    border-top: 1px solid #ffda00;
+    transition: 0.2s;
 }
 .item-avatar:hover {
     background: #191919;
@@ -84,6 +79,19 @@ nav {
 }
 .profile-card {
     padding-bottom: 10px;
+}
+.dropdown-menu {
+    background: #191919;
+}
+.dropdown-menu .dropdown-item a {
+    color: #ffda00;
+}
+.dropdown-menu .dropdown-item:hover {
+    color: #191919;
+    background: #ffda00;
+}
+.dropdown-divider {
+    border-top: 1px solid #ffda00;
 }
 /** forms **/
 .input-group-text {
@@ -145,8 +153,6 @@ nav {
 }
 .user-card .col-md-auto {
     width: auto;
-}
-.user-container .row {
 }
 .user-card {
     height: 122px;
