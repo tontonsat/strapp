@@ -5,7 +5,7 @@
 {% form_theme formImage 'bootstrap_4_layout.html.twig' %}
 {% block body %}
 <main role="main" class="container-fluid main-content">
-    <h2>Profile management</h2>
+    <h2>My profile</h2>
     {% for message in app.flashes('notice-profile') %}
     <div class="alert alert-dismissible alert-success main-alert">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -13,7 +13,7 @@
     </div>
     {% endfor %}
     <div class="row profile-card">
-        <div class="col">
+        <div class="col col-profile">
             <div class="card user-card title-card">
                 <div class="row no-gutters">
                     <div class="col-md-auto">
@@ -30,7 +30,7 @@
                             <p class="card-text"><small class="text-muted muted-mood">
                                     {{ form_start(updateCoord) }}
                                     {{ form_row(updateCoord.coord) }}
-                                    <a class="text-muted" href="#" onclick="document.form.submit();"><i class="fas fa-sync-alt"></i></a>
+                                    <a class="refresh-loc-link" href="#" onclick="document.form.submit();"><i class="fas fa-sync-alt"></i></a>
                                     {{ form_end(updateCoord) }} {{ app.user.currentLocation.city }} - {{
                                     app.user.currentLocation.country }}
                                     {% if app.flashes('notice-coord') %}
@@ -39,8 +39,9 @@
                                     <br />
                                     {{ form_start(formMood) }}
                                     <i class="fas fa-pen-nib"></i>
-                                    {{form_row(formMood.mood, {'attr': {'class': 'text-muted width-dynamic proba dva',
-                                    'maxLength': '30'}})}}
+                                    {{ form_row(formMood.mood, {'attr': {'class': 'text-muted width-dynamic proba dva',
+                                    'maxLength': '30','data-toggle': 'tooltip','data-placement': 'bottom', 'title': '30 characters max.'}}) }}
+                                    {{ form_row(formMood.save, {'attr': {'class': 'text-muted muted-btn'}}) }}
                                     {% if app.flashes('notice-mood') %}
                                     <i class="fas fa-check"></i>
                                     {% endif %}
@@ -51,13 +52,13 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col col-profile">
             <div class="card user-card">
                 {{ form_start(formBio, {'attr': { 'name':'formBio' }}) }}
                 <div class="card-body">
                     <div class="form-row">
                         <div class="input-group form-group-bio">
-                            {{ form_row(formBio.bio, {'attr': {'class': 'form-control area-form-bio', 'rows': '3', 'maxlength': '225', 'aria-label': 'Update'}}) }}  
+                            {{ form_row(formBio.bio, {'attr': {'class': 'form-control area-form-bio', 'rows': '3', 'maxlength': '225', 'aria-label': 'Update','data-toggle': 'tooltip','data-placement': 'bottom', 'title': '225 characters max.'}}) }}  
                             <div class="input-group-append bio-update-submit" onclick="document.bio.submit();">
                                 <span class="input-group-text bio-update-submit"><i class="fas fa-caret-right"></i></span>  
                             </div>        
@@ -69,7 +70,7 @@
         </div>
     </div>
     <div class="row profile-card">
-        <div class="col">
+        <div class="col col-profile">
             <div class="card user-card ">
                 <div class="card-body user-info">
                     <div class="progress rating-profile">
@@ -141,7 +142,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col col-profile">
             <div class="card profile-card">
                 {{ form_start(formPassword) }}
                 <div class="card-body">
@@ -176,7 +177,7 @@
                 {{ form_end(formPassword) }}
             </div>
         </div>
-        <div class="col">
+        <div class="col col-profile">
             <div class="card profile-card text-center">
                 <h5 class="card-title">Profile picture</h5>
                 {{ form_start(formImage) }}

@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'porto'; /*a name to be used later*/
-    src: url('./fonts/porto.ttf'); /*URL to font*/
+    src: url('../fonts/porto.ttf'); /*URL to font*/
 }
 body {
     font-family: 'Playfair Display', serif;
@@ -15,6 +15,7 @@ body {
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 10px;
+    font-family: 'porto';
 }
 .left-login {
     padding-left: 25px;
@@ -42,9 +43,6 @@ body {
 .btn-login:hover {
     background: #191919;
     color: #ffda00;
-}
-h1, h2 {
-    font-family: 'porto';
 }
 
 /** alerts **/

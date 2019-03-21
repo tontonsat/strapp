@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-md-auto basic-info-col">
                         <div class="card-body user-info">
-                            <h5 class="card-title">{{ user.name }} {{ user.lastname }} <span class="badge badge-pill badge-rating-writer">{{ user.ratingWriter }}</span> <span class="badge badge-pill badge-rating-reader">{{ user.ratingReader }}</span></h5>
+                            <h6 class="card-title">{{ user.name }} {{ user.lastname }} </h6>@{{ user.username }}({{ user.ratingWriter }} - {{ user.ratingReader }})
                             <p class="card-text"><small class="text-muted">{{ user.currentLocation.city }} - {{
                                     user.currentLocation.country }}<br />
                                     {{ user.mood }}</small></p>

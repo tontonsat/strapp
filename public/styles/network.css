@@ -4,23 +4,34 @@
     padding-top: 4rem;
     min-height: 100vh;
 }
+/** layout */
+/** bootstrap tooltips **/
+.tooltip-inner {
+    color: #ffda00;
+}
 /** profile card & nav **/
 .navbar-toggler .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,218,0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 .navbar-toggler.navbar-toggler {
     border-color: rgb(255,218,0);
-  } 
+} 
 nav {
     background: #191919;
     color: #ffda00;
 }
 .homeBtn {
     color: #ffda00;
+    transition: color .2s ease;
+    font-family: 'porto';
 }
 .homeBtn:hover {
+    color: #e9ecef;
     text-decoration: none;
-    color: #ffda00;
+}
+.nav-link {
+    padding-right: 0.5rem!important;
+    padding-left: 0.5rem!important;
 }
 .homeBtn h1 {
     border-bottom: 0.3px solid #464646;
@@ -50,13 +61,14 @@ nav {
 .main-nav a {  
     color: #ffda00;
     cursor: pointer;
+    font-family: 'porto';
 }
 .nav-item {
     transition: 0.2s;
-    border-top: 1px solid #191919;
+    border-bottom: 1px solid #191919;
 }
 .nav-item:hover {
-    border-top: 1px solid #ffda00;
+    border-bottom: 1px solid #ffda00;
     transition: 0.2s;
 }
 .item-avatar:hover {
@@ -106,14 +118,20 @@ nav {
     background: #ffda00;
     color: #191919;
     padding: 5px;
+    cursor: pointer;
 }
 .custom-file-label {
     overflow: hidden;
 }
+.refresh-loc-link {
+    color: #6c757d;
+}
+.refresh-loc-link:hover {
+    color: #ffda00;
+}
 #mood_mood {
     border: none;
     box-shadow: none;
-    width: auto;
     display: inline;
     background: #e9ecef;
 }
@@ -121,6 +139,15 @@ nav {
     box-shadow: none;
     outline: none;
     border-bottom: 0.1px solid #6c757d;
+}
+#mood_save {
+    display: none;
+}
+.visible {
+    display: block;
+}
+.muted-btn {
+    border:none;
 }
 .muted-mood div {
     display:inline-block;
