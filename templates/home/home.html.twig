@@ -2,7 +2,7 @@
 
 {% block title %}Home - Strapp.xyz{% endblock %}
 {% block body %}
-        <div class="col-10 main-content">
+        <div class="col main-content">
             {{ form_start(updateCoord) }} 
                 {{ form_row(updateCoord.coord) }}
                 {{ form_row(updateCoord.submit, {'attr': {'class': 'btn btn-success form-control btn-login'}}) }}
@@ -15,6 +15,3 @@
             {% endfor %}
         </div>
 {% endblock %}
-
-
-

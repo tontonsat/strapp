@@ -172,7 +172,14 @@ nav {
 }
 /** friend list **/
 .user-container {
-    padding: 5px;   
+    padding: 5px;
+    min-width: 33%;
+}
+.card-body {
+    padding: 0.75rem;
+}
+.card-title {
+    margin-bottom: 0px;
 }
 .user-container .user-card:hover {
     cursor: pointer;

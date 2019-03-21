@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use App\Entity\User;
 use App\Repository\UserRepository;
 
-class HomeController extends AbstractController
+class HomeController extends Controller
 {
     /**
      * @Route("/", name="home_root")
@@ -56,12 +56,24 @@ class HomeController extends AbstractController
     /**
      * @route("/listUser", name="home_listuser")
      */
-    public function listUser(UserRepository $repo) {
+    public function listUser(Request $request) {
 
-        $listUser = $repo->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $userRepo = $em->getRepository(User::class);
 
+        $currentUserCity = $this->getuser()->getCurrentLocation()['city'];
+        $allUsersQuery = $userRepo->createQueryBuilder('u')
+            ->where('u.currentLocation like :city')
+            ->setParameter('city', '%'.$currentUserCity.'%')
+            ->getQuery();
+
+        /* @var $paginator \Knp\Component\Pager\Paginator */
+        $paginator  = $this->get('knp_paginator');
+
+        $users = $paginator->paginate($allUsersQuery, $request->query->getInt('page', 1), 4);
+        dump($users);
         return $this->render('home/listUser.html.twig', [
-            'listUser' => $listUser
+            'users' => $users
         ]);
     }
 }

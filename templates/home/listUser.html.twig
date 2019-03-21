@@ -4,7 +4,7 @@
 {% block body %}
 <main role="main" class="container-fluid main-content">
     <div class="row user-list-row">
-        {% for user in listUser %}
+        {% for user in users %}
         <div class="user-container">
             <div class="card user-card">
                 <div class="row no-gutters">
@@ -18,7 +18,7 @@
                     </div>
                     <div class="col-md-auto basic-info-col">
                         <div class="card-body user-info">
-                            <h6 class="card-title">{{ user.name }} {{ user.lastname }} </h6>@{{ user.username }}({{ user.ratingWriter }} - {{ user.ratingReader }})
+                            <h6 class="card-title">{{ user.name }} {{ user.lastname }} </h6>@{{ user.username }} ({{ user.ratingWriter }}/{{ user.ratingReader }})
                             <p class="card-text"><small class="text-muted">{{ user.currentLocation.city }} - {{
                                     user.currentLocation.country }}<br />
                                     {{ user.mood }}</small></p>
@@ -28,6 +28,7 @@
             </div>
         </div>
         {% endfor %}
+        {{ knp_pagination_render(users) }}
     </div>
 </main>
 {% endblock %}
