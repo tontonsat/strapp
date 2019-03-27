@@ -36,8 +36,7 @@ class UserController extends AbstractController
         else {
             $media = $user->getmedia();
         }
-        
-        
+         
         $updateCoord = $this->createFormBuilder($this->getUser())
         ->add('coord', HiddenType::class, ['mapped' => false, 'data' => ''])->getForm();
 

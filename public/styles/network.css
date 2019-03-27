@@ -206,3 +206,19 @@ nav {
     width: 120px;
     height: 120px;
 }
+/** pagination */
+.nav-paginator {
+    position: relative;
+    background: transparent;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0;
+}
+.page-link {
+    color: #191919;
+}
+.page-item.active .page-link {
+    background: #ffda00;
+    color: #191919;
+    border-color: #ffda00;
+}

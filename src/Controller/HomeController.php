@@ -70,7 +70,7 @@ class HomeController extends Controller
         /* @var $paginator \Knp\Component\Pager\Paginator */
         $paginator  = $this->get('knp_paginator');
 
-        $users = $paginator->paginate($allUsersQuery, $request->query->getInt('page', 1), 4);
+        $users = $paginator->paginate($allUsersQuery, $request->query->getInt('page', 1), 3);
         dump($users);
         return $this->render('home/listUser.html.twig', [
             'users' => $users
