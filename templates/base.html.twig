@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
     crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,900" rel="stylesheet">
-    <link href='styles/main.css' rel='stylesheet' />
-    <link href='styles/network.css' rel='stylesheet' />
-    <link href='styles/network-responsive.css' rel='stylesheet' />
+    <link href={{ asset('styles/main.css') }} rel='stylesheet' />
+    <link href={{ asset('styles/network.css') }} rel='stylesheet' />
+    <link href={{ asset('styles/network-responsive.css') }} rel='stylesheet' />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% endblock %}
 </head>
@@ -74,8 +74,8 @@
     crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-<script src="js/ui.js"></script>
-<script src="js/locateMe.js"></script>
+<script src={{ asset("js/ui.js") }}></script>
+<script src={{ asset("js/locateMe.js") }}></script>
 {% endblock %}
 </body>
 </html>

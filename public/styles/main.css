@@ -18,10 +18,12 @@ body {
     font-family: 'porto';
 }
 .left-login {
-    padding-left: 25px;
     padding-right: 15px;
     background-color: #ffda00;
     color: #191919;
+    width: 23%;
+    max-width: 360px;
+    min-width: 300px;
 }
 .left-login a {
     color: #191919;
@@ -38,11 +40,47 @@ body {
     background-color: #ffda00;
     color: #191919;
     border: 1px solid #191919;
-    width: 100%
+    width: 100%;
+    margin-bottom: 10px;
 }
 .btn-login:hover {
     background: #191919;
     color: #ffda00;
+    border-color: #191919;
+}
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:focus, .btn-primary.focus
+{
+    box-shadow:none;
+    background: #191919;
+    color: #ffda00;
+    border-color: #191919;
+}
+.btn-standard-active {
+    background-color: #ffda00;
+    color: #191919;
+    border: 1px solid #191919;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.btn-standard-active:hover {
+    background-color: #ffda00;
+    color: #191919;
+    border: 1px solid #191919;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.btn-standard {
+    background-color: #ffffff;
+    color: #191919;
+    border: 1px solid #191919;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.btn-standard:hover {
+    background: #191919;
+    color: #ffda00;
+    border-color: #191919;
 }
 
 /** alerts **/

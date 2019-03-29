@@ -14,4 +14,18 @@
     .user-container  {
         min-width: 100%;
     }
+    .index-row {
+        flex-direction: column;
+        height: 100vh;
+    }
+    .left-login {
+        width: 100%;
+        max-width: 100%;
+    }
+    .map-container {
+        width: 100%;
+    }
+    #map {
+        height: 100%;
+    }
 }

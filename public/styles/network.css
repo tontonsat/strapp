@@ -171,6 +171,12 @@ nav {
     background: #191919;
 }
 /** friend list **/
+.filter-container {
+    margin: 0 auto;
+}
+.filter-user-grp {
+    margin: 0 auto;
+}
 .user-container {
     padding: 5px;
     min-width: 33%;
@@ -216,6 +222,9 @@ nav {
 }
 .page-link {
     color: #191919;
+}
+.page-link:focus {
+    box-shadow: none;
 }
 .page-item.active .page-link {
     background: #ffda00;

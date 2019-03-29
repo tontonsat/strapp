@@ -54,26 +54,38 @@ class HomeController extends Controller
     }
 
     /**
-     * @route("/listUser", name="home_listuser")
+     * @route("/listUser/{slug}", name="home_listuser")
      */
-    public function listUser(Request $request) {
+    public function listUser(Request $request, $slug = NULL) {
+
+        if($slug == NULL) {
+            $slug = 'local';
+        }
 
         $em = $this->getDoctrine()->getManager();
         $userRepo = $em->getRepository(User::class);
 
         $currentUserCity = $this->getuser()->getCurrentLocation()['city'];
-        $allUsersQuery = $userRepo->createQueryBuilder('u')
-            ->where('u.currentLocation like :city')
-            ->setParameter('city', '%'.$currentUserCity.'%')
-            ->getQuery();
+        if($slug == 'local') {
+            $allUsersQuery = $userRepo->createQueryBuilder('u')
+                ->where('u.currentLocation like :city' )
+                ->andWhere('u.id != :currentuser' )
+                ->setParameter('city', '%'.$currentUserCity.'%')
+                ->setParameter('currentuser', $this->getUser()->getId())
+                ->getQuery();
+        }
+        elseif($slug == 'global') {
+            $allUsersQuery = $userRepo->createQueryBuilder('u')->getQuery();
+        }
 
         /* @var $paginator \Knp\Component\Pager\Paginator */
         $paginator  = $this->get('knp_paginator');
 
-        $users = $paginator->paginate($allUsersQuery, $request->query->getInt('page', 1), 3);
+        $users = $paginator->paginate($allUsersQuery, $request->query->getInt('page', 1), 60);
         dump($users);
         return $this->render('home/listUser.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'filter' => $slug
         ]);
     }
 }
