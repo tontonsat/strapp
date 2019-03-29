@@ -75,7 +75,10 @@ class HomeController extends Controller
                 ->getQuery();
         }
         elseif($slug == 'global') {
-            $allUsersQuery = $userRepo->createQueryBuilder('u')->getQuery();
+            $allUsersQuery = $userRepo->createQueryBuilder('u')
+            ->where('u.id != :currentuser' )
+            ->setParameter('currentuser', $this->getUser()->getId())
+            ->getQuery();
         }
 
         /* @var $paginator \Knp\Component\Pager\Paginator */

@@ -110,4 +110,19 @@ class UserController extends AbstractController
             'formBio'       => $formBio->createView(),
         ]);
     }
+    /**
+     * @Route("/user/{slug}", name="home_user")
+     */
+    public function profile(UserRepository $repo, Request $request, ObjectManager $manager, $slug = NULL)
+    {
+        if($slug == NULL) {
+            return $this->redirectToRoute("home_userList");
+        }
+
+        $user = $repo->findOneBy(['id' =>$slug]);
+
+        return $this->render('user/profile.html.twig', [
+            'user'   => $user
+        ]);
+    }
 }

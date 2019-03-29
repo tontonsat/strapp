@@ -177,9 +177,15 @@ nav {
 .filter-user-grp {
     margin: 0 auto;
 }
-.user-container {
+.user-list-link {
+    text-decoration: none;
     padding: 5px;
     min-width: 33%;
+    color: #191919;
+}
+.user-list-link:hover {
+    text-decoration: none;
+    color: #191919;
 }
 .card-body {
     padding: 0.75rem;

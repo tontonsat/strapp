@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }} - Strxyz{% endblock %}
+{% block body %}
+<main role="main" class="container-fluid main-content">
+    <div class="row profile-card">
+        <div class="col col-profile">
+            <div class="card user-card title-card">
+                <div class="row no-gutters">
+                    <div class="col-md-auto">
+                        {% if user.media is null %}
+                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="card-img user-card-avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="profile picture" class="card-img user-card-avatar">
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        <div class="card-body user-info">
+                            <h5 class="card-title">{{ user.name }} {{ user.lastname }} <span class="badge badge-pill badge-rating-writer">{{ user.ratingWriter }}</span> <span class="badge badge-pill badge-rating-reader">{{ user.ratingReader }}</span></h5>
+                            <p class="card-text">
+                                <small class="text-muted muted-mood">
+                                    {{ user.mood }}
+                                </small>
+                            </p>
+                            <p class="card-text">
+                                {{ user.bio }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
