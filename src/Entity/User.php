@@ -2,23 +2,26 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use \App\Entity\Friendship;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(
  *  fields = {"email"},
  *  errorPath="email",
- *  message = "email déjà pris",
+ *  message = "email already in use.",
  * )
  * @UniqueEntity(
  *  fields = {"username"},
  *  errorPath="username",
- *  message = "username déjà pris",
+ *  message = "username already in use.",
  * )
  */
 class User implements UserInterface
@@ -106,17 +109,24 @@ class User implements UserInterface
      */
     private $bio;
 
-    public function __construct() {
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Friendship", mappedBy="user", orphanRemoval=true)
+     */
+    private $friendships;
+
+    public function __construct()
+    {
         $this->setCurrentLocation();
         $this->roles[] = 'ROLE_USER';
+        $this->friendships = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ? int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): ? string
     {
         return $this->name;
     }
@@ -128,7 +138,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function getLastname(): ? string
     {
         return $this->lastname;
     }
@@ -140,7 +150,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): ? string
     {
         return $this->email;
     }
@@ -152,7 +162,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): ? string
     {
         return $this->password;
     }
@@ -164,7 +174,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getDateSignup(): ?\DateTimeInterface
+    public function getDateSignup(): ? \DateTimeInterface
     {
         return $this->dateSignup;
     }
@@ -176,24 +186,23 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getMood(): ?string
+    public function getMood(): ? string
     {
         return $this->mood;
     }
 
-    public function setMood(string $mood = NULL): self
+    public function setMood(string $mood = null): self
     {
-        if($mood == NULL) {
+        if ($mood == null) {
             $this->mood = 'I like trains';
-        }
-        else {
+        } else {
             $this->mood = $mood;
         }
 
         return $this;
     }
 
-    public function getRatingWriter(): ?float
+    public function getRatingWriter(): ? float
     {
         return $this->ratingWriter;
     }
@@ -205,7 +214,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRatingReader(): ?float
+    public function getRatingReader(): ? float
     {
         return $this->ratingReader;
     }
@@ -217,7 +226,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUsername(): ?string
+    public function getUsername(): ? string
     {
         return $this->username;
     }
@@ -229,14 +238,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getConfirmPassword(): ?string
+    public function getConfirmPassword(): ? string
     {
-        if($this->confirmPassword == null){
+        if ($this->confirmPassword == null) {
             return $this->password;
         }
         return $this->confirmPassword;
     }
-    
+
     public function setConfirmPassword(string $password): self
     {
         $this->confirmPassword = $password;
@@ -244,7 +253,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function setRoles(?array $roles): self
+    public function setRoles(? array $roles): self
     {
         $this->roles = $roles;
 
@@ -258,15 +267,18 @@ class User implements UserInterface
         return $this;
     }
 
-    public function eraseCredentials() {}
+    public function eraseCredentials()
+    { }
 
-    public function getSalt() {}
+    public function getSalt()
+    { }
 
-    public function getRoles() {
+    public function getRoles()
+    {
         return $this->roles;
     }
 
-    public function getMedia(): ?Media
+    public function getMedia(): ? Media
     {
         return $this->Media;
     }
@@ -278,34 +290,83 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getCurrentLocation(): ?array
+    public function getCurrentLocation(): ? array
     {
         return $this->currentLocation;
     }
 
-    public function setCurrentLocation(?string $coord = NULL): self
+    public function setCurrentLocation(? string $coord = null): self
     {
-        if($coord != NULL) {
+        if ($coord != null) {
             $data = json_decode(file_get_contents("https://api.mapbox.com/geocoding/v5/mapbox.places/{$coord}.json?access_token=pk.eyJ1IjoidG9udG9uc2F0IiwiYSI6ImNqc25jNTIwNjA5bDc0M280dGt4ejJtNXkifQ.h_Ox7WHHtfhpQK9Qr0oTlw"));
-    
+
             $this->currentLocation['city'] = $data->features[2]->text;
             $this->currentLocation['state'] = $data->features[3]->text;
             $this->currentLocation['country'] = $data->features[4]->text;
-            $this->currentLocation['coord'] = $coord;  
+            $this->currentLocation['coord'] = $coord;
         }
         return $this;
     }
 
-    public function getBio(): ?string
+    public function getBio(): ? string
     {
         return $this->bio;
     }
 
-    public function setBio(?string $bio): self
+    public function setBio(? string $bio): self
     {
         $this->bio = $bio;
 
         return $this;
     }
-    
+
+    /** FRIENDSHIP */
+    /**
+     * @return Collection|Friendship[]
+     */
+    public function getFriendships(): Collection
+    {
+        return $this->friendships;
+    }
+
+    public function addFriendship(Friendship $friendship): self
+    {
+        if (!$this->friendships->contains($friendship)) {
+            $this->friendships[] = $friendship;
+            $friendship->getfriend()->addFriendship($friendship);
+        }
+
+        return $this;
+    }
+
+    public function removeFriendship(Friendship $friendship): self
+    {
+        if ($this->friendships->contains($friendship)) {
+            $this->friendships->removeElement($friendship);
+            // set the owning side to null (unless already changed)
+            if ($friendship->getUser() === $this) {
+                $friendship->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addFriendshipWithMe(Friendship $friendship)
+    {
+        $this->friendsWithMe->add($friendship);
+    }
+
+    public function addFriend(User $friend)
+    {
+        $fs = new Friendship();
+        $fs->setStatus(0)
+            ->setDate(new \Datetime);
+        $fs->setUser($this);
+        $fs->setFriend($friend);
+
+        $this->addFriendship($fs);
+
+        return $fs;
+    }
 }

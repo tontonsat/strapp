@@ -19,6 +19,8 @@ use \App\Form\PasswdType;
 use \App\Form\UploadType;
 use \App\Form\MoodType;
 use \App\Form\BioType;
+use Symfony\Component\HttpFoundation\Response;
+use \App\Entity\Friendship;
 
 class UserController extends AbstractController
 {
@@ -28,24 +30,23 @@ class UserController extends AbstractController
     public function myProfile(UserRepository $repo, Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
 
-        $user = $repo->findOneBy(['id' =>$this->getUser()->getId()]);
-        
-        if($user->getMedia() == null) {
+        $user = $repo->findOneBy(['id' => $this->getUser()->getId()]);
+
+        if ($user->getMedia() == null) {
             $media = new Media();
-        }
-        else {
+        } else {
             $media = $user->getmedia();
         }
-         
+
         $updateCoord = $this->createFormBuilder($this->getUser())
-        ->add('coord', HiddenType::class, ['mapped' => false, 'data' => ''])->getForm();
+            ->add('coord', HiddenType::class, ['mapped' => false, 'data' => ''])->getForm();
 
         $formInfo = $this->createForm(ProfileType::class, $user);
         $formPassword = $this->createForm(PasswdType::class, $user);
         $formMood = $this->createForm(MoodType::class, $user);
         $formBio = $this->createForm(BioType::class, $user);
         $formImage = $this->createForm(UploadType::class, $media);
-        
+
         $formImage->handleRequest($request);
         $formInfo->handleRequest($request);
         $formPassword->handleRequest($request);
@@ -53,7 +54,7 @@ class UserController extends AbstractController
         $formBio->handleRequest($request);
         $updateCoord->handleRequest($request);
 
-        if($updateCoord->isSubmitted() && $updateCoord->isValid()) {
+        if ($updateCoord->isSubmitted() && $updateCoord->isValid()) {
 
             $coord = $request->request->get('form')['coord'];
 
@@ -61,43 +62,36 @@ class UserController extends AbstractController
             $manager->flush();
 
             $updatedCoord = $this->getUser()->getCurrentLocation();
-            $this->addFlash('notice-coord','');
+            $this->addFlash('notice-coord', '');
             return $this->redirectToRoute("home_myprofile");
-        }
-
-        elseif($formBio->isSubmitted() && $formBio->isValid()) {
+        } elseif ($formBio->isSubmitted() && $formBio->isValid()) {
             $manager->flush();
 
-            $this->addFlash('notice-profile','Bio updated with success!');
+            $this->addFlash('notice-profile', 'Bio updated with success!');
             return $this->redirectToRoute("home_myprofile");
-        }
-
-        elseif($formImage->isSubmitted() && $formImage->isValid()) {
+        } elseif ($formImage->isSubmitted() && $formImage->isValid()) {
 
             $user->setMedia($media);
-            $user->getMedia()->setWebPath('uploads/avatars/'. $media->getImageName());
+            $user->getMedia()->setWebPath('uploads/avatars/' . $media->getImageName());
             $manager->flush();
 
-            $this->addFlash('notice-profile','Profile picture updated with success!');
+            $this->addFlash('notice-profile', 'Profile picture updated with success!');
             return $this->redirectToRoute("home_myprofile");
-        }
-        elseif ($formInfo->isSubmitted() && $formInfo->isValid()) {
+        } elseif ($formInfo->isSubmitted() && $formInfo->isValid()) {
             $manager->flush();
-            
-            $this->addFlash('notice-profile','Personnal information edited with success!');
+
+            $this->addFlash('notice-profile', 'Personnal information edited with success!');
             return $this->redirectToRoute("home_myprofile");
-        }  
-        elseif ($formPassword->isSubmitted() && $formPassword->isValid()) {
+        } elseif ($formPassword->isSubmitted() && $formPassword->isValid()) {
             $encoded = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encoded);
             $manager->flush();
-            
-            $this->addFlash('notice-profile','Password modified with success!');
+
+            $this->addFlash('notice-profile', 'Password modified with success!');
             return $this->redirectToRoute("home_myprofile");
-        }
-        elseif ($formMood->isSubmitted() && $formMood->isValid()) {
+        } elseif ($formMood->isSubmitted() && $formMood->isValid()) {
             $manager->flush();
-            $this->addFlash('notice-mood','');
+            $this->addFlash('notice-mood', '');
             return $this->redirectToRoute("home_myprofile");
         }
         return $this->render('user/myProfile.html.twig', [
@@ -113,16 +107,34 @@ class UserController extends AbstractController
     /**
      * @Route("/user/{slug}", name="home_user")
      */
-    public function profile(UserRepository $repo, Request $request, ObjectManager $manager, $slug = NULL)
+    public function profile(UserRepository $repo, Request $request, ObjectManager $manager, $slug = null)
     {
-        if($slug == NULL) {
+        if ($slug == null) {
             return $this->redirectToRoute("home_userList");
         }
 
-        $user = $repo->findOneBy(['id' =>$slug]);
+        $user = $repo->findOneBy(['id' => $slug]);
 
         return $this->render('user/profile.html.twig', [
             'user'   => $user
         ]);
+    }
+
+    /**
+     * @Route("/addFriend/{slug}", name="home_addFriend")
+     */
+    public function ajaxAddFriend(UserRepository $repo, Request $request, ObjectManager $manager, $slug = null): Response
+    {
+        if ($slug == null) {
+            return $this->redirectToRoute("home_userList");
+        }
+        $friend = $repo->findOneBy(['id' => $slug]);
+
+        $friendship = $this->getUser()->addFriend($friend);
+
+        $manager->persist($friendship);
+        $manager->flush();
+
+        return $this->render('user/ajaxAddFriend.html.twig');
     }
 }

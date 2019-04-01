@@ -42,7 +42,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{ app.user.name }} 
                     {% if app.user.media is null %}
-                    <img src="uploads/avatars/0.jpg" alt="profile picture" class="avatar">
+                    <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture" class="avatar">
                     {% else %}
                         <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}" alt="profile picture" class="avatar">
                     {% endif %}

@@ -18,7 +18,8 @@
                 <div class="row no-gutters">
                     <div class="col-md-auto">
                         {% if app.user.media is null %}
-                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="card-img user-card-avatar">
+                        <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture"
+                            class="card-img user-card-avatar">
                         {% else %}
                         <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}"
                             alt="profile picture" class="card-img user-card-avatar">
@@ -26,11 +27,15 @@
                     </div>
                     <div class="col">
                         <div class="card-body user-info">
-                            <h5 class="card-title">{{ app.user.name }} {{ app.user.lastname }} <span class="badge badge-pill badge-rating-writer">{{ app.user.ratingWriter }}</span> <span class="badge badge-pill badge-rating-reader">{{ app.user.ratingReader }}</span></h5>
+                            <h5 class="card-title">{{ app.user.name }} {{ app.user.lastname }} <span
+                                    class="badge badge-pill badge-rating-writer">{{ app.user.ratingWriter }}</span>
+                                <span class="badge badge-pill badge-rating-reader">{{ app.user.ratingReader }}</span>
+                            </h5>
                             <p class="card-text"><small class="text-muted muted-mood">
                                     {{ form_start(updateCoord) }}
                                     {{ form_row(updateCoord.coord) }}
-                                    <a class="refresh-loc-link" href="#" onclick="document.form.submit();"><i class="fas fa-sync-alt"></i></a>
+                                    <a class="refresh-loc-link" href="#" onclick="document.form.submit();"><i
+                                            class="fas fa-sync-alt"></i></a>
                                     {{ form_end(updateCoord) }} {{ app.user.currentLocation.city }} - {{
                                     app.user.currentLocation.country }}
                                     {% if app.flashes('notice-coord') %}
@@ -40,7 +45,8 @@
                                     {{ form_start(formMood) }}
                                     <i class="fas fa-pen-nib"></i>
                                     {{ form_row(formMood.mood, {'attr': {'class': 'text-muted width-dynamic proba dva',
-                                    'maxLength': '30','data-toggle': 'tooltip','data-placement': 'bottom', 'title': '30 characters max.'}}) }}
+                                    'maxLength': '30','data-toggle': 'tooltip','data-placement': 'bottom', 'title': '30 characters max.'}})
+                                    }}
                                     {{ form_row(formMood.save, {'attr': {'class': 'text-muted muted-btn'}}) }}
                                     {% if app.flashes('notice-mood') %}
                                     <i class="fas fa-check"></i>
@@ -58,10 +64,12 @@
                 <div class="card-body">
                     <div class="form-row">
                         <div class="input-group form-group-bio">
-                            {{ form_row(formBio.bio, {'attr': {'class': 'form-control area-form-bio', 'rows': '3', 'maxlength': '225', 'aria-label': 'Update','data-toggle': 'tooltip','data-placement': 'bottom', 'title': '225 characters max.'}}) }}  
+                            {{ form_row(formBio.bio, {'attr': {'class': 'form-control area-form-bio', 'rows': '3', 'maxlength': '225', 'aria-label': 'Update','data-toggle': 'tooltip','data-placement': 'bottom', 'title': '225 characters max.'}})
+                            }}
                             <div class="input-group-append bio-update-submit" onclick="document.bio.submit();">
-                                <span class="input-group-text bio-update-submit"><i class="fas fa-caret-right"></i></span>  
-                            </div>        
+                                <span class="input-group-text bio-update-submit"><i
+                                        class="fas fa-caret-right"></i></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -74,13 +82,23 @@
             <div class="card user-card ">
                 <div class="card-body user-info">
                     <div class="progress rating-profile">
-                        <div class="progress-bar progress-bar-writer" role="progressbar" style="width: {{ app.user.ratingWriter }}%" aria-valuenow="{{ app.user.ratingWriter }}" aria-valuemin="0" aria-valuemax="100">{{ app.user.ratingWriter }}</div>
-                        <div class="progress-bar progress-bar-reader" role="progressbar" style="width: {{ 100 - app.user.ratingWriter }}%" aria-valuenow="{{ 100 - app.user.ratingWriter }}" aria-valuemin="0" aria-valuemax="100">{{ 100 - app.user.ratingWriter }}</div>
-                      </div><br />
+                        <div class="progress-bar progress-bar-writer" role="progressbar"
+                            style="width: {{ app.user.ratingWriter }}%" aria-valuenow="{{ app.user.ratingWriter }}"
+                            aria-valuemin="0" aria-valuemax="100">{{ app.user.ratingWriter }}</div>
+                        <div class="progress-bar progress-bar-reader" role="progressbar"
+                            style="width: {{ 100 - app.user.ratingWriter }}%"
+                            aria-valuenow="{{ 100 - app.user.ratingWriter }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ 100 - app.user.ratingWriter }}</div>
+                    </div><br />
                     <div class="progress rating-profile">
-                        <div class="progress-bar progress-bar-writer" role="progressbar" style="width: {{ app.user.ratingReader }}%" aria-valuenow="{{ app.user.ratingReader }}" aria-valuemin="0" aria-valuemax="100">{{ app.user.ratingReader }}</div>
-                        <div class="progress-bar progress-bar-reader" role="progressbar" style="width: {{ 100 - app.user.ratingReader }}%" aria-valuenow="{{ 100 - app.user.ratingReader }}" aria-valuemin="0" aria-valuemax="100">{{ 100 - app.user.ratingReader }}</div>
-                      </div>
+                        <div class="progress-bar progress-bar-writer" role="progressbar"
+                            style="width: {{ app.user.ratingReader }}%" aria-valuenow="{{ app.user.ratingReader }}"
+                            aria-valuemin="0" aria-valuemax="100">{{ app.user.ratingReader }}</div>
+                        <div class="progress-bar progress-bar-reader" role="progressbar"
+                            style="width: {{ 100 - app.user.ratingReader }}%"
+                            aria-valuenow="{{ 100 - app.user.ratingReader }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ 100 - app.user.ratingReader }}</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,7 +127,8 @@
                                 <label>Username</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="addon-wrappingConfirm"><i class="fas fa-at"></i></span>
+                                        <span class="input-group-text" id="addon-wrappingConfirm"><i
+                                                class="fas fa-at"></i></span>
                                     </div>
                                     <input type="text" value="{{app.user.username}}" class="form-control" disabled />
                                 </div>
@@ -127,9 +146,11 @@
                                 <label>Current location</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="addon-wrappingConfirm"><i class="fas fa-search-location"></i></span>
+                                        <span class="input-group-text" id="addon-wrappingConfirm"><i
+                                                class="fas fa-search-location"></i></span>
                                     </div>
-                                    <input type="text" value="{{app.user.currentLocation.city}}, {{app.user.currentLocation.country}}, [ {{app.user.currentLocation.coord}} ]"
+                                    <input type="text"
+                                        value="{{app.user.currentLocation.city}}, {{app.user.currentLocation.country}}, [ {{app.user.currentLocation.coord}} ]"
                                         class="form-control" disabled />
                                 </div>
                             </div>
@@ -184,8 +205,8 @@
                 {% if app.user.media is null %}
                 <img src="uploads/avatars/0.jpg" alt="profile picture" class="avatar-form card-img-top">
                 {% else %}
-                <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}" alt="profile picture"
-                    class="avatar-form card-img-top">
+                <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}"
+                    alt="profile picture" class="avatar-form card-img-top">
                 {% endif %}
                 {{ form_row(formImage.imageFile, {'attr': {'class': 'form-control-file'}}) }}
                 {{ form_row(formImage.save, {'attr': {'class': 'btn btn-primary form-control btn-login'}}) }}
@@ -197,12 +218,15 @@
 {% endblock %}
 
 {% block javascripts %}
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
 <script src="js/ui.js"></script>
 <script src="js/upload.js"></script>
 <script src="js/autoExpand.js"></script>

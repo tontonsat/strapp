@@ -4,220 +4,287 @@
     padding-top: 4rem;
     min-height: 100vh;
 }
+
 /** layout */
 /** bootstrap tooltips **/
 .tooltip-inner {
     color: #ffda00;
 }
+
 /** profile card & nav **/
 .navbar-toggler .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,218,0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
+
 .navbar-toggler.navbar-toggler {
-    border-color: rgb(255,218,0);
-} 
+    border-color: rgb(255, 218, 0);
+}
+
 nav {
     background: #191919;
     color: #ffda00;
 }
+
 .homeBtn {
     color: #ffda00;
     transition: color .2s ease;
     font-family: 'porto';
 }
+
 .homeBtn:hover {
     color: #e9ecef;
     text-decoration: none;
 }
+
 .nav-link {
-    padding-right: 0.5rem!important;
-    padding-left: 0.5rem!important;
+    padding-right: 0.5rem !important;
+    padding-left: 0.5rem !important;
 }
+
 .homeBtn h1 {
     border-bottom: 0.3px solid #464646;
     padding-top: 5px;
     padding-bottom: 10px;
     transition: 0.2s;
 }
+
 .homeBtn h1:hover {
     background: #ffda00;
     color: #191919;
 }
+
 .nav-item .avatar {
     width: 25px;
     height: 25px;
     border-radius: 20px;
 }
+
 .nav-item .avatar:hover {
     box-shadow: 0 0 0px 2px #ffda00;
 }
+
 .profile-card .info {
     padding-top: 10px;
 }
+
 .profile-card .info a {
     color: #ffda00;
     cursor: pointer;
 }
-.main-nav a {  
+
+.main-nav a {
     color: #ffda00;
     cursor: pointer;
     font-family: 'porto';
 }
+
 .nav-item {
     transition: 0.2s;
     border-bottom: 1px solid #191919;
 }
+
 .nav-item:hover {
     border-bottom: 1px solid #ffda00;
     transition: 0.2s;
 }
+
 .item-avatar:hover {
     background: #191919;
 }
+
 .rating-profile {
     height: 25px;
 }
+
 .progress-bar-writer {
     background: #ffda00;
     color: #191919;
     height:
 }
+
 .progress-bar-reader {
     background: #191919;
     color: #ffda00;
 }
+
 .rating-bar-vertical {
     margin-bottom: 5px;
 }
+
 .profile-card {
     padding-bottom: 10px;
 }
+
 .dropdown-menu {
     background: #191919;
 }
+
 .dropdown-menu .dropdown-item a {
     color: #ffda00;
 }
+
 .dropdown-menu .dropdown-item:hover {
     color: #191919;
     background: #ffda00;
 }
+
 .dropdown-divider {
     border-top: 1px solid #ffda00;
 }
+
 /** forms **/
 .input-group-text {
     background: #ffda00;
     color: #191919;
 }
+
 .avatar-form {
     height: 120px;
     width: 120px;
 }
+
 #upload_imageFile_file {
     background: #ffda00;
     color: #191919;
     padding: 5px;
     cursor: pointer;
 }
+
 .custom-file-label {
     overflow: hidden;
 }
+
 .refresh-loc-link {
     color: #6c757d;
 }
+
 .refresh-loc-link:hover {
     color: #ffda00;
 }
+
 #mood_mood {
     border: none;
     box-shadow: none;
     display: inline;
     background: #e9ecef;
 }
+
 #mood_mood:focus {
     box-shadow: none;
     outline: none;
     border-bottom: 0.1px solid #6c757d;
 }
+
 #mood_save {
     display: none;
 }
+
 .visible {
     display: block;
 }
+
 .muted-btn {
-    border:none;
+    border: none;
 }
+
 .muted-mood div {
-    display:inline-block;
+    display: inline-block;
 }
+
 .area-form-bio {
     width: 100%;
     resize: none;
 }
+
 .form-group-bio {
     width: 100%;
 }
+
 .form-group-bio div:first-child {
     width: 95%;
 }
+
 .bio-update-submit {
     cursor: pointer;
     width: 5%;
 }
+
 .bio-update-submit span:hover {
     color: #ffda00;
     background: #191919;
 }
+
 /** friend list **/
 .filter-container {
     margin: 0 auto;
 }
+
 .filter-user-grp {
     margin: 0 auto;
 }
+
 .user-list-link {
     text-decoration: none;
     padding: 5px;
     min-width: 33%;
+    max-width: 33%;
     color: #191919;
 }
+
 .user-list-link:hover {
     text-decoration: none;
     color: #191919;
 }
+
+.friendship-container {
+    min-width: 33%;
+    max-width: 33%;
+}
+
 .card-body {
     padding: 0.75rem;
 }
+
 .card-title {
     margin-bottom: 0px;
 }
+
 .user-container .user-card:hover {
     cursor: pointer;
     box-shadow: 0px 0px 4px #ffda00;
 }
+
 .user-card .col-md-auto {
     width: auto;
 }
+
 .user-card {
     height: 122px;
 }
+
+.card-text .text-muted {
+    word-wrap: break-word;
+}
+
 .user-card .badge-rating-writer {
     background: #ffda00;
     color: #191919;
 }
+
 .user-card .badge-rating-reader {
     background: #191919;
     color: #ffda00;
 }
+
 .user-card .user-info {
     padding-bottom: 0px;
 }
+
 .user-card-avatar {
     width: 120px;
     height: 120px;
 }
+
 /** pagination */
 .nav-paginator {
     position: relative;
@@ -226,14 +293,22 @@ nav {
     margin-right: auto;
     bottom: 0;
 }
+
 .page-link {
     color: #191919;
 }
+
 .page-link:focus {
     box-shadow: none;
 }
+
 .page-item.active .page-link {
     background: #ffda00;
     color: #191919;
     border-color: #ffda00;
+}
+
+/** profile */
+.btn-add-friend-profile {
+    margin-top: 5px;
 }

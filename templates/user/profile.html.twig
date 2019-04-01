@@ -9,7 +9,8 @@
                 <div class="row no-gutters">
                     <div class="col-md-auto">
                         {% if user.media is null %}
-                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="card-img user-card-avatar">
+                        <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture"
+                            class="card-img user-card-avatar">
                         {% else %}
                         <img src="{{ asset('uploads/avatars/' ~ user.media.imageName) | imagine_filter('avatar') }}"
                             alt="profile picture" class="card-img user-card-avatar">
@@ -17,20 +18,58 @@
                     </div>
                     <div class="col">
                         <div class="card-body user-info">
-                            <h5 class="card-title">{{ user.name }} {{ user.lastname }} <span class="badge badge-pill badge-rating-writer">{{ user.ratingWriter }}</span> <span class="badge badge-pill badge-rating-reader">{{ user.ratingReader }}</span></h5>
+                            <h5 class="card-title">{{ user.name }} {{ user.lastname }} <span
+                                    class="badge badge-pill badge-rating-writer">{{ user.ratingWriter }}</span> <span
+                                    class="badge badge-pill badge-rating-reader">{{ user.ratingReader }}</span></h5>
+                            <p class="card-text">
+                                <small class="text-muted muted-mood">
+                                    {{ user.currentLocation.city }} - {{ user.currentLocation.country }}
+                                </small>
+                            </p>
                             <p class="card-text">
                                 <small class="text-muted muted-mood">
                                     {{ user.mood }}
                                 </small>
                             </p>
-                            <p class="card-text">
-                                {{ user.bio }}
-                            </p>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="add-friend-container">
+                <button class="btn btn-primary btn-standard btn-add-friend-profile" data-target="{{ user.id }}"><i
+                        class="fas fa-user-plus"></i> Add
+                    friend</button>
+                <a class="btn btn-primary btn-standard" href="{{ path('home_addFriend', {'slug': user.id }) }}"
+                    data-target="{{ user.id }}"><i class="fas fa-user-plus"></i> Add
+                    friend</a>
+            </div>
+        </div>
+        <div class="col col-profile">
+            <div class="card user-card">
+                <div class="card-body">
+                    <h3 class="h3">Bio</h3>
+                    {% if user.bio %}
+                    {{ user.bio }}
+                    {% endif %}
+                    {% if not user.bio %}
+                    No bio for this user yet.
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </main>
+{% endblock %}
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src={{ asset("js/ui.js") }}></script>
+<script src={{ asset("js/locateMe.js") }}></script>
+<script src={{ asset("js/friendlyAjax.js") }}></script>
 {% endblock %}

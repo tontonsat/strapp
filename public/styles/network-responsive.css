@@ -11,8 +11,9 @@
     .user-card {
         height: auto;
     }
-    .user-container  {
+    .user-list-link  {
         min-width: 100%;
+        max-width: 100%;
     }
     .index-row {
         flex-direction: column;
