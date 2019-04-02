@@ -352,11 +352,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function addFriendshipWithMe(Friendship $friendship)
-    {
-        $this->friendsWithMe->add($friendship);
-    }
-
     public function addFriend(User $friend)
     {
         $fs = new Friendship();

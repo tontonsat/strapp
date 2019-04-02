@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ user.username }} - Strxyz{% endblock %}
+{% block title %}{{ user.username }} - Strapp.xyz{% endblock %}
 {% block body %}
 <main role="main" class="container-fluid main-content">
     <div class="row profile-card">
@@ -18,7 +18,7 @@
                     </div>
                     <div class="col">
                         <div class="card-body user-info">
-                            <h5 class="card-title">{{ user.name }} {{ user.lastname }} <span
+                            <h5 class="card-title">{{ user.name }} {{ user.lastname }} @{{ user.username }} <span
                                     class="badge badge-pill badge-rating-writer">{{ user.ratingWriter }}</span> <span
                                     class="badge badge-pill badge-rating-reader">{{ user.ratingReader }}</span></h5>
                             <p class="card-text">
@@ -35,6 +35,7 @@
                     </div>
                 </div>
             </div>
+            {% if isFriend == false %}
             <div class="add-friend-container">
                 <button class="btn btn-primary btn-standard btn-add-friend-profile" data-target="{{ user.id }}"><i
                         class="fas fa-user-plus"></i> Add
@@ -43,19 +44,50 @@
                     data-target="{{ user.id }}"><i class="fas fa-user-plus"></i> Add
                     friend</a>
             </div>
+            {% endif %}
         </div>
         <div class="col col-profile">
-            <div class="card user-card">
-                <div class="card-body">
-                    <h3 class="h3">Bio</h3>
-                    {% if user.bio %}
-                    {{ user.bio }}
-                    {% endif %}
-                    {% if not user.bio %}
-                    No bio for this user yet.
-                    {% endif %}
+            <div class="row profile-card">
+                <div class="card user-card">
+                    <div class="card-body">
+                        <h3 class="h3">Bio</h3>
+                        {% if user.bio %}
+                        {{ user.bio }}
+                        {% endif %}
+                        {% if not user.bio %}
+                        No bio for this user yet.
+                        {% endif %}
+                    </div>
                 </div>
             </div>
+            <div class="row profile-card">
+                <div class="user-friend-container">
+                    <h5 class="title-friends-container">Friends of {{ user.name }} {{ user.lastname }}</h5>
+                    {% for fs in friends %}
+                    <a class="user-friend-list-item" href="{{ path('home_user', {'slug': fs.friend.id}) }}">
+                        <div class="user-friend-thumbnail">
+                            {% if fs.friend.media is null %}
+                            <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture"
+                                class="user-friend-list-item-media">
+                            {% else %}
+                            <img src="{{ asset('uploads/avatars/' ~ fs.friend.media.imageName) | imagine_filter('avatar') }}"
+                                alt="profile picture" class="user-friend-list-item-media">
+                            {% endif %}
+                            <div class="user-friend-thumbnail-text text-center">
+                                @{{fs.friend.username}}
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    {{ knp_pagination_render(friends) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row profile-card">
+        <div class="col col-profile"></div>
+        <div class="col col-profile">
         </div>
     </div>
 </main>

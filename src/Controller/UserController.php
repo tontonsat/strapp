@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -10,6 +10,7 @@ use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 use App\Repository\UserRepository;
+use App\Repository\FriendshipRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use \App\Entity\User;
@@ -22,7 +23,7 @@ use \App\Form\BioType;
 use Symfony\Component\HttpFoundation\Response;
 use \App\Entity\Friendship;
 
-class UserController extends AbstractController
+class UserController extends Controller
 {
     /**
      * @Route("/myProfile", name="home_myprofile")
@@ -115,8 +116,34 @@ class UserController extends AbstractController
 
         $user = $repo->findOneBy(['id' => $slug]);
 
+        $em = $this->getDoctrine()->getManager();
+        $fsRepo = $em->getRepository(Friendship::class);
+
+        if ($isFriendQuery = $fsRepo->createQueryBuilder('fs')
+            ->select('fs.id')
+            ->where('fs.user = :currentuser AND fs.friend = :friend')
+            ->setParameter('currentuser', $this->getUser()->getId())
+            ->setParameter('friend', $user->getId())
+            ->getQuery()->getResult()) {
+            $isFriend = true;
+        } else {
+            $isFriend = false;
+        }
+
+        /* @var $paginator \Knp\Component\Pager\Paginator */
+        $paginator  = $this->get('knp_paginator');
+
+        $allFriendsQuery = $fsRepo->createQueryBuilder('fs')
+            ->where('fs.user = :user')
+            ->setParameter('user', $user->getId())
+            ->getQuery();
+
+        $friends = $paginator->paginate($allFriendsQuery, $request->query->getInt('page', 1), 12);
+
         return $this->render('user/profile.html.twig', [
-            'user'   => $user
+            'user'   => $user,
+            'isFriend' => $isFriend,
+            'friends' => $friends
         ]);
     }
 
@@ -130,9 +157,11 @@ class UserController extends AbstractController
         }
         $friend = $repo->findOneBy(['id' => $slug]);
 
-        $friendship = $this->getUser()->addFriend($friend);
+        $friendship1 = $this->getUser()->addFriend($friend);
+        $friendship2 = $friend->addFriend($this->getUser());
 
-        $manager->persist($friendship);
+        $manager->persist($friendship1);
+        $manager->persist($friendship2);
         $manager->flush();
 
         return $this->render('user/ajaxAddFriend.html.twig');

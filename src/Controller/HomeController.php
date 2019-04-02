@@ -68,12 +68,13 @@ class HomeController extends Controller
         $paginator  = $this->get('knp_paginator');
 
         $currentUserCity = $this->getuser()->getCurrentLocation()['city'];
+        $em = $this->getDoctrine()->getManager();
+        $fsRepo = $em->getRepository(Friendship::class);
 
         if ($slug == 'mine') {
-            $em = $this->getDoctrine()->getManager();
-            $fsRepo = $em->getRepository(Friendship::class);
+
             $allFriendshipsQuery = $fsRepo->createQueryBuilder('fs')
-                ->where('fs.user = :currentuser OR fs.friend = :currentuser')
+                ->where('fs.user = :currentuser')
                 ->setParameter('currentuser', $this->getUser()->getId())
                 ->getQuery();
 
@@ -84,19 +85,26 @@ class HomeController extends Controller
                 'filter' => $slug
             ]);
         } else {
-            $em = $this->getDoctrine()->getManager();
             $userRepo = $em->getRepository(User::class);
+
+            $myFriends = $fsRepo->createQueryBuilder('fs')
+                ->select('IDENTITY(fs.friend)')
+                ->where('fs.user = :currentuser')
+                ->setParameter('currentuser', $this->getUser()->getId());
+            dump($myFriends->getQuery()->getResult());
 
             if ($slug == 'local') {
                 $allUsersQuery = $userRepo->createQueryBuilder('u')
                     ->where('u.currentLocation like :city')
                     ->andWhere('u.id != :currentuser')
+                    ->andWhere($myFriends->expr()->notIn('u.id', $myFriends->getDQL()))
                     ->setParameter('city', '%' . $currentUserCity . '%')
                     ->setParameter('currentuser', $this->getUser()->getId())
                     ->getQuery();
             } elseif ($slug == 'global') {
                 $allUsersQuery = $userRepo->createQueryBuilder('u')
                     ->where('u.id != :currentuser')
+                    ->andWhere($myFriends->expr()->notIn('u.id', $myFriends->getDQL()))
                     ->setParameter('currentuser', $this->getUser()->getId())
                     ->getQuery();
             }

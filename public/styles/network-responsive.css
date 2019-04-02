@@ -1,31 +1,52 @@
 @media screen and (max-width: 1065px) {
-    .user-container  {
+    .user-container {
         min-width: 50%;
     }
 }
+
+@media screen and (max-width: 1570px) {
+    .user-list-link {
+        min-width: 33%;
+        max-width: 33%;
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    .user-list-link {
+        min-width: 50%;
+        max-width: 50%;
+    }
+}
+
 @media screen and (max-width: 908px) {
     .col-profile {
         min-width: 100%;
         padding-bottom: 5px;
     }
+
     .user-card {
         height: auto;
     }
-    .user-list-link  {
+
+    .user-list-link {
         min-width: 100%;
         max-width: 100%;
     }
+
     .index-row {
         flex-direction: column;
         height: 100vh;
     }
+
     .left-login {
         width: 100%;
         max-width: 100%;
     }
+
     .map-container {
         width: 100%;
     }
+
     #map {
         height: 100%;
     }

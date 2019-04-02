@@ -29,6 +29,8 @@ nav {
     color: #ffda00;
     transition: color .2s ease;
     font-family: 'porto';
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
 }
 
 .homeBtn:hover {
@@ -76,11 +78,15 @@ nav {
     color: #ffda00;
     cursor: pointer;
     font-family: 'porto';
+    -webkit-transition: .2s ease-in-out;
+    transition: .2s ease-in-out;
 }
 
 .nav-item {
     transition: 0.2s;
     border-bottom: 1px solid #191919;
+    -webkit-transition: .2s ease-in-out;
+    transition: .2s ease-in-out;
 }
 
 .nav-item:hover {
@@ -113,6 +119,7 @@ nav {
 
 .profile-card {
     padding-bottom: 10px;
+    width: 100%;
 }
 
 .dropdown-menu {
@@ -226,19 +233,14 @@ nav {
 .user-list-link {
     text-decoration: none;
     padding: 5px;
-    min-width: 33%;
-    max-width: 33%;
+    min-width: 25%;
+    max-width: 25%;
     color: #191919;
 }
 
 .user-list-link:hover {
     text-decoration: none;
     color: #191919;
-}
-
-.friendship-container {
-    min-width: 33%;
-    max-width: 33%;
 }
 
 .card-body {
@@ -251,7 +253,7 @@ nav {
 
 .user-container .user-card:hover {
     cursor: pointer;
-    box-shadow: 0px 0px 4px #ffda00;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
 }
 
 .user-card .col-md-auto {
@@ -260,6 +262,8 @@ nav {
 
 .user-card {
     height: 122px;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
 }
 
 .card-text .text-muted {
@@ -296,6 +300,8 @@ nav {
 
 .page-link {
     color: #191919;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
 }
 
 .page-link:focus {
@@ -311,4 +317,50 @@ nav {
 /** profile */
 .btn-add-friend-profile {
     margin-top: 5px;
+}
+
+.user-friend-container {
+    display: flex;
+    flex-flow: row wrap;
+    background-color: #ffffff;
+    padding: 5px;
+}
+
+.title-friends-container {
+    width: 100%;
+}
+
+.user-friend-list-item {
+    min-width: 25%;
+    max-width: 25%;
+    height: auto;
+    padding: 1px;
+}
+
+.user-friend-thumbnail-text {
+    position: absolute;
+    bottom: 0;
+    color: #ffda00;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.user-friend-list-item-media {
+    width: 100%;
+    height: auto;
+    -webkit-filter: sepia(100%);
+    filter: sepia(100%);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+
+.user-friend-list-item-media:hover {
+    -webkit-filter: sepia(0);
+    filter: sepia(0);
+}
+
+.user-friend-thumbnail {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }

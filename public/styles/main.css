@@ -1,7 +1,16 @@
 @font-face {
-    font-family: 'porto'; /*a name to be used later*/
-    src: url('../fonts/porto.ttf'); /*URL to font*/
+    font-family: 'porto';
+    /*a name to be used later*/
+    src: url('../fonts/porto.ttf');
+    /*URL to font*/
 }
+
+/** cancel bootstrap */
+.btn-primary {
+    background-color: transparent;
+    border-color: transparent;
+}
+
 body {
     font-family: 'Playfair Display', serif;
     margin: 0px;
@@ -9,6 +18,7 @@ body {
     background-color: #ffda00;
     height: 100vh;
 }
+
 .main-logo {
     background: #191919;
     color: #ffda00;
@@ -17,6 +27,7 @@ body {
     padding-bottom: 10px;
     font-family: 'porto';
 }
+
 .left-login {
     padding-right: 15px;
     background-color: #ffda00;
@@ -25,44 +36,58 @@ body {
     max-width: 360px;
     min-width: 300px;
 }
+
 .left-login a {
     color: #191919;
 }
+
 /** forms **/
 .form-control:focus {
     border-color: #ffda00;
     box-shadow: inset 0px 0px 2px #ffda00;
 }
+
 .form {
     font-family: 'Playfair Display', serif;
 }
+
 .btn-login {
     background-color: #ffda00;
     color: #191919;
     border: 1px solid #191919;
     width: 100%;
     margin-bottom: 10px;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
 }
+
 .btn-login:hover {
     background: #191919;
     color: #ffda00;
     border-color: #191919;
 }
+
 .btn-primary:not(:disabled):not(.disabled):active:focus,
-.btn-primary:focus, .btn-primary.focus
-{
-    box-shadow:none;
+.btn-primary:focus,
+.btn-primary.focus {
+    box-shadow: none;
     background: #191919;
     color: #ffda00;
     border-color: #191919;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
 }
+
 .btn-standard-active {
     background-color: #ffda00;
     color: #191919;
     border: 1px solid #191919;
     width: 100%;
     margin-bottom: 10px;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
 }
+
 .btn-standard-active:hover {
     background-color: #ffda00;
     color: #191919;
@@ -70,13 +95,17 @@ body {
     width: 100%;
     margin-bottom: 10px;
 }
+
 .btn-standard {
     background-color: #ffffff;
     color: #191919;
     border: 1px solid #191919;
     width: 100%;
     margin-bottom: 10px;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
 }
+
 .btn-standard:hover {
     background: #191919;
     color: #ffda00;
@@ -87,4 +116,5 @@ body {
 .main-alert {
     color: #191919;
     background: #ffda00;
+    margin-top: 5px;
 }
