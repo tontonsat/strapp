@@ -34,10 +34,10 @@
                                 ({{ user.ratingWriter }}/{{ user.ratingReader }})
                                 <p class="card-text"><small class="text-muted">{{ user.currentLocation.city }} - {{
                                         user.currentLocation.country }}<br />
-                                        {% if user.mood|length > 35 %}
-                                        {{ user.mood[:35] }}...
+                                        {% if user.mood|length > 25 %}
+                                        {{ user.mood[:25] }}...
                                         {% endif %}
-                                        {% if user.mood|length <= 35 %}
+                                        {% if user.mood|length <= 25 %}
                                         {{ user.mood }}
                                         {% endif %}
                                     </small>

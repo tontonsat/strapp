@@ -22,15 +22,39 @@
     .col-profile {
         min-width: 100%;
         padding-bottom: 5px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .container-fluid {
+        padding-right: 0px;
     }
 
     .user-card {
         height: auto;
     }
 
+    .profile-card {
+        margin-right: 0px;
+        width: auto;
+    }
+
     .user-list-link {
         min-width: 100%;
         max-width: 100%;
+    }
+
+    .btn-status-friendship-container {
+        padding-top: 7.5px;
+        flex-direction: column;
+        height: 100%;
+        top: 0;
+        width: auto;
+    }
+
+    .btn-status-friendship-container .btn-friendship {
+        padding-top: 25%;
+        padding-bottom: 25%;
     }
 
     .index-row {

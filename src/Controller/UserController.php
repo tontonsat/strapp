@@ -113,7 +113,9 @@ class UserController extends Controller
         if ($slug == null) {
             return $this->redirectToRoute("home_userList");
         }
-
+        if ($slug == $this->getUser()->getId()) {
+            return $this->redirectToRoute('home_myprofile');
+        }
         $user = $repo->findOneBy(['id' => $slug]);
 
         $em = $this->getDoctrine()->getManager();

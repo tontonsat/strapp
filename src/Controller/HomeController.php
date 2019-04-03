@@ -75,6 +75,7 @@ class HomeController extends Controller
 
             $allFriendshipsQuery = $fsRepo->createQueryBuilder('fs')
                 ->where('fs.user = :currentuser')
+                ->addOrderBy('fs.status', 'ASC')
                 ->setParameter('currentuser', $this->getUser()->getId())
                 ->getQuery();
 

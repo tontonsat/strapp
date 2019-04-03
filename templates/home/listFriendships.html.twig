@@ -14,7 +14,52 @@
         </div>
     </div>
     <div class="row user-list-row">
+        {% if friendships is not empty %}
+        <h5 class="title-friends-container">My friends</h5>
         {% for fs in friendships %}
+        {% if fs.status == 0 %}
+        <div class="user-list-link" href="{{ path('home_user', {'slug': fs.friend.id}) }}">
+            <div class="user-container friendship-container" data-user="{{ fs.friend.id }}">
+                <div class="card user-card">
+                    <div class="row no-gutters">
+                        <a class="user-list-link-passive" href="{{ path('home_user', {'slug': fs.friend.id}) }}">
+                            <div class="col-md-auto col-friend-auto">
+                                {% if fs.friend.media is null %}
+                                <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture"
+                                    class="user-card-avatar">
+                                {% else %}
+                                <img src="{{ asset('uploads/avatars/' ~ fs.friend.media.imageName) | imagine_filter('avatar') }}"
+                                    alt="profile picture" class="card-img user-card-avatar">
+                                {% endif %}
+                            </div>
+                            <div class="col-md-auto basic-info-col col-friend-auto">
+                                <div class="card-body user-info">
+                                    <h6 class="card-title">{{ fs.friend.name }} {{ fs.friend.lastname }} </h6>
+                                    @{{ fs.friend.username }}
+                                    ({{ fs.friend.ratingWriter }}/{{ fs.friend.ratingReader }})
+                                    <p class="card-text"><small class="text-muted">{{ fs.friend.currentLocation.city }}
+                                            - {{ fs.friend.currentLocation.country }}<br />
+                                            {% if fs.friend.mood|length > 25 %}
+                                            {{ fs.friend.mood[:25] }}...
+                                            {% endif %}
+                                            {% if fs.friend.mood|length <= 25 %}
+                                            {{ fs.friend.mood }}
+                                            {% endif %}
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="btn-status-friendship-container">
+                            <a href="" class="btn-friendship accept">Accept</a>
+                            <a href="" class="btn-friendship refuse">Decline</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if fs.status == 1 %}
         <a class="user-list-link" href="{{ path('home_user', {'slug': fs.friend.id}) }}">
             <div class="user-container friendship-container" data-user="{{ fs.friend.id }}">
                 <div class="card user-card">
@@ -34,7 +79,7 @@
                                 @{{ fs.friend.username }}
                                 ({{ fs.friend.ratingWriter }}/{{ fs.friend.ratingReader }})
                                 <p class="card-text"><small class="text-muted">{{ fs.friend.currentLocation.city }} - {{
-                                            fs.friend.currentLocation.country }}<br />
+                                                fs.friend.currentLocation.country }}<br />
                                         {% if fs.friend.mood|length > 35 %}
                                         {{ fs.friend.mood[:35] }}...
                                         {% endif %}
@@ -49,7 +94,9 @@
                 </div>
             </div>
         </a>
+        {% endif %}
         {% endfor %}
+        {% endif %}
     </div>
     <div class="row">
         {{ knp_pagination_render(friendships) }}

@@ -104,25 +104,25 @@
         </div>
     </div>
     <div class="row profile-card">
-        <div class="col">
+        <div class="col col-profile">
             <div class="card">
                 {{ form_start(formProfile) }}
                 <div class="card-body">
                     <h5 class="card-title">Personnal information</h5>
                     <div class="form-row">
-                        <div class="col">
+                        <div class="col col-profile">
                             <div class="form-group">
                                 {{ form_row(formProfile.name, {'attr': {'class': 'form-control'}}) }}
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col col-profile">
                             <div class="form-group">
                                 {{ form_row(formProfile.lastname, {'attr': {'class': 'form-control'}}) }}
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col">
+                        <div class="col col-profile">
                             <div class="form-group">
                                 <label>Username</label>
                                 <div class="input-group">
@@ -134,7 +134,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col col-profile">
                             <div class="form-group">
                                 {{ form_row(formProfile.email, {'attr': {'class': 'form-control'}}) }}
                             </div>
@@ -162,14 +162,14 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row profile-card">
         <div class="col col-profile">
             <div class="card profile-card">
                 {{ form_start(formPassword) }}
                 <div class="card-body">
                     <h5 class="card-title">Password</h5>
                     <div class="form-row">
-                        <div class="col-auto">
+                        <div class="col-auto col-profile">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="addon-wrapping">New password</span>
@@ -180,16 +180,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto col-profile">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="addon-wrappingConfirm">Confirm</span>
+                                    <span class="input-group-text" id="addon-wrappingConfirm">Confirmation</span>
                                 </div>
                                 {{ form_row(formPassword.confirmPassword, {'attr': {'class': 'form-control
                                 form-password', 'aria-describedby': 'addon-wrappingConfirm'}}) }}
                             </div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto col-profile">
                             {{ form_row(formPassword.save, {'attr': {'class': 'btn btn-primary form-control
                             btn-login'}}) }}
                         </div>

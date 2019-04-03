@@ -222,6 +222,46 @@ nav {
 }
 
 /** friend list **/
+.btn-status-friendship-container {
+    position: absolute;
+    right: 3px;
+    top: 40%;
+    display: flex;
+}
+
+.btn-status-friendship-container .btn-friendship {
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    padding: .375rem .75rem;
+    font-size: 0.80rem;
+    line-height: auto;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+
+.btn-status-friendship-container .accept {
+    background: #28a745;
+    color: #e9ecef;
+}
+
+.btn-status-friendship-container .accept:hover {
+    text-decoration: none;
+    color: #191919;
+    background-color: #ffda00;
+}
+
+.btn-status-friendship-container .refuse {
+    background: #e9ecef;
+    color: #191919;
+}
+
+.btn-status-friendship-container .refuse:hover {
+    text-decoration: none;
+    color: #ffda00;
+    background-color: #191919;
+}
+
 .filter-container {
     margin: 0 auto;
 }
@@ -239,6 +279,22 @@ nav {
 }
 
 .user-list-link:hover {
+    text-decoration: none;
+    color: #191919;
+}
+
+.user-list-link-passive {
+    text-decoration: none;
+    color: #191919;
+    display: flex;
+}
+
+.col-friend-auto {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.user-list-link-passive:hover {
     text-decoration: none;
     color: #191919;
 }
