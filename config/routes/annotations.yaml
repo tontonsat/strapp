@@ -1,3 +1,7 @@
 controllers:
     resource: ../../src/Controller/
     type: annotation
+
+mgilet_notification:
+    resource: "@MgiletNotificationBundle/Controller/"
+    prefix: /notifications

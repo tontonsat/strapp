@@ -1,0 +1,82 @@
+{% if friendships is not empty %}
+<h5 class="title-friends-container">My friends</h5>
+{% for fs in friendships %}
+{% if fs.status == 0 %}
+<div class="user-list-link" href="{{ path('home_user', {'slug': fs.user.id}) }}">
+    <div class="user-container friendship-container" data-user="{{ fs.user.id }}">
+        <div class="card user-card">
+            <div class="row no-gutters">
+                <a class="user-list-link-passive" href="{{ path('home_user', {'slug': fs.user.id}) }}">
+                    <div class="col-md-auto col-friend-auto">
+                        {% if fs.user.media is null %}
+                        <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture" class="user-card-avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ fs.user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="profile picture" class="card-img user-card-avatar">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-auto basic-info-col col-friend-auto">
+                        <div class="card-body user-info">
+                            <h6 class="card-title">{{ fs.user.name }} {{ fs.user.lastname }} </h6>
+                            @{{ fs.user.username }}
+                            <p class="card-text"><small class="text-muted">{{ fs.user.currentLocation.city }}
+                                    - {{ fs.user.currentLocation.country }}<br />
+                                    {% if fs.user.mood|length > 25 %}
+                                    {{ fs.user.mood[:25] }}...
+                                    {% endif %}
+                                    {% if fs.user.mood|length <= 25 %}
+                                    {{ fs.user    .mood }}
+                                    {% endif %}
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <div class="btn-status-friendship-container">
+                    <button class="btn btn-friendship friendship-accept" data-slug="1"
+                        data-target="{{fs.id}}">Accept</button>
+                    <button class="btn btn-friendship friendship-refuse" data-slug="0"
+                        data-target="{{fs.id}}">Decline</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if fs.status == 1 %}
+<a class="user-list-link" href="{{ path('home_user', {'slug': fs.user.id}) }}">
+    <div class="user-container friendship-container" data-user="{{ fs.user.id }}">
+        <div class="card user-card">
+            <div class="row no-gutters">
+                <div class="col-md-auto">
+                    {% if fs.user.media is null %}
+                    <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture" class="user-card-avatar">
+                    {% else %}
+                    <img src="{{ asset('uploads/avatars/' ~ fs.user.media.imageName) | imagine_filter('avatar') }}"
+                        alt="profile picture" class="card-img user-card-avatar">
+                    {% endif %}
+                </div>
+                <div class="col-md-auto basic-info-col">
+                    <div class="card-body user-info">
+                        <h6 class="card-title">{{ fs.user.name }} {{ fs.user.lastname }} </h6>
+                        @{{ fs.user.username }}
+                        ({{ fs.user.ratingWriter }}/{{ fs.user.ratingReader }})
+                        <p class="card-text"><small class="text-muted">{{ fs.user.currentLocation.city }} - {{
+                                                fs.user.currentLocation.country }}<br />
+                                {% if fs.user.mood|length > 35 %}
+                                {{ fs.user.mood[:35] }}...
+                                {% endif %}
+                                {% if fs.user.mood|length <= 35 %}
+                                {{ fs.user.mood }}
+                                {% endif %}
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+{% endif %}
+{% endfor %}
+{% endif %}

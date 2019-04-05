@@ -126,7 +126,8 @@ class UserController extends Controller
             ->where('fs.user = :currentuser AND fs.friend = :friend')
             ->setParameter('currentuser', $this->getUser()->getId())
             ->setParameter('friend', $user->getId())
-            ->getQuery()->getResult()) {
+            ->getQuery()->getResult()
+        ) {
             $isFriend = true;
         } else {
             $isFriend = false;
@@ -136,7 +137,7 @@ class UserController extends Controller
         $paginator  = $this->get('knp_paginator');
 
         $allFriendsQuery = $fsRepo->createQueryBuilder('fs')
-            ->where('fs.user = :user')
+            ->where('fs.user = :user AND fs.status = 1')
             ->setParameter('user', $user->getId())
             ->getQuery();
 
@@ -162,10 +163,77 @@ class UserController extends Controller
         $friendship1 = $this->getUser()->addFriend($friend);
         $friendship2 = $friend->addFriend($this->getUser());
 
+        $friendship1->setOrigin($this->getUser()->getId());
+        $friendship2->setOrigin($this->getUser()->getId());
+
+        $managerNotif = $this->get('mgilet.notification');
+        $url = $this->generateUrl('home_user', array('slug' => $this->getUser()->getId()));
+
+        $notif = $managerNotif->createNotification('<img src="{{ asset(\' uploads / avatars / \' ~ $this->getUser()->getMedia()->getImageName()) | imagine_filter(\' avatar \') }}"
+                            alt="profile picture" class="avatar">' . $this->getUser()->getName() . ' ' . $this->getUser()->getLastname());
+        $notif->setMessage(' sent you a friend request.');
+        $notif->setLink($url);
+
         $manager->persist($friendship1);
         $manager->persist($friendship2);
+
+        $managerNotif->addNotification([$friend], $notif, true);
+
         $manager->flush();
 
         return $this->render('user/ajaxAddFriend.html.twig');
+    }
+
+    /**
+     * @Route("/treatFriendRequest/{slug}/{state}", name="home_treatfriendrequest")
+     */
+    public function ajaxTreatFriendRequest(FriendshipRepository $repo, Request $request, ObjectManager $manager, $slug = null, $state = null): Response
+    {
+        if ($slug == null || $state == null) {
+            return $this->redirectToRoute("home_userList");
+        }
+
+        $friendship1 = $repo->findOneBy(['id' => $slug]);
+
+        $friendship2 = $repo->findOneBy(['user' => $friendship1->getFriend()->getId()]);
+
+
+        if ($state == 1) {
+            $friendship1->setStatus(1);
+            $friendship2->setStatus(1);
+
+            $managerNotif = $this->get('mgilet.notification');
+            $url = $this->generateUrl('home_user', array('slug' => $this->getUser()->getId()));
+
+            $notif = $managerNotif->createNotification('<img src="{{ asset(\' uploads / avatars / \' ~ $this->getUser()->getMedia()->getImageName()) | imagine_filter(\' avatar \') }}"
+                            alt="profile picture" class="avatar">' . $this->getUser()->getName() . ' ' . $this->getUser()->getLastname());
+            $notif->setMessage(' accepted your friend request.');
+            $notif->setLink($url);
+
+            $managerNotif->addNotification([$friendship1->getFriend()], $notif, true);
+        } elseif ($state == 0) {
+            $manager->remove($friendship1);
+            $manager->remove($friendship2);
+        }
+
+
+        $manager->flush();
+
+        return $this->render('user/ajaxTreatFriendRequest.html.twig', ['state' => $state]);
+    }
+
+    /**
+     * @Route("/updateCoord/{slug}", name="home_updatecoord")
+     */
+    public function ajaxUpdateCoord(Request $request, ObjectManager $manager, $slug = null): Response
+    {
+        if ($slug == null) {
+            return $this->redirectToRoute("home_root");
+        }
+
+        $this->getuser()->setCurrentLocation($slug);
+        $manager->flush();
+
+        return $this->render('user/ajaxUpdateCoord.html.twig');
     }
 }

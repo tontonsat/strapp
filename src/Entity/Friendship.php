@@ -38,12 +38,17 @@ class Friendship
      */
     private $status;
 
-    public function getId(): ? int
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $origin;
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDate(): ? \DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
@@ -55,31 +60,31 @@ class Friendship
         return $this;
     }
 
-    public function getUser(): ? User
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(? User $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getFriend(): ? User
+    public function getFriend(): ?User
     {
         return $this->friend;
     }
 
-    public function setFriend(? User $friend): self
+    public function setFriend(?User $friend): self
     {
         $this->friend = $friend;
 
         return $this;
     }
 
-    public function getStatus(): ? int
+    public function getStatus(): ?int
     {
         return $this->status;
     }
@@ -87,6 +92,18 @@ class Friendship
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getOrigin(): ?int
+    {
+        return $this->origin;
+    }
+
+    public function setOrigin(?int $origin): self
+    {
+        $this->origin = $origin;
 
         return $this;
     }

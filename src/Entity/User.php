@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Mgilet\NotificationBundle\Annotation\Notifiable;
+use Mgilet\NotificationBundle\NotifiableInterface;
 
 use \App\Entity\Friendship;
 
@@ -23,8 +25,9 @@ use \App\Entity\Friendship;
  *  errorPath="username",
  *  message = "username already in use.",
  * )
+ * @Notifiable(name="User")
  */
-class User implements UserInterface
+class User implements UserInterface, NotifiableInterface
 {
     /**
      * @ORM\Id()
@@ -121,12 +124,12 @@ class User implements UserInterface
         $this->friendships = new ArrayCollection();
     }
 
-    public function getId(): ? int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ? string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -138,7 +141,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLastname(): ? string
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
@@ -150,7 +153,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getEmail(): ? string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -162,7 +165,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPassword(): ? string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -174,7 +177,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getDateSignup(): ? \DateTimeInterface
+    public function getDateSignup(): ?\DateTimeInterface
     {
         return $this->dateSignup;
     }
@@ -186,7 +189,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getMood(): ? string
+    public function getMood(): ?string
     {
         return $this->mood;
     }
@@ -202,7 +205,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRatingWriter(): ? float
+    public function getRatingWriter(): ?float
     {
         return $this->ratingWriter;
     }
@@ -214,7 +217,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRatingReader(): ? float
+    public function getRatingReader(): ?float
     {
         return $this->ratingReader;
     }
@@ -226,7 +229,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUsername(): ? string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -238,7 +241,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getConfirmPassword(): ? string
+    public function getConfirmPassword(): ?string
     {
         if ($this->confirmPassword == null) {
             return $this->password;
@@ -253,7 +256,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function setRoles(? array $roles): self
+    public function setRoles(?array $roles): self
     {
         $this->roles = $roles;
 
@@ -278,7 +281,7 @@ class User implements UserInterface
         return $this->roles;
     }
 
-    public function getMedia(): ? Media
+    public function getMedia(): ?Media
     {
         return $this->Media;
     }
@@ -290,12 +293,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getCurrentLocation(): ? array
+    public function getCurrentLocation(): ?array
     {
         return $this->currentLocation;
     }
 
-    public function setCurrentLocation(? string $coord = null): self
+    public function setCurrentLocation(?string $coord = null): self
     {
         if ($coord != null) {
             $data = json_decode(file_get_contents("https://api.mapbox.com/geocoding/v5/mapbox.places/{$coord}.json?access_token=pk.eyJ1IjoidG9udG9uc2F0IiwiYSI6ImNqc25jNTIwNjA5bDc0M280dGt4ejJtNXkifQ.h_Ox7WHHtfhpQK9Qr0oTlw"));
@@ -308,12 +311,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getBio(): ? string
+    public function getBio(): ?string
     {
         return $this->bio;
     }
 
-    public function setBio(? string $bio): self
+    public function setBio(?string $bio): self
     {
         $this->bio = $bio;
 

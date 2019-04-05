@@ -7,3 +7,24 @@ $(".btn-add-friend-profile").click(function () {
         }
     });
 });
+
+$(document).on('click', '.btn-friendship', function () {
+    $.ajax({
+        url: '/treatFriendRequest/' + $(".btn-friendship").data('target') + '/' + $(".btn-friendship").data('slug'),
+        type: 'GET',
+        success: function (result) {
+            $(".main-flash-container").html(result)
+            updateFrienships()
+        }
+    });
+});
+
+var updateFrienships = () => {
+    $.ajax({
+        url: '/ajaxListUser/' + $(".ajax-filter").data('path'),
+        type: 'GET',
+        success: function (result) {
+            $(".ajax-user-list").html(result)
+        }
+    });
+}

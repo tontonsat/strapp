@@ -3,47 +3,47 @@
 {% block title %}Users list - Strapp.xyz{% endblock %}
 {% block body %}
 <main role="main" class="container-fluid main-content">
-    <div class="filter-container">
+    <div class="filter-container text-center">
         <div class="btn-group filter-user-grp" role="group" aria-label="Basic example">
-            <a class="btn btn-primary btn-standard{% if filter == 'mine' %}-active{% endif %}"
-                href="{{ path('home_listuser', {'slug': 'mine'}) }}">Friends</a>
-            <a class="btn btn-primary btn-standard{% if filter == 'local' %}-active{% endif %}"
-                href="{{ path('home_listuser', {'slug': 'local'}) }}">Nearby</a>
-            <a class="btn btn-primary btn-standard{% if filter == 'global' %}-active{% endif %}"
-                href="{{ path('home_listuser', {'slug': 'global'}) }}">All</a>
+            <a class="btn btn-primary ajax-filter btn-standard{% if filter == 'mine' %}-active ajax-filter
+                 {% endif %}" data-path="mine" href="{{ path('home_listuser', {'slug': 'mine'}) }}">Friends</a>
+            <a class="btn btn-primary btn-standard{% if filter == 'local' %}-active ajax-filter 
+                {% endif %}" data-path="local" href="{{ path('home_listuser', {'slug': 'local'}) }}">Nearby</a>
+            <a class="btn btn-primary btn-standard{% if filter == 'global' %}-active ajax-filter 
+                {% endif %}" data-path="global" href="{{ path('home_listuser', {'slug': 'global'}) }}">All</a>
         </div>
     </div>
-    <div class="row user-list-row">
+    <div class="row user-list-row main-flash-container"></div>
+    <div class="row user-list-row ajax-user-list">
         {% if friendships is not empty %}
         <h5 class="title-friends-container">My friends</h5>
         {% for fs in friendships %}
-        {% if fs.status == 0 %}
-        <div class="user-list-link" href="{{ path('home_user', {'slug': fs.friend.id}) }}">
-            <div class="user-container friendship-container" data-user="{{ fs.friend.id }}">
+        {% if fs.status == 0 and fs.origin != app.user.id %}
+        <div class="user-list-link" href="{{ path('home_user', {'slug': fs.user.id}) }}">
+            <div class="user-container friendship-container" data-user="{{ fs.user.id }}">
                 <div class="card user-card">
                     <div class="row no-gutters">
-                        <a class="user-list-link-passive" href="{{ path('home_user', {'slug': fs.friend.id}) }}">
+                        <a class="user-list-link-passive" href="{{ path('home_user', {'slug': fs.user.id}) }}">
                             <div class="col-md-auto col-friend-auto">
-                                {% if fs.friend.media is null %}
+                                {% if fs.user.media is null %}
                                 <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture"
                                     class="user-card-avatar">
                                 {% else %}
-                                <img src="{{ asset('uploads/avatars/' ~ fs.friend.media.imageName) | imagine_filter('avatar') }}"
+                                <img src="{{ asset('uploads/avatars/' ~ fs.user.media.imageName) | imagine_filter('avatar') }}"
                                     alt="profile picture" class="card-img user-card-avatar">
                                 {% endif %}
                             </div>
                             <div class="col-md-auto basic-info-col col-friend-auto">
                                 <div class="card-body user-info">
-                                    <h6 class="card-title">{{ fs.friend.name }} {{ fs.friend.lastname }} </h6>
-                                    @{{ fs.friend.username }}
-                                    ({{ fs.friend.ratingWriter }}/{{ fs.friend.ratingReader }})
-                                    <p class="card-text"><small class="text-muted">{{ fs.friend.currentLocation.city }}
-                                            - {{ fs.friend.currentLocation.country }}<br />
-                                            {% if fs.friend.mood|length > 25 %}
-                                            {{ fs.friend.mood[:25] }}...
+                                    <h6 class="card-title">{{ fs.user.name }} {{ fs.user.lastname }} </h6>
+                                    @{{ fs.user.username }}
+                                    <p class="card-text"><small class="text-muted">{{ fs.user.currentLocation.city }}
+                                            - {{ fs.user.currentLocation.country }}<br />
+                                            {% if fs.user.mood|length > 25 %}
+                                            {{ fs.user.mood[:25] }}...
                                             {% endif %}
-                                            {% if fs.friend.mood|length <= 25 %}
-                                            {{ fs.friend.mood }}
+                                            {% if fs.user.mood|length <= 25 %}
+                                            {{ fs.user    .mood }}
                                             {% endif %}
                                         </small>
                                     </p>
@@ -51,8 +51,10 @@
                             </div>
                         </a>
                         <div class="btn-status-friendship-container">
-                            <a href="" class="btn-friendship accept">Accept</a>
-                            <a href="" class="btn-friendship refuse">Decline</a>
+                            <button class="btn btn-friendship friendship-accept" data-slug="1"
+                                data-target="{{fs.id}}">Accept</button>
+                            <button class="btn btn-friendship friendship-refuse" data-slug="0"
+                                data-target="{{fs.id}}">Decline</button>
                         </div>
                     </div>
                 </div>
@@ -60,31 +62,31 @@
         </div>
         {% endif %}
         {% if fs.status == 1 %}
-        <a class="user-list-link" href="{{ path('home_user', {'slug': fs.friend.id}) }}">
-            <div class="user-container friendship-container" data-user="{{ fs.friend.id }}">
+        <a class="user-list-link" href="{{ path('home_user', {'slug': fs.user.id}) }}">
+            <div class="user-container friendship-container" data-user="{{ fs.user.id }}">
                 <div class="card user-card">
                     <div class="row no-gutters">
                         <div class="col-md-auto">
-                            {% if fs.friend.media is null %}
+                            {% if fs.user.media is null %}
                             <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture"
                                 class="user-card-avatar">
                             {% else %}
-                            <img src="{{ asset('uploads/avatars/' ~ fs.friend.media.imageName) | imagine_filter('avatar') }}"
+                            <img src="{{ asset('uploads/avatars/' ~ fs.user.media.imageName) | imagine_filter('avatar') }}"
                                 alt="profile picture" class="card-img user-card-avatar">
                             {% endif %}
                         </div>
                         <div class="col-md-auto basic-info-col">
                             <div class="card-body user-info">
-                                <h6 class="card-title">{{ fs.friend.name }} {{ fs.friend.lastname }} </h6>
-                                @{{ fs.friend.username }}
-                                ({{ fs.friend.ratingWriter }}/{{ fs.friend.ratingReader }})
-                                <p class="card-text"><small class="text-muted">{{ fs.friend.currentLocation.city }} - {{
-                                                fs.friend.currentLocation.country }}<br />
-                                        {% if fs.friend.mood|length > 35 %}
-                                        {{ fs.friend.mood[:35] }}...
+                                <h6 class="card-title">{{ fs.user.name }} {{ fs.user.lastname }} </h6>
+                                @{{ fs.user.username }}
+                                ({{ fs.user.ratingWriter }}/{{ fs.user.ratingReader }})
+                                <p class="card-text"><small class="text-muted">{{ fs.user.currentLocation.city }} - {{
+                                                fs.user.currentLocation.country }}<br />
+                                        {% if fs.user.mood|length > 35 %}
+                                        {{ fs.user.mood[:35] }}...
                                         {% endif %}
-                                        {% if fs.friend.mood|length <= 35 %}
-                                        {{ fs.friend.mood }}
+                                        {% if fs.user.mood|length <= 35 %}
+                                        {{ fs.user.mood }}
                                         {% endif %}
                                     </small>
                                 </p>
@@ -104,8 +106,8 @@
 </main>
 {% endblock %}
 {% block javascripts %}
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
@@ -116,4 +118,5 @@
 <script src={{ asset("js/ui.js") }}></script>
 <script src={{ asset("js/locateMe.js") }}></script>
 <script src={{ asset("ajax/userList.js") }}></script>
+<script src={{ asset("js/friendlyAjax.js") }}></script>
 {% endblock %}

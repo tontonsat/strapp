@@ -139,6 +139,34 @@ nav {
     border-top: 1px solid #ffda00;
 }
 
+/** nav notif */
+.nav-notif-show {
+    margin-left: -447px;
+    font-family: 'Playfair Display', serif;
+}
+
+.nav-notif-show a {
+    font-family: 'Playfair Display', serif;
+}
+
+.nav-notif-counter {
+    font-size: 0.6rem;
+    background: red;
+    color: #ffffff;
+    padding: 0px 2px;
+    position: absolute;
+    margin-left: -3px;
+    border-radius: 3px;
+}
+
+.notif-counted {
+    color: #e9ecef;
+}
+
+.notif-menu-item {
+    color: #ffda00;
+}
+
 /** forms **/
 .input-group-text {
     background: #ffda00;
@@ -214,6 +242,8 @@ nav {
 .bio-update-submit {
     cursor: pointer;
     width: 5%;
+    margin-left: -2px;
+    z-index: auto;
 }
 
 .bio-update-submit span:hover {
@@ -238,26 +268,25 @@ nav {
     line-height: auto;
     -webkit-transition: .3s ease-in-out;
     transition: .3s ease-in-out;
+    box-shadow: none;
 }
 
-.btn-status-friendship-container .accept {
+.btn-status-friendship-container .friendship-accept {
     background: #28a745;
     color: #e9ecef;
 }
 
-.btn-status-friendship-container .accept:hover {
-    text-decoration: none;
+.btn-status-friendship-container .friendship-accept:hover {
     color: #191919;
     background-color: #ffda00;
 }
 
-.btn-status-friendship-container .refuse {
+.btn-status-friendship-container .friendship-refuse {
     background: #e9ecef;
     color: #191919;
 }
 
-.btn-status-friendship-container .refuse:hover {
-    text-decoration: none;
+.btn-status-friendship-container .friendship-refuse:hover {
     color: #ffda00;
     background-color: #191919;
 }
@@ -318,6 +347,7 @@ nav {
 
 .user-card {
     height: 122px;
+    width: 100%;
     -webkit-transition: .3s ease-in-out;
     transition: .3s ease-in-out;
 }
@@ -384,6 +414,7 @@ nav {
 
 .title-friends-container {
     width: 100%;
+    padding-left: 10px;
 }
 
 .user-friend-list-item {
@@ -399,6 +430,7 @@ nav {
     color: #ffda00;
     width: 100%;
     background: rgba(0, 0, 0, 0.3);
+    word-wrap: break-word;
 }
 
 .user-friend-list-item-media {
@@ -419,4 +451,8 @@ nav {
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+.profile-bio {
+    height: auto;
 }

@@ -15,8 +15,8 @@
     <div class="row profile-card">
         <div class="col col-profile">
             <div class="card user-card title-card">
-                <div class="row no-gutters">
-                    <div class="col-md-auto">
+                <div class="row no-gutters col-profile-resp">
+                    <div class="col-md-auto profile-media-resp">
                         {% if app.user.media is null %}
                         <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture"
                             class="card-img user-card-avatar">
@@ -27,10 +27,7 @@
                     </div>
                     <div class="col">
                         <div class="card-body user-info">
-                            <h5 class="card-title">{{ app.user.name }} {{ app.user.lastname }} <span
-                                    class="badge badge-pill badge-rating-writer">{{ app.user.ratingWriter }}</span>
-                                <span class="badge badge-pill badge-rating-reader">{{ app.user.ratingReader }}</span>
-                            </h5>
+                            <h5 class="card-title">{{ app.user.name }} {{ app.user.lastname }}</h5>
                             <p class="card-text"><small class="text-muted muted-mood">
                                     {{ form_start(updateCoord) }}
                                     {{ form_row(updateCoord.coord) }}
@@ -218,8 +215,8 @@
 {% endblock %}
 
 {% block javascripts %}
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">

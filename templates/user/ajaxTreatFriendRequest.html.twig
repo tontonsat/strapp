@@ -1,0 +1,10 @@
+<div class="alert alert-dismissible alert-success main-alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <i class="fas fa-user-circle"></i>
+    {% if state == 1 %}
+    Friend request accepted
+    {% endif %}
+    {% if state == 2 %}
+    Friend request ignored
+    {% endif %}
+</div>

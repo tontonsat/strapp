@@ -113,8 +113,17 @@ body {
 }
 
 /** alerts **/
+.main-flash-container {
+    margin-left: 0px;
+}
+
 .main-alert {
     color: #191919;
     background: #ffda00;
     margin-top: 5px;
+}
+
+.main-row-alert {
+    width: 100%;
+    text-align: center;
 }

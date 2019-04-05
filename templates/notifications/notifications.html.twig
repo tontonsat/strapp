@@ -1,0 +1,23 @@
+{% if notificationList|length > 0 %}
+<form
+    action="{{ mgilet_notification_generate_path('notification_mark_all_as_seen', notificationList|first.notifiableEntity) }}"
+    method="post">
+    <button type="submit" class="notif-menu-item">Mark all as seen</button>
+</form>
+{% endif %}
+{% for item in notificationList %}
+<a class="dropdown-item notif-menu-item" href="#">{% if item.seen == 0 %}
+    <i class="fas fa-circle"></i>
+    {% endif %} {{ item.notification }}
+    <form
+        action="{{ mgilet_notification_generate_path('notification_mark_as_seen', item.notifiableEntity, item.notification) }}"
+        method="post">
+        <button type="submit" class="notif-menu-item">Mark as seen</button>
+    </form>
+    <form
+        action="{{ mgilet_notification_generate_path('notification_mark_as_unseen', item.notifiableEntity, item.notification) }}"
+        method="post">
+        <button type="submit" class="notif-menu-item">Mark as unseen</button>
+    </form>
+    <div class="dropdown-divider"></div>
+    {% endfor %}

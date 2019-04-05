@@ -3,14 +3,14 @@
 {% block title %}Users list - Strapp.xyz{% endblock %}
 {% block body %}
 <main role="main" class="container-fluid main-content">
-    <div class="filter-container">
+    <div class="filter-container text-center">
         <div class="btn-group filter-user-grp" role="group" aria-label="Basic example">
-            <a class="btn btn-primary btn-standard{% if filter == 'mine' %}-active{% endif %}"
-                href="{{ path('home_listuser', {'slug': 'mine'}) }}">Friends</a>
-            <a class="btn btn-primary btn-standard{% if filter == 'local' %}-active{% endif %}"
-                href="{{ path('home_listuser', {'slug': 'local'}) }}">Nearby</a>
-            <a class="btn btn-primary btn-standard{% if filter == 'global' %}-active{% endif %}"
-                href="{{ path('home_listuser', {'slug': 'global'}) }}">All</a>
+            <a class="btn btn-primary btn-standard{% if filter == 'mine' %}-active ajax-filter{% endif %}"
+                data-path="mine" href=" {{ path('home_listuser', {'slug': 'mine'}) }}">Friends</a>
+            <a class="btn btn-primary btn-standard{% if filter == 'local' %}-active ajax-filter{% endif %}"
+                data-path="local" href="{{ path('home_listuser', {'slug': 'local'}) }}">Nearby</a>
+            <a class="btn btn-primary btn-standard{% if filter == 'global' %}-active ajax-filter 
+                {% endif %}" data-path="global" href="{{ path('home_listuser', {'slug': 'global'}) }}">All</a>
         </div>
     </div>
     <div class="row user-list-row">
@@ -56,8 +56,8 @@
 </main>
 {% endblock %}
 {% block javascripts %}
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">

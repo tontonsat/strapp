@@ -21,16 +21,12 @@
                             <h5 class="card-title">{{ user.name }} {{ user.lastname }} @{{ user.username }} <span
                                     class="badge badge-pill badge-rating-writer">{{ user.ratingWriter }}</span> <span
                                     class="badge badge-pill badge-rating-reader">{{ user.ratingReader }}</span></h5>
-                            <p class="card-text">
-                                <small class="text-muted muted-mood">
-                                    {{ user.currentLocation.city }} - {{ user.currentLocation.country }}
-                                </small>
-                            </p>
-                            <p class="card-text">
-                                <small class="text-muted muted-mood">
-                                    {{ user.mood }}
-                                </small>
-                            </p>
+                            <small class="text-muted muted-mood">
+                                {{ user.currentLocation.city }} - {{ user.currentLocation.country }}
+                            </small><br />
+                            <small class="text-muted muted-mood">
+                                {{ user.mood }}
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -40,15 +36,12 @@
                 <button class="btn btn-primary btn-standard btn-add-friend-profile" data-target="{{ user.id }}"><i
                         class="fas fa-user-plus"></i> Add
                     friend</button>
-                <a class="btn btn-primary btn-standard" href="{{ path('home_addFriend', {'slug': user.id }) }}"
-                    data-target="{{ user.id }}"><i class="fas fa-user-plus"></i> Add
-                    friend</a>
             </div>
             {% endif %}
         </div>
         <div class="col col-profile">
-            <div class="row profile-card">
-                <div class="card user-card">
+            <div class="row profile-card profile-row-card">
+                <div class="card user-card profile-bio">
                     <div class="card-body">
                         <h3 class="h3">Bio</h3>
                         {% if user.bio %}
@@ -60,7 +53,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row profile-card">
+            <div class="row profile-card profile-row-card">
                 <div class="user-friend-container">
                     <h5 class="title-friends-container">Friends of {{ user.name }} {{ user.lastname }}</h5>
                     {% for fs in friends %}
@@ -73,8 +66,8 @@
                             <img src="{{ asset('uploads/avatars/' ~ fs.friend.media.imageName) | imagine_filter('avatar') }}"
                                 alt="profile picture" class="user-friend-list-item-media">
                             {% endif %}
-                            <div class="user-friend-thumbnail-text text-center">
-                                @{{fs.friend.username}}
+                            <div class="user-friend-thumbnail-text">
+                                {{fs.friend.name}} {{fs.friend.lastname}}
                             </div>
                         </div>
                     </a>
@@ -86,10 +79,10 @@
         </div>
     </div>
     <div class="row profile-card">
-        <div class="col col-profile"></div>
         <div class="col col-profile">
+            <div class="col col-profile">
+            </div>
         </div>
-    </div>
 </main>
 {% endblock %}
 {% block javascripts %}

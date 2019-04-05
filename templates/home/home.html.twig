@@ -2,16 +2,10 @@
 
 {% block title %}Home - Strapp.xyz{% endblock %}
 {% block body %}
-        <div class="col main-content">
-            {{ form_start(updateCoord) }} 
-                {{ form_row(updateCoord.coord) }}
-                {{ form_row(updateCoord.submit, {'attr': {'class': 'btn btn-success form-control btn-login'}}) }}
-            {{ form_end(updateCoord) }}            
-            {% for message in app.flashes('notice-coord') %}
-                <div class="alert alert-dismissible alert-success main-alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <i class="fas fa-user-circle"></i> {{ message }}
-                </div>
-            {% endfor %}
-        </div>
+<main class="container-fluid main-content">
+    <div class="row user-list-row main-flash-container">
+        <button href="" class="btn btn-standard form-control updateCoordBtn"><i class="fas fa-map-marker-alt"></i>
+            Update location</button>
+    </div>
+</main>
 {% endblock %}
