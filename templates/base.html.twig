@@ -55,7 +55,7 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-menu nav-notif-show" aria-labelledby="navbarDropdownMenuLink">
-                        {{ mgilet_notification_render(app.user ,{'seen': true, 'template': '/notifications/notifications.html.twig' }) }}
+                        {{ mgilet_notification_render(app.user ,{'seen': true, 'template': '/notifications/notifications.html.twig', 'order': 'DESC' }) }}
                     </div>
                 </li>
                 <li class="nav-item dropdown">

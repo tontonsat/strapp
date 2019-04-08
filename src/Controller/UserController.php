@@ -169,9 +169,8 @@ class UserController extends Controller
         $managerNotif = $this->get('mgilet.notification');
         $url = $this->generateUrl('home_user', array('slug' => $this->getUser()->getId()));
 
-        $notif = $managerNotif->createNotification('<img src="{{ asset(\' uploads / avatars / \' ~ $this->getUser()->getMedia()->getImageName()) | imagine_filter(\' avatar \') }}"
-                            alt="profile picture" class="avatar">' . $this->getUser()->getName() . ' ' . $this->getUser()->getLastname());
-        $notif->setMessage(' sent you a friend request.');
+        $notif = $managerNotif->createNotification($this->getUser()->getName() . ' ' . $this->getUser()->getLastname());
+        $notif->setMessage('sent you a friend request.');
         $notif->setLink($url);
 
         $manager->persist($friendship1);
@@ -205,17 +204,15 @@ class UserController extends Controller
             $managerNotif = $this->get('mgilet.notification');
             $url = $this->generateUrl('home_user', array('slug' => $this->getUser()->getId()));
 
-            $notif = $managerNotif->createNotification('<img src="{{ asset(\' uploads / avatars / \' ~ $this->getUser()->getMedia()->getImageName()) | imagine_filter(\' avatar \') }}"
-                            alt="profile picture" class="avatar">' . $this->getUser()->getName() . ' ' . $this->getUser()->getLastname());
-            $notif->setMessage(' accepted your friend request.');
+            $notif = $managerNotif->createNotification($this->getUser()->getName() . ' ' . $this->getUser()->getLastname());
+            $notif->setMessage('accepted your friend request.');
             $notif->setLink($url);
 
-            $managerNotif->addNotification([$friendship1->getFriend()], $notif, true);
+            $managerNotif->addNotification([$friendship2->getFriend()], $notif, true);
         } elseif ($state == 0) {
             $manager->remove($friendship1);
             $manager->remove($friendship2);
         }
-
 
         $manager->flush();
 

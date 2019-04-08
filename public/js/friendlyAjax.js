@@ -10,7 +10,7 @@ $(".btn-add-friend-profile").click(function () {
 
 $(document).on('click', '.btn-friendship', function () {
     $.ajax({
-        url: '/treatFriendRequest/' + $(".btn-friendship").data('target') + '/' + $(".btn-friendship").data('slug'),
+        url: '/treatFriendRequest/' + $(this).data('target') + '/' + $(this).data('slug'),
         type: 'GET',
         success: function (result) {
             $(".main-flash-container").html(result)
