@@ -44,7 +44,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Messages</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown dropdown-notif-update">
                     <a class="nav-link nav-notif-title" href="#" id="navbarDropdownMenuLink" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {% if mgilet_notification_unseen_count(app.user) == 0 %}
@@ -55,7 +55,9 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-menu nav-notif-show" aria-labelledby="navbarDropdownMenuLink">
-                        {{ mgilet_notification_render(app.user ,{'seen': true, 'template': '/notifications/notifications.html.twig', 'order': 'DESC' }) }}
+                        <div class="spinner-container">
+                            <i class="fas fa-compass fa-spin"></i>
+                        </div>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -102,6 +104,7 @@
     </script>
     <script src={{ asset("js/ui.js") }}></script>
     <script src={{ asset("js/locateMe.js") }}></script>
+    <script src={{ asset("ajax/notification.js") }}></script>
     {% endblock %}
 </body>
 

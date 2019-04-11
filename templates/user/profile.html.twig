@@ -38,6 +38,14 @@
                     friend</button>
             </div>
             {% endif %}
+            {% if isFriend == true and friendship[0].status == 0 and friendship[0].origin != app.user.id %}
+            <div class="btn-status-friendship-container-profile">
+                <button class="btn btn-primary btn-standard btn-friendship-profile friendship-accept" data-slug="1"
+                    data-target="{{friendship[0].id}}">Accept</button>
+                <button class="btn btn-primary btn-standard btn-friendship-profile friendship-refuse" data-slug="0"
+                    data-target="{{friendship[0].id}}">Decline</button>
+            </div>
+            {% endif %}
         </div>
         <div class="col col-profile">
             <div class="row profile-card profile-row-card">
@@ -96,5 +104,6 @@
 </script>
 <script src={{ asset("js/ui.js") }}></script>
 <script src={{ asset("js/locateMe.js") }}></script>
-<script src={{ asset("js/friendlyAjax.js") }}></script>
+<script src={{ asset("ajax/friendlyAjax.js") }}></script>
+<script src={{ asset("ajax/notification.js") }}></script>
 {% endblock %}

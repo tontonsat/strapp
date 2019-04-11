@@ -1,12 +1,13 @@
 {% if notificationList|length > 0 %}
-<span class='text-muted'><a
-        href="{{ mgilet_notification_generate_path('notification_mark_all_as_seen', notificationList|first.notifiableEntity) }}">Mark
-        all as seen</a></span>
+<span class='text-muted'><a href="#" class="notif-data-clear"
+                data-clear="{{ mgilet_notification_generate_path('notification_mark_all_as_seen', notificationList|first.notifiableEntity) }}">Mark
+                all as seen</a></span>
 {% endif %}
 {% for item in notificationList %}
 <a class="dropdown-item notif-menu-item {% if item.seen == 0 %}notif-seen{% endif %}"
-    href="{{ mgilet_notification_generate_path('notification_mark_as_seen', item.notifiableEntity, item.notification) }}">
-    <span class="notif-title">{{ item.notification.subject }}</span> {{ item.notification.message }}<br /><span
-        class="text-muted">{{ item.notification.date|date('H:i d/m/Y') }}</span>
+        href="{{ item.notification.link }}">
+        <span class="notif-title">{{ item.notification.subject }}</span>
+        {{ item.notification.message }}<br /><span
+                class="text-muted">{{ item.notification.date|date('H:i d/m/Y') }}</span>
 </a>
 {% endfor %}

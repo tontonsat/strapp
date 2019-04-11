@@ -121,8 +121,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $fsRepo = $em->getRepository(Friendship::class);
 
-        if ($isFriendQuery = $fsRepo->createQueryBuilder('fs')
-            ->select('fs.id')
+        if ($friendship = $fsRepo->createQueryBuilder('fs')
             ->where('fs.user = :currentuser AND fs.friend = :friend')
             ->setParameter('currentuser', $this->getUser()->getId())
             ->setParameter('friend', $user->getId())
@@ -132,7 +131,6 @@ class UserController extends Controller
         } else {
             $isFriend = false;
         }
-
         /* @var $paginator \Knp\Component\Pager\Paginator */
         $paginator  = $this->get('knp_paginator');
 
@@ -146,7 +144,8 @@ class UserController extends Controller
         return $this->render('user/profile.html.twig', [
             'user'   => $user,
             'isFriend' => $isFriend,
-            'friends' => $friends
+            'friends' => $friends,
+            'friendship' => $friendship
         ]);
     }
 
@@ -198,8 +197,9 @@ class UserController extends Controller
 
 
         if ($state == 1) {
-            $friendship1->setStatus(1);
-            $friendship2->setStatus(1);
+            $date = new \Datetime();
+            $friendship1->setStatus(1)->setDate($date);
+            $friendship2->setStatus(1)->setDate($date);
 
             $managerNotif = $this->get('mgilet.notification');
             $url = $this->generateUrl('home_user', array('slug' => $this->getUser()->getId()));
@@ -208,7 +208,7 @@ class UserController extends Controller
             $notif->setMessage('accepted your friend request.');
             $notif->setLink($url);
 
-            $managerNotif->addNotification([$friendship2->getFriend()], $notif, true);
+            $managerNotif->addNotification([$friendship1->getFriend()], $notif, true);
         } elseif ($state == 0) {
             $manager->remove($friendship1);
             $manager->remove($friendship2);

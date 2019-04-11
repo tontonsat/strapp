@@ -25,21 +25,23 @@ class SecurityController extends AbstractController
      * @param  ObjectManager $manager
      * @return [type]                 [description]
      */
-    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, LoggerInterface $logger) {
+    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, LoggerInterface $logger)
+    {
 
-        if(!$this->getUser()) {
+        if (!$this->getUser()) {
             $user = new User();
-        }
-        else {
+        } else {
             return $this->redirectToRoute('home');
         }
 
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $coord = $request->request->get('registration')['coord'];
+            $name = ucfirst($request->request->get('registration')['name']);
+            $lastname = ucfirst($request->request->get('registration')['lastname']);
 
             $encoded = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($encoded)
@@ -48,18 +50,18 @@ class SecurityController extends AbstractController
                 ->setMood('I like trains')
                 ->setBio('Bio - I am a lovely turtle and I like big trains.')
                 ->setRatingWriter(0)
+                ->setName($name)
+                ->setLastname($lastname)
                 ->setRatingReader(0);
-
-            $logger->info("User register ok: ". $user->getUsername());
 
             $manager->persist($user);
             $manager->flush();
 
-            $this->addFlash('notice','Inscription ok!');
+            $this->addFlash('notice', 'Inscription ok!');
             return $this->redirectToRoute("home_root");
         }
 
-        return $this->render('security/register.html.twig',[
+        return $this->render('security/register.html.twig', [
             'controller_name'   => 'SecurityController',
             'user'              => $user,
             'formUser'          => $form->createView()
@@ -71,11 +73,12 @@ class SecurityController extends AbstractController
      * @return [type] [description]
      * @Route("/login", name="security_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils) : Response {
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
         // get the login error if there is one
         $errors = $authenticationUtils->getLastAuthenticationError();
-        return $this->render('home/index.html.twig',[
-                            'errors' => $errors
+        return $this->render('home/index.html.twig', [
+            'errors' => $errors
         ]);
     }
 
@@ -84,5 +87,6 @@ class SecurityController extends AbstractController
      * @return [type] [description]
      * @Route("/logout", name="security_logout")
      */
-    public function logout() {}
+    public function logout()
+    { }
 }

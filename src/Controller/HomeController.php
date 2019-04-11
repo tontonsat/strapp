@@ -71,7 +71,6 @@ class HomeController extends Controller
                 ->select('IDENTITY(fs.friend)')
                 ->where('fs.user = :currentuser')
                 ->setParameter('currentuser', $this->getUser()->getId());
-            dump($myFriends->getQuery()->getResult());
 
             if ($slug == 'local') {
                 $allUsersQuery = $userRepo->createQueryBuilder('u')
@@ -80,12 +79,14 @@ class HomeController extends Controller
                     ->andWhere($myFriends->expr()->notIn('u.id', $myFriends->getDQL()))
                     ->setParameter('city', '%' . $currentUserCity . '%')
                     ->setParameter('currentuser', $this->getUser()->getId())
+                    ->orderBy('u.id', 'DESC')
                     ->getQuery();
             } elseif ($slug == 'global') {
                 $allUsersQuery = $userRepo->createQueryBuilder('u')
                     ->where('u.id != :currentuser')
                     ->andWhere($myFriends->expr()->notIn('u.id', $myFriends->getDQL()))
                     ->setParameter('currentuser', $this->getUser()->getId())
+                    ->orderBy('u.id', 'DESC')
                     ->getQuery();
             }
 
@@ -162,5 +163,21 @@ class HomeController extends Controller
                 'filter' => $slug
             ]);
         }
+    }
+
+    /**
+     * @route("/ajaxListNotif", name="home_ajaxlistnotif")
+     */
+    public function ajaxListNotif(Request $request)
+    {
+        return $this->render('home/ajaxListNotif.html.twig');
+    }
+
+    /**
+     * @route("/ajaxGetCounter", name="home_ajaxgetcounter")
+     */
+    public function ajaxGetCounter(Request $request)
+    {
+        return $this->render('home/ajaxCountNotif.html.twig');
     }
 }

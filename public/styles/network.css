@@ -102,7 +102,6 @@ nav {
 .progress-bar-writer {
     background: #ffda00;
     color: #191919;
-    height:
 }
 
 .progress-bar-reader {
@@ -139,6 +138,7 @@ nav {
 /** nav notif */
 .nav-notif-show::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px #ffda00;
+    box-shadow: inset 0 0 6px #ffda00;
     background-color: #ffda00;
 }
 
@@ -150,6 +150,11 @@ nav {
 .nav-notif-show::-webkit-scrollbar-thumb {
     background-color: #000000;
     border: 2px solid #191919;
+}
+
+.spinner-container {
+    text-align: center;
+    font-size: 1.2rem;
 }
 
 .notif-title {
@@ -442,6 +447,22 @@ nav {
     flex-flow: row wrap;
     background-color: #ffffff;
     padding: 5px;
+}
+
+.btn-status-friendship-container-profile {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 5px;
+}
+
+.btn-status-friendship-container-profile .friendship-accept {
+    width: 49%;
+    margin: auto;
+}
+
+.btn-status-friendship-container-profile .friendship-refuse {
+    margin: auto;
+    width: 49%;
 }
 
 .title-friends-container {

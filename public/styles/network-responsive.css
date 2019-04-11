@@ -98,4 +98,9 @@
     #map {
         height: 100%;
     }
+
+    /* notifs menu */
+    .nav-notif-show {
+        margin-left: 0;
+    }
 }

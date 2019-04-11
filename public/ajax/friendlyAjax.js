@@ -7,7 +7,7 @@ $(".btn-add-friend-profile").click(function () {
         }
     });
 });
-
+/* list user behavior */
 $(document).on('click', '.btn-friendship', function () {
     $.ajax({
         url: '/treatFriendRequest/' + $(this).data('target') + '/' + $(this).data('slug'),
@@ -15,6 +15,16 @@ $(document).on('click', '.btn-friendship', function () {
         success: function (result) {
             $(".main-flash-container").html(result)
             updateFrienships()
+        }
+    });
+});
+/* profile behavior */
+$(document).on('click', '.btn-friendship-profile', function () {
+    $.ajax({
+        url: '/treatFriendRequest/' + $(this).data('target') + '/' + $(this).data('slug'),
+        type: 'GET',
+        success: function (result) {
+            $(".btn-status-friendship-container-profile").html(result)
         }
     });
 });
