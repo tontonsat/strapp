@@ -27,7 +27,13 @@ nav {
     background: #191919;
     color: #ffda00;
 }
-
+.settings-nav-dropdown {
+    left: auto;
+    right: 0;
+}
+.settings-nav-dropdown .dropdown-item {
+    font-size: .85rem;
+}
 .homeBtn {
     color: #ffda00;
     transition: color .2s ease;
@@ -39,11 +45,6 @@ nav {
 .homeBtn:hover {
     color: #e9ecef;
     text-decoration: none;
-}
-
-.nav-link {
-    padding-right: 0.5rem !important;
-    padding-left: 0.5rem !important;
 }
 
 .homeBtn h1 {
@@ -63,9 +64,11 @@ nav {
     height: 25px;
     border-radius: 20px;
 }
-
+.nav-item .nav-name {
+    font-size: .85rem;
+}
 .nav-item .avatar:hover {
-    box-shadow: 0 0 0px 2px #ffda00;
+    box-shadow: 0 0 0px 1px #ffda00;
 }
 
 .profile-card .info {
@@ -87,11 +90,11 @@ nav {
 
 .nav-item {
     transition: 0.2s;
-    border-bottom: 1px solid #191919;
+    border-radius: 5px;
 }
 
 .nav-item:hover {
-    border-bottom: 1px solid #ffda00;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .item-avatar:hover {
@@ -339,6 +342,7 @@ nav {
 
 .filter-user-grp {
     margin: 0 auto;
+    width: 100%;
 }
 
 .user-list-link {

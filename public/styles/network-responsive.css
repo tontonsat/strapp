@@ -110,3 +110,16 @@
         box-shadow: none;
     }
 }
+/** main-nav not responsive */
+@media screen and (min-width: 700px) {
+    .main-content {
+        padding-top: 3.2rem;
+    }
+    .main-nav {
+        padding: 0 .9rem;
+    }
+
+    .main-nav .nav-link {
+        padding: 0 .55rem !important;
+    }
+}

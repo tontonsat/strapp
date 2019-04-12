@@ -27,22 +27,28 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
             <ul class="navbar-nav main-nav d-flex flex-sm-row flex-column text-center ">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('home_myprofile') }}">Profile</a>
+                    <a class="nav-link" href="{{ path('home_myprofile') }}">
+                        {% if app.user.media is null %}
+                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="profile picture" class="avatar">
+                        {% endif %} <span class="nav-name">{{ app.user.name }}</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Map</a>
+                    <a class="nav-link" href="#"><i class="fas fa-map"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Feed</a>
+                    <a class="nav-link" href="#"><i class="fas fa-newspaper"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Tracking</a>
+                    <a class="nav-link" href="#"><i class="far fa-star"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('home_listuser') }}">Friends</a>
+                    <a class="nav-link" href="{{ path('home_listuser') }}"><i class="fas fa-user-friends"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Messages</a>
+                    <a class="nav-link" href="#"><i class="fas fa-comment-dots"></i></a>
                 </li>
                 <li class="nav-item dropdown dropdown-notif-update">
                     <a class="nav-link nav-notif-title" href="#" id="navbarDropdownMenuLink" role="button"
@@ -63,15 +69,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ app.user.name }}
-                        {% if app.user.media is null %}
-                        <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="profile picture" class="avatar">
-                        {% else %}
-                        <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}"
-                            alt="profile picture" class="avatar">
-                        {% endif %}
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu settings-nav-dropdown" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{ path('home_myprofile') }}">
                             {% if app.user.media is null %}
                             <img src="uploads/avatars/0.jpg" alt="profile picture" class="avatar">
@@ -79,7 +78,7 @@
                             <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}"
                                 alt="profile picture" class="avatar">
                             {% endif %}Profile</a>
-                        <a class="dropdown-item" href="#">Settings</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-sliders-h"></i> Settings</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ path('security_logout') }}">Logout</a>
                     </div>
