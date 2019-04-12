@@ -4,6 +4,9 @@
     padding-top: 4rem;
     min-height: 100vh;
 }
+.container-fluid .refresh-pos-home-btn {
+    margin-left: -15px;
+}
 
 /** layout */
 /** bootstrap tooltips **/
@@ -162,12 +165,13 @@ nav {
 }
 
 .nav-notif-show {
-    margin-left: -270px;
     font-family: 'Playfair Display', serif;
     overflow-y: auto;
     background-color: #ffffff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
     max-height: 80vh;
+    right: 0;
+    left: auto;
 }
 
 .nav-notif-show a {
@@ -199,9 +203,10 @@ nav {
 
 .nav-item .nav-notif-show .notif-menu-item {
     color: #191919;
-    padding: 0.25rem;
+    padding: .3rem .4rem;
     font-size: 0.85rem;
-    border-bottom: 0.4px solid rgba(0, 0, 0, 0.3);
+    border-top: 0.4px solid rgba(0, 0, 0, 0.3);
+    word-wrap: break-word;
 }
 
 /** forms **/

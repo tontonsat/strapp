@@ -100,7 +100,13 @@
     }
 
     /* notifs menu */
-    .nav-notif-show {
-        margin-left: 0;
+    .navbar-nav .nav-notif-show {
+        max-height: 60vh;
+    }
+}
+@media screen and (max-width: 670px) {
+    .navbar-nav .nav-notif-show {
+        max-height: 40vh;
+        box-shadow: none;
     }
 }

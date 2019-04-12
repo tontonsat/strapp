@@ -4,38 +4,29 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-
 use App\Entity\User;
 use App\Entity\Friendship;
-use App\Repository\UserRepository;
 
-class HomeController extends Controller
+class AjaxController extends Controller
 {
     /**
-     * @Route("/", name="home_root")
+     * @Route("/ajax", name="ajax")
      */
     public function index()
     {
-        return $this->render('home/index.html.twig', []);
+        return $this->render('ajax/index.html.twig', [
+            'controller_name' => 'AjaxController',
+        ]);
     }
 
     /**
-     * @Route("/home", name="home_home")
+     * @route("/ajaxListUser/{slug}", name="ajax_ajaxlistuser")
      */
-    public function home(ObjectManager $manager, Request $request)
-    {
-        return $this->render('home/home.html.twig');
-    }
-
-    /**
-     * @route("/listUser/{slug}", name="home_listuser")
-     */
-    public function listUser(Request $request, $slug = null)
+    public function ajaxListUser(Request $request, $slug = null)
     {
 
         if ($slug == null) {
@@ -60,7 +51,7 @@ class HomeController extends Controller
 
             $friendships = $paginator->paginate($allFriendshipsQuery, $request->query->getInt('page', 1), 60);
 
-            return $this->render('home/listFriendships.html.twig', [
+            return $this->render('home/ajaxListFriendships.html.twig', [
                 'friendships' => $friendships,
                 'filter' => $slug
             ]);
@@ -71,6 +62,7 @@ class HomeController extends Controller
                 ->select('IDENTITY(fs.friend)')
                 ->where('fs.user = :currentuser')
                 ->setParameter('currentuser', $this->getUser()->getId());
+            dump($myFriends->getQuery()->getResult());
 
             if ($slug == 'local') {
                 $allUsersQuery = $userRepo->createQueryBuilder('u')
@@ -79,23 +71,37 @@ class HomeController extends Controller
                     ->andWhere($myFriends->expr()->notIn('u.id', $myFriends->getDQL()))
                     ->setParameter('city', '%' . $currentUserCity . '%')
                     ->setParameter('currentuser', $this->getUser()->getId())
-                    ->orderBy('u.id', 'DESC')
                     ->getQuery();
             } elseif ($slug == 'global') {
                 $allUsersQuery = $userRepo->createQueryBuilder('u')
                     ->where('u.id != :currentuser')
                     ->andWhere($myFriends->expr()->notIn('u.id', $myFriends->getDQL()))
                     ->setParameter('currentuser', $this->getUser()->getId())
-                    ->orderBy('u.id', 'DESC')
                     ->getQuery();
             }
 
             $users = $paginator->paginate($allUsersQuery, $request->query->getInt('page', 1), 60);
 
-            return $this->render('home/listUser.html.twig', [
+            return $this->render('home/ajaxListUser.html.twig', [
                 'users' => $users,
                 'filter' => $slug
             ]);
         }
+    }
+
+    /**
+     * @route("/ajaxListNotif", name="ajax_ajaxlistnotif")
+     */
+    public function ajaxListNotif(Request $request)
+    {
+        return $this->render('home/ajaxListNotif.html.twig');
+    }
+
+    /**
+     * @route("/ajaxGetCounter", name="ajax_ajaxgetcounter")
+     */
+    public function ajaxGetCounter(Request $request)
+    {
+        return $this->render('home/ajaxCountNotif.html.twig');
     }
 }

@@ -2,6 +2,10 @@ $(document).on('click', '.nav-notif-title', function (e) {
     e.stopPropagation()
     getNotifs()
 });
+$(document).on('click', '.notif-data-clear', function (e) {
+    e.stopPropagation()
+    getNotifs()
+});
 
 var clearNotifs = () => {
     $.ajax({
@@ -24,7 +28,7 @@ var getCounter = () => {
         }
     });
 }
-
+    
 /* ajax refresh notifs */
 var getNotifs = () => {
     $.ajax({
