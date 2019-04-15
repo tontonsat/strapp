@@ -1,8 +1,3 @@
-{% if notificationList|length > 0 %}
-<span class='text-muted'><a href="#" class="notif-data-clear"
-                data-clear="{{ mgilet_notification_generate_path('notification_mark_all_as_seen', notificationList|first.notifiableEntity) }}">Mark
-                all as seen</a></span>
-{% endif %}
 {% for item in notificationList %}
 <a class="dropdown-item notif-menu-item {% if item.seen == 0 %}notif-seen{% endif %}"
         href="{{ item.notification.link }}">

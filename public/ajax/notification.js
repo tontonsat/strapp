@@ -17,6 +17,22 @@ var clearNotifs = () => {
     });
 
 }
+$(function ($) {
+    $('.nav-notif-show').bind('scroll', function () {
+        var offset = $(this).data('offset')
+
+        if ($(this).scrollTop() + $(this).outerHeight() >= $(this)[0].scrollHeight) {
+            $.ajax({
+                url: '/ajaxListNotifScroll/' + offset,
+                type: 'GET',
+                success: (result) => {
+                    $(this).append(result)
+                    $(this).data('offset', offset + 10)
+                }
+            });
+        }
+    })
+});
 
 /* ajax refresh notif counter & bell */
 var getCounter = () => {
@@ -28,7 +44,7 @@ var getCounter = () => {
         }
     });
 }
-    
+
 /* ajax refresh notifs */
 var getNotifs = () => {
     $.ajax({

@@ -98,6 +98,15 @@ class AjaxController extends Controller
     }
 
     /**
+     * @route("/ajaxListNotifScroll/{offset}", name="ajax_ajaxlistnotifscroll")
+     */
+    public function ajaxListNotifScroll(Request $request, $offset = null)
+    {
+        $offset += 10;
+        return $this->render('home/ajaxListNotifScroll.html.twig', ['offset' => $offset]);
+    }
+
+    /**
      * @route("/ajaxGetCounter", name="ajax_ajaxgetcounter")
      */
     public function ajaxGetCounter(Request $request)

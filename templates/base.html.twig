@@ -27,15 +27,6 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
             <ul class="navbar-nav main-nav d-flex flex-sm-row flex-column text-center ">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('home_myprofile') }}">
-                        {% if app.user.media is null %}
-                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="avatar">
-                        {% else %}
-                        <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}"
-                            alt="profile picture" class="avatar">
-                        {% endif %} {{ app.user.name }}</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-map"></i> Map</a>
                 </li>
                 <li class="nav-item">
@@ -50,6 +41,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-comment-dots"></i> Messages</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('home_myprofile') }}">
+                        {% if app.user.media is null %}
+                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ app.user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="profile picture" class="avatar">
+                        {% endif %} {{ app.user.name }}</a>
+                </li>
                 <li class="nav-item dropdown dropdown-notif-update">
                     <a class="nav-link nav-notif-title" href="#" id="navbarDropdownMenuLink" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -60,7 +60,7 @@
                             class="nav-notif-counter">{{ mgilet_notification_unseen_count(app.user) }}</span>
                         {% endif %}
                     </a>
-                    <div class="dropdown-menu nav-notif-show" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu nav-notif-show" aria-labelledby="navbarDropdownMenuLink" data-offset="0">
                         <div class="spinner-container">
                             <i class="fas fa-compass fa-spin"></i>
                         </div>
