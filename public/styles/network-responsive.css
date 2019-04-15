@@ -99,22 +99,30 @@
         height: 100%;
     }
 
+    .main-nav {
+        padding: .3 .7rem;
+        max-width: 100vw;
+    }
+
     /* notifs menu */
     .navbar-nav .nav-notif-show {
         max-height: 60vh;
     }
 }
+
 @media screen and (max-width: 670px) {
     .navbar-nav .nav-notif-show {
         max-height: 40vh;
         box-shadow: none;
     }
 }
+
 /** main-nav not responsive */
 @media screen and (min-width: 700px) {
     .main-content {
         padding-top: 3.2rem;
     }
+
     .main-nav {
         padding: 0 .9rem;
     }

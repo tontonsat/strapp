@@ -6,7 +6,7 @@
 {% for item in notificationList %}
 <a class="dropdown-item notif-menu-item {% if item.seen == 0 %}notif-seen{% endif %}"
         href="{{ item.notification.link }}">
-        <span class="notif-title">{{ item.notification.subject }}</span>
+        <span class="notif-title">{{ item.notification.id }} {{ item.notification.subject }}</span>
         {{ item.notification.message }}<br /><span
                 class="text-muted">{{ item.notification.date|date('H:i d/m/Y') }}</span>
 </a>

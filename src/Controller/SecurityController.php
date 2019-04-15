@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
         if (!$this->getUser()) {
             $user = new User();
         } else {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home_home');
         }
 
         $form = $this->createForm(RegistrationType::class, $user);

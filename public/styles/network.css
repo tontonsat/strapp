@@ -30,6 +30,7 @@ nav {
 .settings-nav-dropdown {
     left: auto;
     right: 0;
+    text-align: center;
 }
 .settings-nav-dropdown .dropdown-item {
     font-size: .85rem;
