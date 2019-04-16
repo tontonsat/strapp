@@ -1,0 +1,71 @@
+{% if result['byName'] is empty and result['byLastname'] is empty and result['byUsername'] is empty and result['byAll'] is empty %}
+    No result for <i class="fas fa-angle-double-left"></i> {{query}} <i class="fas fa-angle-double-right"></i>
+{% else %}
+    <ul>
+        {% if result['byName'] is not empty %}
+            {% for user in result['byName'] %}
+                <a href="{{ path('home_user', {'slug': user.id}) }}">
+                    <li>{% if user.media is null %}
+                        <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="user picture" class="search-list-user_avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="user picture" class="search-list-user_avatar">
+                        {% endif %}
+                        <span class="search-user-info">
+                            {{ user.name }} {{ user.lastname }} @{{ user.username }}
+                        </span>
+                    </li>
+                </a>
+            {% endfor %}
+        {% endif %}
+        {% if result['byLastname'] is not empty %}         
+            {% for user in result['byLastname'] %}
+                <a href="{{ path('home_user', {'slug': user.id}) }}">
+                    <li>{% if user.media is null %}
+                        <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="user picture" class="search-list-user_avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="user picture" class="search-list-user_avatar">
+                        {% endif %}
+                        <span class="search-user-info">
+                            {{ user.name }} {{ user.lastname }} @{{ user.username }}
+                        </span>
+                    </li>
+                </a>
+            {% endfor %}
+        {% endif %}
+        {% if result['byUsername'] is not empty %}         
+            {% for user in result['byUsername'] %}
+                <a href="{{ path('home_user', {'slug': user.id}) }}">
+                    <li>{% if user.media is null %}
+                        <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="user picture" class="search-list-user_avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="user picture" class="search-list-user_avatar">
+                        {% endif %}
+                        <span class="search-user-info">
+                            {{ user.name }} {{ user.lastname }} @{{ user.username }}
+                        </span>
+                    </li>
+                </a>
+            {% endfor %}
+        {% endif %}
+        {% if result['byAll'] is not empty %}         
+            {% for user in result['byAll'] %}
+                <a href="{{ path('home_user', {'slug': user.id}) }}">
+                    <li>{% if user.media is null %}
+                        <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="user picture" class="search-list-user_avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="user picture" class="search-list-user_avatar">
+                        {% endif %}
+                        <span class="search-user-info">
+                            {{ user.name }} {{ user.lastname }} @{{ user.username }}
+                        </span>
+                    </li>
+                </a>
+            {% endfor %}
+        {% endif %}
+
+    </ul>
+{% endif %}

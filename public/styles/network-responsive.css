@@ -111,9 +111,8 @@
 }
 
 @media screen and (max-width: 670px) {
-    .navbar-nav .nav-notif-show {
-        max-height: 40vh;
-        box-shadow: none;
+    .search-bar-container {
+        margin-top: .8rem;
     }
 }
 
@@ -125,9 +124,20 @@
 
     .main-nav {
         padding: 0 .9rem;
+        font-size: 0.85rem;
     }
 
+    .main-nav .nav-item {
+        padding: 0.3rem 0;
+        margin: auto;
+    }
     .main-nav .nav-link {
         padding: 0 .55rem !important;
+    }
+    .search-bar-container {
+        max-width: 40%;
+    }
+    .main-nav .nav-item .nav-notif-title {
+        padding: 0 1.2rem !important;
     }
 }

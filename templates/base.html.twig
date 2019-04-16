@@ -25,6 +25,16 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <div class="input-group search-bar-container">
+                <input type="text" class="form-control search-bar" placeholder="Search" aria-label="Username"
+                    aria-describedby="basic-addon1">
+                <div class="input-group-append">
+                    <span class="input-group-text search-bar-icon" id="basic-addon1"><i
+                            class="fas fa-search"></i></span>
+                </div>
+                <div class="search-result-container">
+                </div>
+            </div>
             <ul class="navbar-nav main-nav d-flex flex-sm-row flex-column text-center ">
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-map"></i> Map</a>
@@ -36,7 +46,8 @@
                     <a class="nav-link" href="#"><i class="far fa-star"></i> Favourites</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('home_listuser') }}"><i class="fas fa-user-friends"></i> Friends</a>
+                    <a class="nav-link" href="{{ path('home_listuser') }}"><i class="fas fa-user-friends"></i>
+                        Friends</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-comment-dots"></i> Messages</a>
@@ -104,6 +115,7 @@
     <script src={{ asset("js/ui.js") }}></script>
     <script src={{ asset("js/locateMe.js") }}></script>
     <script src={{ asset("ajax/notification.js") }}></script>
+    <script src={{ asset("ajax/search.js") }}></script>
     {% endblock %}
 </body>
 

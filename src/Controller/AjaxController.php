@@ -62,7 +62,6 @@ class AjaxController extends Controller
                 ->select('IDENTITY(fs.friend)')
                 ->where('fs.user = :currentuser')
                 ->setParameter('currentuser', $this->getUser()->getId());
-            dump($myFriends->getQuery()->getResult());
 
             if ($slug == 'local') {
                 $allUsersQuery = $userRepo->createQueryBuilder('u')
@@ -112,5 +111,90 @@ class AjaxController extends Controller
     public function ajaxGetCounter(Request $request)
     {
         return $this->render('home/ajaxCountNotif.html.twig');
+    }
+
+    /**
+     * @route("/ajaxSearch/{query}", name="ajax_ajaxsearch")
+     */
+    public function ajaxSearch(Request $request, $query = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userRepo = $em->getRepository(User::class);
+        
+        $queryData = explode(' ', $query);
+        $result = array();
+        $result['byName'] = array();
+        $result['byLastname'] = array();
+        $result['byUsername'] = array();
+        $result['bestResults'] = array();
+
+        foreach ($queryData as $value) {           
+            $byName = $userRepo->createQueryBuilder('u')
+                                ->where('u.name LIKE :query ')
+                                ->setParameter('query', $value.'%')
+                                ->setMaxResults(10)
+                                ->getQuery()
+                                ->getResult();
+            if(!in_array($byName, $result)) {
+                $result['byName'] = $byName;
+            }
+            if(in_array($byName, $result['byLastname']) || in_array($byName, $result['byUsername'])) {
+                $result['bestResults'] = $byName;
+                unset($result['byLastname']);
+                unset($result['byName']);
+                unset($result['byUsername']);
+            }
+
+            $byLastname = $userRepo->createQueryBuilder('u')
+                                    ->where('u.lastname LIKE :query')
+                                    ->setParameter('query', $value.'%')
+                                    ->setMaxResults(10)
+                                    ->getQuery()
+                                    ->getResult();
+            if(!in_array($byLastname, $result['byName']) && !in_array($byLastname, $result['byUsername'])) {
+                $result['byLastname'] = $byLastname;
+            }
+            if(in_array($byLastname, $result['byName']) || in_array($byLastname, $result['byUsername'])) {
+                $result['bestResults'] = $byLastname;
+                unset($result['byLastname']);
+                unset($result['byName']);
+                unset($result['byUsername']);
+            }
+
+            $byUsername = $userRepo->createQueryBuilder('u')
+                                    ->where('u.username LIKE :query')
+                                    ->setParameter('query', $value.'%')
+                                    ->setMaxResults(10)
+                                    ->getQuery()
+                                    ->getResult();
+            if(!in_array($byUsername, $result['byLastname']) && !in_array($byUsername, $result['byName'])) {
+                $result['byUsername'] = $byUsername;
+            }
+            if(in_array($byUsername, $result['byLastname']) || in_array($byUsername, $result['byName'])) {
+                $result['bestResults'] = $byLastname;
+                unset($result['byLastname']);
+                unset($result['byName']);
+                unset($result['byUsername']);
+            }
+        }
+
+        $result['byAll'] = array();
+        if(empty($result['byName']) && empty($result['byLastname']) && empty($result['byUsername'])) {
+            foreach ($queryData as $value) {            
+                $byAll = $userRepo->createQueryBuilder('u')
+                    ->where('u.name LIKE :query OR u.lastname LIKE :query OR u.username LIKE :query')
+                    ->setParameter('query', $value.'%')
+                    ->setMaxResults(10)
+                    ->getQuery()
+                    ->getResult();
+                if(!in_array($byAll, $result)) {
+                    $result['byAll'] = $byAll;
+                }
+            }
+        }
+        dump($result);
+        return $this->render('ajax/ajaxListSearch.html.twig', ['result' => $result, 
+                                                                'query' => $query]
+        );
     }
 }
