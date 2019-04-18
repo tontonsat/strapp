@@ -23,18 +23,59 @@ body {
     background: #191919;
     color: #ffda00;
     justify-content: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
     font-family: 'porto';
+}
+.homeBtn-white {
+    color: #ffffff;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+.main-logo h1 {
+    line-height: 2;
+}
+.main-logo h1 a {
+    color: #ffda00;
+    text-decoration: none;
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    padding: .9rem 0;
+}
+.main-logo h1 a:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+.main-logo h1 a:hover .homeBtn-white {
+    color: #ffda00;
+    text-decoration: none;
+}
+.main-logo-img {
+    width: 42px;
+    height: 42px;
+    object-fit: cover;
+    object-position: 0 0;
+    transition: all .2s ease;
+    object-position: 0 0;
+}
+.main-nav .navbar-brand .homeBtn {
+    color: #ffda00;
+    font-family: 'porto';
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+
+.homeBtn:hover .main-logo-img {
+    object-position: 0 100%;
 }
 
 .left-login {
+    z-index: 3;
     padding-right: 15px;
     background-color: #ffda00;
     color: #191919;
     width: 23%;
     max-width: 360px;
     min-width: 300px;
+	box-shadow: 0 0 .3em 0 #191919;
 }
 
 .left-login a {

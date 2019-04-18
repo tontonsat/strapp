@@ -13,13 +13,20 @@
     <link href={{ asset('styles/main.css') }} rel='stylesheet' />
     <link href={{ asset('styles/network.css') }} rel='stylesheet' />
     <link href={{ asset('styles/network-responsive.css') }} rel='stylesheet' />
+    <link rel="apple-touch-icon" sizes="180x180" href={{ asset('favicon/apple-touch-icon.png') }}>
+    <link rel="icon" type="image/png" sizes="32x32" href={{ asset('favicon/favicon-32x32.png') }}>
+    <link rel="icon" type="image/png" sizes="16x16" href={{ asset('favicon/favicon-16x16.png') }}>
+    <link rel="manifest" href={{ asset('favicon/site.webmanifest') }}>
+    <link rel="mask-icon" href={{ asset('favicon/safari-pinned-tab.svg') }} color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% endblock %}
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg fixed-top main-nav">
-        <span class="navbar-brand mb-0 h1"><a class='homeBtn' href="{{ path('home_home') }}">Strapp.xyz</a></span>
+        <span class="navbar-brand mb-0 h1"><a class='homeBtn' href="{{ path('home_home') }}"><img class="main-nav-logo" src={{ asset('img/logo_sprite_small.png') }} alt="strapp logo"> Strapp.xyz</a></span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

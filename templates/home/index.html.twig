@@ -19,7 +19,7 @@
     <div class="row index-row">
         <div class="col left-login">
             <div class="main-logo text-center">
-                <h1>Strapp.xyz</h1>
+                <h1><a class='homeBtn' href="{{ path('home_home') }}"><img class="main-logo-img" src={{ asset('img/logo_sprite_small.png') }} alt="strapp logo"> STR<span class="homeBtn-white">APP<span></a></h1>
             </div>
             <h2>Login</h2>
             {% if errors is defined  and errors is not empty %}
