@@ -2,6 +2,23 @@
     No result for <i class="fas fa-angle-double-left"></i> {{query}} <i class="fas fa-angle-double-right"></i>
 {% else %}
     <ul>
+        {% if result['bestResult'] is not empty %}
+            {% for user in result['bestResult'] %}
+                <a href="{{ path('home_user', {'slug': user.id}) }}">
+                    <li>{% if user.media is null %}
+                        <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="user picture" class="search-list-user_avatar">
+                        {% else %}
+                        <img src="{{ asset('uploads/avatars/' ~ user.media.imageName) | imagine_filter('avatar') }}"
+                            alt="user picture" class="search-list-user_avatar">
+                        {% endif %}
+                        <span class="search-user-info">
+                            <b>{{ user.name }} {{ user.lastname }} @{{ user.username }}</b>
+                        </span>
+                    </li>
+                </a>
+            {% endfor %}
+            <div class="dropdown-divider"></div>
+        {% endif %}
         {% if result['byName'] is not empty %}
             {% for user in result['byName'] %}
                 <a href="{{ path('home_user', {'slug': user.id}) }}">
@@ -12,7 +29,7 @@
                             alt="user picture" class="search-list-user_avatar">
                         {% endif %}
                         <span class="search-user-info">
-                            {{ user.name }} {{ user.lastname }} @{{ user.username }}
+                            <b>{{ user.name }}</b> {{ user.lastname }} @{{ user.username }}
                         </span>
                     </li>
                 </a>
@@ -28,7 +45,7 @@
                             alt="user picture" class="search-list-user_avatar">
                         {% endif %}
                         <span class="search-user-info">
-                            {{ user.name }} {{ user.lastname }} @{{ user.username }}
+                            {{ user.name }} <b>{{ user.lastname }}</b> @{{ user.username }}
                         </span>
                     </li>
                 </a>
@@ -44,28 +61,11 @@
                             alt="user picture" class="search-list-user_avatar">
                         {% endif %}
                         <span class="search-user-info">
-                            {{ user.name }} {{ user.lastname }} @{{ user.username }}
+                            {{ user.name }} {{ user.lastname }} @<b>{{ user.username }}</b>
                         </span>
                     </li>
                 </a>
             {% endfor %}
         {% endif %}
-        {% if result['byAll'] is not empty %}         
-            {% for user in result['byAll'] %}
-                <a href="{{ path('home_user', {'slug': user.id}) }}">
-                    <li>{% if user.media is null %}
-                        <img src="{{ asset('uploads/avatars/0.jpg') }}" alt="user picture" class="search-list-user_avatar">
-                        {% else %}
-                        <img src="{{ asset('uploads/avatars/' ~ user.media.imageName) | imagine_filter('avatar') }}"
-                            alt="user picture" class="search-list-user_avatar">
-                        {% endif %}
-                        <span class="search-user-info">
-                            {{ user.name }} {{ user.lastname }} @{{ user.username }}
-                        </span>
-                    </li>
-                </a>
-            {% endfor %}
-        {% endif %}
-
     </ul>
 {% endif %}

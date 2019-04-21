@@ -4,6 +4,12 @@
     src: url('../fonts/porto.ttf');
     /*URL to font*/
 }
+@font-face {
+    font-family: 'Roboto';
+    /*a name to be used later*/
+    src: url('https://fonts.googleapis.com/css?family=Roboto');
+    /*URL to font*/
+}
 
 /** cancel bootstrap */
 .btn-primary {
@@ -12,7 +18,7 @@
 }
 
 body {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0px;
     padding: 0px;
     background-color: #ffda00;
@@ -89,7 +95,7 @@ body {
 }
 
 .form {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .btn-login {

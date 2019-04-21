@@ -128,71 +128,70 @@ class AjaxController extends Controller
         $result['byUsername'] = array();
         $result['bestResults'] = array();
 
-        foreach ($queryData as $value) {           
-            $byName = $userRepo->createQueryBuilder('u')
-                                ->where('u.name LIKE :query ')
-                                ->setParameter('query', $value.'%')
-                                ->setMaxResults(10)
-                                ->getQuery()
-                                ->getResult();
-            if(!in_array($byName, $result)) {
+        foreach ($queryData as $value) {    
+            if(strlen($value) >= 3) {
+                $byName = $userRepo->createQueryBuilder('u')
+                    ->where('u.name LIKE :query ')
+                    ->setParameter('query', '%' . $value . '%')
+                    ->setMaxResults(10)
+                    ->getQuery()
+                    ->getResult();
                 $result['byName'] = $byName;
-            }
-            if(in_array($byName, $result['byLastname']) || in_array($byName, $result['byUsername'])) {
-                $result['bestResults'] = $byName;
-                unset($result['byLastname']);
-                unset($result['byName']);
-                unset($result['byUsername']);
-            }
+                if (empty($result['bestResult'])) {
+                    $result['bestResult'] = $byName;
+                } else {
+                    $result['bestResult'] = array_merge($result['bestResult'], $byName);
+                }
 
-            $byLastname = $userRepo->createQueryBuilder('u')
-                                    ->where('u.lastname LIKE :query')
-                                    ->setParameter('query', $value.'%')
-                                    ->setMaxResults(10)
-                                    ->getQuery()
-                                    ->getResult();
-            if(!in_array($byLastname, $result['byName']) && !in_array($byLastname, $result['byUsername'])) {
-                $result['byLastname'] = $byLastname;
-            }
-            if(in_array($byLastname, $result['byName']) || in_array($byLastname, $result['byUsername'])) {
-                $result['bestResults'] = $byLastname;
-                unset($result['byLastname']);
-                unset($result['byName']);
-                unset($result['byUsername']);
-            }
+                $byLastname = $userRepo->createQueryBuilder('u')
+                    ->where('u.lastname LIKE :query')
+                    ->setParameter('query', '%' . $value . '%')
+                    ->setMaxResults(6)
+                    ->getQuery()
+                    ->getResult();
 
-            $byUsername = $userRepo->createQueryBuilder('u')
-                                    ->where('u.username LIKE :query')
-                                    ->setParameter('query', $value.'%')
-                                    ->setMaxResults(10)
-                                    ->getQuery()
-                                    ->getResult();
-            if(!in_array($byUsername, $result['byLastname']) && !in_array($byUsername, $result['byName'])) {
-                $result['byUsername'] = $byUsername;
-            }
-            if(in_array($byUsername, $result['byLastname']) || in_array($byUsername, $result['byName'])) {
-                $result['bestResults'] = $byLastname;
-                unset($result['byLastname']);
-                unset($result['byName']);
-                unset($result['byUsername']);
+                $result['byLastname'] = array_udiff($byLastname, $result['byName'], $result['byUsername'], function ($res1, $res2) {
+                    return $res1->getId() - $res2->getId();
+                });
+                if (empty($result['bestResult'])) {
+                    $result['bestResult'] = $byLastname;
+                } else {
+                    $result['bestResult'] = array_merge($result['bestResult'], $byLastname);
+                }
+
+                $byUsername = $userRepo->createQueryBuilder('u')
+                    ->where('u.username LIKE :query')
+                    ->setParameter('query', '%' . $value . '%')
+                    ->setMaxResults(6)
+                    ->getQuery()
+                    ->getResult();
+                $result['byUsername'] = array_udiff($byUsername, $result['byName'], $result['byLastname'], function ($res1, $res2) {
+                    return $res1->getId() - $res2->getId();
+                });
+                if (empty($result['bestResult'])) {
+                    $result['bestResult'] = $byUsername;
+                } else {
+                    $result['bestResult'] = array_merge($result['bestResult'], $byUsername);
+                }
+                $result['bestResult'] = array_merge($result['bestResult'], $byUsername);
             }
         }
 
         $result['byAll'] = array();
-        if(empty($result['byName']) && empty($result['byLastname']) && empty($result['byUsername'])) {
             foreach ($queryData as $value) {            
-                $byAll = $userRepo->createQueryBuilder('u')
-                    ->where('u.name LIKE :query OR u.lastname LIKE :query OR u.username LIKE :query')
-                    ->setParameter('query', $value.'%')
-                    ->setMaxResults(10)
-                    ->getQuery()
-                    ->getResult();
-                if(!in_array($byAll, $result)) {
-                    $result['byAll'] = $byAll;
-                }
-            }
+            $byAll = $userRepo->createQueryBuilder('u')
+                ->where('u.name LIKE :query AND u.username LIKE :query')
+                ->setParameter('query', '%' .$value.'%')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult();
+            $result['byAll'] = array_unique($byAll);
         }
-        dump($result);
+
+        $result['bestResult'] = array_unique(array_uintersect($result['bestResult'], $result['byAll'], function ($res1, $res2) {
+            return spl_object_hash($res1) <=> spl_object_hash($res2);
+        }));
+
         return $this->render('ajax/ajaxListSearch.html.twig', ['result' => $result, 
                                                                 'query' => $query]
         );

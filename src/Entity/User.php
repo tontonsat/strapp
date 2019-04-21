@@ -124,6 +124,11 @@ class User implements UserInterface, NotifiableInterface
         $this->friendships = new ArrayCollection();
     }
 
+    public function __toString(): ?string
+    {
+        return $this->username;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
