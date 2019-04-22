@@ -117,11 +117,17 @@ class User implements UserInterface, NotifiableInterface
      */
     private $friendships;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="author", orphanRemoval=true)
+     */
+    private $votes;
+
     public function __construct()
     {
         $this->setCurrentLocation();
         $this->roles[] = 'ROLE_USER';
         $this->friendships = new ArrayCollection();
+        $this->votes = new ArrayCollection();
     }
 
     public function __toString(): ?string
@@ -371,5 +377,36 @@ class User implements UserInterface, NotifiableInterface
         $this->addFriendship($fs);
 
         return $fs;
+    }
+
+    /**
+     * @return Collection|Vote[]
+     */
+    public function getVotes(): Collection
+    {
+        return $this->votes;
+    }
+
+    public function addVote(Vote $vote): self
+    {
+        if (!$this->votes->contains($vote)) {
+            $this->votes[] = $vote;
+            $vote->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVote(Vote $vote): self
+    {
+        if ($this->votes->contains($vote)) {
+            $this->votes->removeElement($vote);
+            // set the owning side to null (unless already changed)
+            if ($vote->getAuthor() === $this) {
+                $vote->setAuthor(null);
+            }
+        }
+
+        return $this;
     }
 }

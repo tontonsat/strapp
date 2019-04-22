@@ -29,6 +29,14 @@ class HomeController extends Controller
      */
     public function home(ObjectManager $manager, Request $request)
     {
+        return $this->render('vote/vote.html.twig');
+    }
+
+    /**
+     * @Route("/newVote", name="home_newvote")
+     */
+    public function newVote(ObjectManager $manager, Request $request)
+    {
         return $this->render('home/home.html.twig');
     }
 
@@ -39,8 +47,7 @@ class HomeController extends Controller
     {
 
         if ($slug == null) {
-            $slug =
-                'mine';
+            $slug = 'mine';
         }
 
         /* @var $paginator \Knp\Component\Pager\Paginator */
