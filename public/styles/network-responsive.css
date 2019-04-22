@@ -114,6 +114,10 @@
     .search-bar-container {
         margin-top: .8rem;
     }
+    .search-bar-container .search-result-container {
+        position: relative;
+        box-shadow: none;
+    }
 }
 
 /** main-nav not responsive */

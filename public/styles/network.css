@@ -30,12 +30,14 @@
     box-shadow: none;
 }
 
-.search-bar-container .search-bar-icon {
+#navbarNavDropdown .search-bar-container .input-group-append .search-bar-icon {
     background-color: #414142;
     color: #ffda00;
     border: none;
     height: calc(1em + .65rem + 2px);
-    border-radius: .25rem !important;
+    border-top-right-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+    z-index: 3;
 }
 .search-bar-container .search-result-container {
     position: absolute;
