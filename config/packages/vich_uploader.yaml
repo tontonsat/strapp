@@ -12,3 +12,14 @@ vich_uploader:
 
             namer:
                 service: Vich\UploaderBundle\Naming\UniqidNamer
+                
+        vote_image:
+            uri_prefix: /uploads/votes
+            upload_destination: '%kernel.project_dir%/public/uploads/votes'
+
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+            
+            namer:
+                service: Vich\UploaderBundle\Naming\UniqidNamer

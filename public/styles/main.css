@@ -4,12 +4,7 @@
     src: url('../fonts/porto.ttf');
     /*URL to font*/
 }
-@font-face {
-    font-family: 'Roboto';
-    /*a name to be used later*/
-    src: url('https://fonts.googleapis.com/css?family=Roboto');
-    /*URL to font*/
-}
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 /** cancel bootstrap */
 .btn-primary {

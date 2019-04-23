@@ -6,6 +6,13 @@
     <div class="row user-list-row main-flash-container refresh-pos-home-btn">
         <button href="" class="btn btn-standard form-control updateCoordBtn"><i class="fas fa-map-marker-alt"></i>
             Update location</button>
+        {% for message in app.flashes('notice-vote-submit') %}
+            <div class="alert alert-dismissible alert-success main-alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <i class="fas fa-user-circle"></i> {{ message }}
+            </div>
+        {% endfor %}
     </div>
+    {{dump(app.user.votes)}}
 </main>
 {% endblock %}

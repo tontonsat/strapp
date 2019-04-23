@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use App\Entity\User;
 use App\Entity\Friendship;
 use App\Repository\UserRepository;
+use App\Repository\VoteRepository;
+use App\Form\VoteType;
+use App\Entity\Vote;
 
 class HomeController extends Controller
 {
@@ -29,15 +32,41 @@ class HomeController extends Controller
      */
     public function home(ObjectManager $manager, Request $request)
     {
-        return $this->render('vote/vote.html.twig');
+        return $this->render('home/home.html.twig');
     }
 
     /**
-     * @Route("/newVote", name="home_newvote")
+     * @Route("/vote/{vote}", name="home_vote")
      */
-    public function newVote(ObjectManager $manager, Request $request)
+    public function vote(VoteRepository $repo, ObjectManager $manager, Request $request, Vote $vote = null)
     {
-        return $this->render('home/home.html.twig');
+        if(is_null($vote)) {
+            $vote = new Vote();
+        }
+        else {
+            $vote = $repo->findOneBy(['author' => $this->getUser()->getId()]);
+        }
+
+        $formVote = $this->createForm(VoteType::class, $vote);
+
+        $formVote->handleRequest($request);
+        if ( $formVote->isSubmitted() && $formVote->isValid()) {
+            $coord = $request->request->get('vote')['coord'];
+            $duration = $request->request->get('vote')['duration'];
+            $vote->setCoord($coord)
+                ->setStatus(1)
+                ->setAuthor($this->getUser())
+                ->setDateCreate(new \Datetime('now'));
+            $vote->setDateEnd(new \Datetime('+'. $duration .' hour'));
+
+            $manager->persist($vote);
+            $manager->flush();
+
+            $this->addFlash('notice-vote-submit', 'Story submitted with success!');
+            return $this->redirectToRoute("home_home");
+        }
+
+        return $this->render('vote/vote.html.twig', ['formVote' => $formVote->createView()]);
     }
 
     /**

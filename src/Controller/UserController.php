@@ -62,7 +62,6 @@ class UserController extends Controller
             $this->getuser()->setCurrentLocation($coord);
             $manager->flush();
 
-            $updatedCoord = $this->getUser()->getCurrentLocation();
             $this->addFlash('notice-coord', '');
             return $this->redirectToRoute("home_myprofile");
         } elseif ($formBio->isSubmitted() && $formBio->isValid()) {

@@ -118,6 +118,9 @@
         position: relative;
         box-shadow: none;
     }
+    .card .card-standard {
+        flex-direction: column;
+    }
 }
 
 /** main-nav not responsive */

@@ -9,6 +9,7 @@ var getLocation = () => {
 var setValue = (position) => {
     $('.updateCoordBtn').data('pos', position.coords.longitude + ',' + position.coords.latitude)
     $('#registration_coord').val(position.coords.longitude + ',' + position.coords.latitude)
+    $('#vote_coord').val(position.coords.longitude + ',' + position.coords.latitude)
 
 }
 

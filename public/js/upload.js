@@ -5,3 +5,8 @@ var getOutputFile = () => {
     
     $("#upload_imageFile_file").next(".custom-file-label").html(value)
 }
+var getOutputFileVote = () => { 
+    var value = $("#vote_imageFile_file").val().replace('C:\\fakepath\\', '').trim()
+    
+    $("#vote_imageFile_file").next(".custom-file-label").html(value)
+}

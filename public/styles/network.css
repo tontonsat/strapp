@@ -1,9 +1,4 @@
-@font-face {
-    font-family: 'Roboto';
-    /*a name to be used later*/
-    src: url('https://fonts.googleapis.com/css?family=Roboto');
-    /*URL to font*/
-}
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 /** content **/
 .main-content {
     background: rgb(232, 236, 239);
@@ -593,4 +588,13 @@ nav {
 
 .profile-bio {
     height: auto;
+}
+
+/* votes */
+.main-card {
+    width: 100%;
+}
+.main-card .card-body {
+    display: flex;
+    flex-direction: row;
 }
