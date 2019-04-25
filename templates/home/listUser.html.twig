@@ -54,8 +54,7 @@
         </a>
         {% endfor %}
     </div>
-    <div class="row">
-        {{ knp_pagination_render(users) }}
+    <div class="row list-bottom-ajax text-center" data-path="/ajaxlistUserScroll/{{ filter }}" data-offset="48">
     </div>
 </main>
 {% endblock %}

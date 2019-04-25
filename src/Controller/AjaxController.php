@@ -196,4 +196,69 @@ class AjaxController extends Controller
                                                                 'query' => $query]
         );
     }
+
+    /**
+     * @route("/ajaxlistUserScroll/{slug}/{offset}", name="ajax_ajaxlistuserscroll")
+     */
+    public function ajaxListUserScroll(Request $request, $slug = null, $offset = null)
+    {
+        $currentUserCity = $this->getuser()->getCurrentLocation()['city'];
+        $em = $this->getDoctrine()->getManager();
+        $fsRepo = $em->getRepository(Friendship::class);
+
+        if ($slug == 'mine') {
+
+            $allFriendships = $fsRepo->createQueryBuilder('fs')
+                ->where('fs.friend = :currentuser')
+                ->addOrderBy('fs.status', 'ASC')
+                ->setParameter('currentuser', $this->getUser()->getId())
+                ->setFirstResult($offset)
+                ->setMaxResults(48)
+                ->getQuery()
+                ->getResult();
+            $offset += 48;
+            return $this->render('ajax/ajaxListUserScroll.html.twig', [
+                'friendships' => $allFriendships,
+                'offset' => $offset
+            ]);
+        } else {
+            $userRepo = $em->getRepository(User::class);
+
+            $myFriends = $fsRepo->createQueryBuilder('fs')
+                ->select('IDENTITY(fs.friend)')
+                ->where('fs.user = :currentuser')
+                ->setParameter('currentuser', $this->getUser()->getId());
+
+            if ($slug == 'local') {
+                $allUsers = $userRepo->createQueryBuilder('u')
+                    ->where('u.currentLocation like :city')
+                    ->andWhere('u.id != :currentuser')
+                    ->andWhere($myFriends->expr()->notIn('u.id', $myFriends->getDQL()))
+                    ->setParameter('city', '%' . $currentUserCity . '%')
+                    ->setParameter('currentuser', $this->getUser()->getId())
+                    ->orderBy('u.id', 'DESC')
+                    ->setFirstResult($offset)
+                    ->setMaxResults(48)
+                    ->getQuery()
+                    ->getResult();
+            } elseif ($slug == 'global') {
+                $allUsers = $userRepo->createQueryBuilder('u')
+                    ->where('u.id != :currentuser')
+                    ->andWhere($myFriends->expr()->notIn('u.id', $myFriends->getDQL()))
+                    ->setParameter('currentuser', $this->getUser()->getId())
+                    ->orderBy('u.id', 'DESC')
+                    ->setFirstResult($offset)
+                    ->setMaxResults(48)
+                    ->getQuery()
+                    ->getResult();
+            }
+
+            $offset += 48;
+
+            return $this->render('ajax/ajaxListUserScroll.html.twig', [
+                'users' => $allUsers,
+                'offset' => $offset
+            ]);
+        }
+    }
 }

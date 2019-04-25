@@ -516,6 +516,20 @@ nav {
     color: #191919;
     border-color: #ffda00;
 }
+.list-bottom-ajax {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: -webkit-linear-gradient(transparent, #ffda00);
+    background: -moz-linear-gradient(transparent, #ffda00);
+    background: -o-linear-gradient(transparent, #ffda00);
+    background: linear-gradient(transparent, #ffda00);
+}
+.compass-listuser {
+    margin: auto;
+    line-height: 1.5;
+    font-size: 1.45rem;
+}
 
 /** profile */
 .btn-add-friend-profile {

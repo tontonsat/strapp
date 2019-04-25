@@ -162,7 +162,8 @@ body {
 .main-alert {
     color: #191919;
     background: #ffda00;
-    margin-top: 5px;
+    margin: auto;
+    width: 98%;
 }
 
 .main-row-alert {

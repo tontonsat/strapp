@@ -88,16 +88,16 @@ class HomeController extends Controller
 
         if ($slug == 'mine') {
 
-            $allFriendshipsQuery = $fsRepo->createQueryBuilder('fs')
+            $allFriendships = $fsRepo->createQueryBuilder('fs')
                 ->where('fs.friend = :currentuser')
                 ->addOrderBy('fs.status', 'ASC')
                 ->setParameter('currentuser', $this->getUser()->getId())
-                ->getQuery();
-
-            $friendships = $paginator->paginate($allFriendshipsQuery, $request->query->getInt('page', 1), 60);
+                ->setMaxResults(48)
+                ->getQuery()
+                ->getResult();
 
             return $this->render('home/listFriendships.html.twig', [
-                'friendships' => $friendships,
+                'friendships' => $allFriendships,
                 'filter' => $slug
             ]);
         } else {
@@ -109,27 +109,29 @@ class HomeController extends Controller
                 ->setParameter('currentuser', $this->getUser()->getId());
 
             if ($slug == 'local') {
-                $allUsersQuery = $userRepo->createQueryBuilder('u')
+                $allUsers = $userRepo->createQueryBuilder('u')
                     ->where('u.currentLocation like :city')
                     ->andWhere('u.id != :currentuser')
                     ->andWhere($myFriends->expr()->notIn('u.id', $myFriends->getDQL()))
                     ->setParameter('city', '%' . $currentUserCity . '%')
                     ->setParameter('currentuser', $this->getUser()->getId())
                     ->orderBy('u.id', 'DESC')
-                    ->getQuery();
+                    ->setMaxResults(48)
+                    ->getQuery()
+                    ->getResult();
             } elseif ($slug == 'global') {
-                $allUsersQuery = $userRepo->createQueryBuilder('u')
+                $allUsers = $userRepo->createQueryBuilder('u')
                     ->where('u.id != :currentuser')
                     ->andWhere($myFriends->expr()->notIn('u.id', $myFriends->getDQL()))
                     ->setParameter('currentuser', $this->getUser()->getId())
                     ->orderBy('u.id', 'DESC')
-                    ->getQuery();
+                    ->setMaxResults(48)
+                    ->getQuery()
+                    ->getResult();
             }
 
-            $users = $paginator->paginate($allUsersQuery, $request->query->getInt('page', 1), 60);
-
             return $this->render('home/listUser.html.twig', [
-                'users' => $users,
+                'users' => $allUsers,
                 'filter' => $slug
             ]);
         }

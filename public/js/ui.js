@@ -22,3 +22,37 @@ $(document).ready(function() {
         submit_focus = true
     })
 })
+
+/* pagination */
+
+/* trigger is used to block ajax request when no match is found */
+var trigger = 1
+
+var paginate = () => {
+    let offset = $('.list-bottom-ajax').data('offset')
+    let path = $('.list-bottom-ajax').data('path')
+    $('.list-bottom-ajax').html('<i class="fas fa-compass fa-spin compass-listuser"></i>')
+    $.ajax({
+        url: path + '/' + offset,
+        type: 'GET',
+        success: (data) => {
+            $('.list-bottom-ajax').html('')
+            $('.list-bottom-ajax').data('offset',  offset + 48)
+            if(data !== '' && data !== null) {
+                $('.user-list-row').append(data)  
+                trigger = 1
+                
+            }  
+            else {
+                trigger = 0
+            }       
+        }
+    }) 
+}
+$(window).scroll(function() {
+    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+        if(trigger === 1) {
+            paginate()
+        } 
+    }
+ });

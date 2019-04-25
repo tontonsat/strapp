@@ -104,8 +104,7 @@
         {% endfor %}
         {% endif %}
     </div>
-    <div class="row">
-        {{ knp_pagination_render(friendships) }}
+    <div class="row list-bottom-ajax text-center" data-path="/ajaxlistUserScroll/{{ filter }}" data-offset="48">
     </div>
 </main>
 {% endblock %}
