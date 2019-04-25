@@ -4,7 +4,7 @@ $(function () {
 })
 
 /* general behaviours */
-$(document).ready(function() {
+$(document).ready(function () {
 
     var submit_focus = false
     $('#mood_mood').focus(function () {
@@ -12,7 +12,7 @@ $(document).ready(function() {
     }).blur(function () {
         if (submit_focus) {
             submit_focus = true
-            
+
         } else {
             $('#mood_save').hide().removeClass('visible')
         }
@@ -24,7 +24,6 @@ $(document).ready(function() {
 })
 
 /* pagination */
-
 /* trigger is used to block ajax request when no match is found */
 var trigger = 1
 
@@ -37,22 +36,22 @@ var paginate = () => {
         type: 'GET',
         success: (data) => {
             $('.list-bottom-ajax').html('')
-            $('.list-bottom-ajax').data('offset',  offset + 48)
-            if(data !== '' && data !== null) {
-                $('.user-list-row').append(data)  
+            $('.list-bottom-ajax').data('offset', offset + 48)
+            if (data !== '' && data !== null) {
+                $('.user-list-row').append(data)
                 trigger = 1
-                
-            }  
-            else {
+
+            } else {
                 trigger = 0
-            }       
+                $('.user-list-row').append('<div class="end-result">No more results</div>')
+            }
         }
-    }) 
+    })
 }
-$(window).scroll(function() {
-    if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        if(trigger === 1) {
+$(window).scroll(function () {
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+        if (trigger === 1) {
             paginate()
-        } 
+        }
     }
- });
+});

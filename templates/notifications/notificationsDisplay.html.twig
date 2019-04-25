@@ -1,0 +1,17 @@
+{% if notificationList|length > 0 %}
+<div class="notif-menu-container">
+        <a href="#" class="btn btn-primary btn-standard notif-data-link notif-data-clear" data-clear="{{ mgilet_notification_generate_path('notification_mark_all_as_seen', notificationList|first.notifiableEntity) }}">Mark all as seen</a>
+</div>
+{% endif %}
+<ul class="list-group notif-list-group">  
+{% for item in notificationList %}
+<a class="notif-display-link {% if item.seen == 0 %}notif-seen{% endif %}"
+href="{{ item.notification.link }}">
+    <li class="list-group-item">
+        <span class="notif-title">{{ item.notification.subject }}</span>
+        {{ item.notification.message }}<br /><span
+                class="text-muted">{{ item.notification.date|date('H:i d/m/Y') }}</span>
+    </li>
+</a>
+{% endfor %}
+</ul>

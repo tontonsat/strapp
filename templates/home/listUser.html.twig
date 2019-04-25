@@ -3,19 +3,20 @@
 {% block title %}Users list - Strapp.xyz{% endblock %}
 {% block body %}
 <main role="main" class="container-fluid main-content">
-    <div class="btn-group filter-user-grp" role="group" aria-label="Basic example">
-        <a class="btn btn-primary ajax-filter btn-standard{% if filter == 'mine' %}-active ajax-filter
-                 {% endif %}" data-path="mine" href="{{ path('home_listuser', {'slug': 'mine'}) }}"
-            data-toggle="tooltip" data-placement="bottom" data-title="My friends"><i class="fas fa-users"></i></a>
-        <a class="btn btn-primary btn-standard{% if filter == 'local' %}-active ajax-filter 
-                {% endif %}" data-path="local" href="{{ path('home_listuser', {'slug': 'local'}) }}"
-            data-toggle="tooltip" data-placement="bottom" data-title="Nearby"><i
-                class="fas fa-map-marker-alt"></i></a>
-        <a class="btn btn-primary btn-standard{% if filter == 'global' %}-active ajax-filter 
-                {% endif %}" data-path="global" href="{{ path('home_listuser', {'slug': 'global'}) }}"
-            data-toggle="tooltip" data-placement="bottom" data-title="Find more!"><i
-                class="fas fa-globe-americas"></i></a>
-    </div>
+    <div class="filter-container text-center">
+        <div class="btn-group filter-user-grp" role="group" aria-label="Basic example">
+            <a class="btn btn-primary ajax-filter btn-standard{% if filter == 'mine' %}-active ajax-filter
+                    {% endif %}" data-path="mine" href="{{ path('home_listuser', {'slug': 'mine'}) }}"
+                data-toggle="tooltip" data-placement="bottom" data-title="My friends"><i class="fas fa-users"></i></a>
+            <a class="btn btn-primary btn-standard{% if filter == 'local' %}-active ajax-filter 
+                    {% endif %}" data-path="local" href="{{ path('home_listuser', {'slug': 'local'}) }}"
+                data-toggle="tooltip" data-placement="bottom" data-title="Nearby"><i
+                    class="fas fa-map-marker-alt"></i></a>
+            <a class="btn btn-primary btn-standard{% if filter == 'global' %}-active ajax-filter 
+                    {% endif %}" data-path="global" href="{{ path('home_listuser', {'slug': 'global'}) }}"
+                data-toggle="tooltip" data-placement="bottom" data-title="Find more!"><i
+                    class="fas fa-globe-americas"></i></a>
+        </div>
     </div>
     <div class="row user-list-row">
         {% for user in users %}

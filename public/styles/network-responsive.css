@@ -106,7 +106,7 @@
 
     /* notifs menu */
     .navbar-nav .nav-notif-show {
-        max-height: 60vh;
+        max-height: 30vh;
     }
 }
 
@@ -117,6 +117,8 @@
     .search-bar-container .search-result-container {
         position: relative;
         box-shadow: none;
+        max-height: 60vh;
+        overflow-y: auto;
     }
     .card .card-standard {
         flex-direction: column;
@@ -142,7 +144,7 @@
         padding: 0 .55rem !important;
     }
     .search-bar-container {
-        max-width: 40%;
+        max-width: 35%;
     }
     .main-nav .nav-item .nav-notif-title {
         padding: 0 1.2rem !important;

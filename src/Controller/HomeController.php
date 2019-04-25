@@ -7,9 +7,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-
 use App\Entity\User;
 use App\Entity\Friendship;
 use App\Repository\UserRepository;
@@ -30,9 +27,39 @@ class HomeController extends Controller
     /**
      * @Route("/home", name="home_home")
      */
-    public function home(ObjectManager $manager, Request $request)
+    public function home(VoteRepository $voteRepo, ObjectManager $manager, Request $request)
     {
-        return $this->render('home/home.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $fsRepo = $em->getRepository(Friendship::class);
+
+        
+        $allFriends = $fsRepo->createQueryBuilder('fs')
+        ->select('partial fs.{id, user}')
+        ->leftJoin('fs.user', 'user')
+        ->addSelect('user')
+        ->where('fs.friend = :currentuser AND fs.status = 1')
+        ->setParameter('currentuser', $this->getUser()->getId())
+        ->getQuery()
+        ->getResult();
+        
+        foreach($allFriends as $friend) {
+            $friendsId[] = $friend->getUser()->getId();
+        }
+
+        $myVotes = $voteRepo->findBy(['author' => $this->getUser()->getId()]);
+        $myFriendsVotes = $voteRepo->findBy(['author' => $friendsId], ['id' => 'DESC']);
+
+        $votes = array_merge($myVotes, $myFriendsVotes);
+
+        return $this->render('home/home.html.twig', ['votes' => $votes]);
+    }
+
+    /**
+     * @Route("/displaynotifs", name="home_displaynotifs")
+     */
+    public function displayNotifs()
+    {
+        return $this->render('home/displayNotifs.html.twig');
     }
 
     /**
@@ -135,5 +162,88 @@ class HomeController extends Controller
                 'filter' => $slug
             ]);
         }
+    }
+
+    /**
+     * @route("/search/{query}", name="home_search")
+     */
+    public function search(Request $request, $query = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userRepo = $em->getRepository(User::class);
+        
+        $queryData = explode(' ', $query);
+        $result = array();
+        $result['byName'] = array();
+        $result['byLastname'] = array();
+        $result['byUsername'] = array();
+        $result['bestResults'] = array();
+
+        foreach ($queryData as $value) {    
+            if(strlen($value) >= 3) {
+                $byName = $userRepo->createQueryBuilder('u')
+                    ->where('u.name LIKE :query ')
+                    ->setParameter('query', '%' . $value . '%')
+                    ->setMaxResults(100)
+                    ->getQuery()
+                    ->getResult();
+                $result['byName'] = $byName;
+                if (empty($result['bestResult'])) {
+                    $result['bestResult'] = $byName;
+                } else {
+                    $result['bestResult'] = array_merge($result['bestResult'], $byName);
+                }
+
+                $byLastname = $userRepo->createQueryBuilder('u')
+                    ->where('u.lastname LIKE :query')
+                    ->setParameter('query', '%' . $value . '%')
+                    ->setMaxResults(100)
+                    ->getQuery()
+                    ->getResult();
+
+                $result['byLastname'] = array_udiff($byLastname, $result['byName'], $result['byUsername'], function ($res1, $res2) {
+                    return $res1->getId() - $res2->getId();
+                });
+                if (empty($result['bestResult'])) {
+                    $result['bestResult'] = $byLastname;
+                } else {
+                    $result['bestResult'] = array_merge($result['bestResult'], $byLastname);
+                }
+
+                $byUsername = $userRepo->createQueryBuilder('u')
+                    ->where('u.username LIKE :query')
+                    ->setParameter('query', '%' . $value . '%')
+                    ->setMaxResults(100)
+                    ->getQuery()
+                    ->getResult();
+                $result['byUsername'] = array_udiff($byUsername, $result['byName'], $result['byLastname'], function ($res1, $res2) {
+                    return $res1->getId() - $res2->getId();
+                });
+                if (empty($result['bestResult'])) {
+                    $result['bestResult'] = $byUsername;
+                } else {
+                    $result['bestResult'] = array_merge($result['bestResult'], $byUsername);
+                }
+                $result['bestResult'] = array_merge($result['bestResult'], $byUsername);
+            }
+        }
+
+        $result['byAll'] = array();
+            foreach ($queryData as $value) {            
+            $byAll = $userRepo->createQueryBuilder('u')
+                ->where('u.name LIKE :query AND u.username LIKE :query')
+                ->setParameter('query', '%' .$value.'%')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult();
+            $result['byAll'] = array_unique($byAll);
+        }
+
+        $result['bestResult'] = array_unique(array_uintersect($result['bestResult'], $result['byAll'], function ($res1, $res2) {
+            return spl_object_hash($res1) <=> spl_object_hash($res2);
+        }));
+
+        return $this->render('home/listSearch.html.twig', ['result' => $result]
+        );
     }
 }

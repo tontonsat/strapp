@@ -13,5 +13,14 @@
             </div>
         {% endfor %}
     </div>
+    <div class="row">
+        <div class="col">
+            {% for vote in votes %}
+                {{dump(vote)}}
+            {% endfor %}
+        </div>
+        <div class="col">
+        </div>
+    </div>
 </main>
 {% endblock %}
