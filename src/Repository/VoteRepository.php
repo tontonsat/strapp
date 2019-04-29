@@ -22,19 +22,18 @@ class VoteRepository extends ServiceEntityRepository
     // /**
     //  * @return Vote[] Returns an array of Vote objects
     //  */
-    /*
-    public function findByExampleField($value)
+    public function findByUserIdAndFriends($id, $friends)
     {
         return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('v.author = :id Or v.author IN (:friends)')
+            ->setParameter('id', $id)
+            ->setParameter('friends', array_values($friends))
+            ->orderBy('v.id', 'DESC')
+            ->setMaxResults(60)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Vote

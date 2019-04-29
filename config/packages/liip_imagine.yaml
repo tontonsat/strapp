@@ -11,3 +11,12 @@ liip_imagine:
       # These are the filters of the filter set, many filters can be applied 
       # Scale and shrink the image to the given size, with a possible crop of the image 
         thumbnail: { size: [253, 253], mode: outbound }
+
+    vote_crop:
+        filters:
+            # use and setup the "crop" filter
+          crop:
+            # set the size of the cropping area
+            size: [ 88, 88 ]
+            # set the starting coordinates of the crop
+            start: [ 0, 0 ]

@@ -46,10 +46,7 @@ class HomeController extends Controller
             $friendsId[] = $friend->getUser()->getId();
         }
 
-        $myVotes = $voteRepo->findBy(['author' => $this->getUser()->getId()]);
-        $myFriendsVotes = $voteRepo->findBy(['author' => $friendsId], ['id' => 'DESC']);
-
-        $votes = array_merge($myVotes, $myFriendsVotes);
+        $votes = $voteRepo->findByUserIdAndFriends([$this->getUser()->getId()],['friends' => $friendsId]);
 
         return $this->render('home/home.html.twig', ['votes' => $votes]);
     }

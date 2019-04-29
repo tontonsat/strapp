@@ -23,6 +23,11 @@ $(document).ready(function () {
     })
 })
 
+$('.vote-author-link').on('click', (e) => {
+    var path = $(e.target).data('path')
+    window.location = path
+})
+
 /* pagination */
 /* trigger is used to block ajax request when no match is found */
 var trigger = 1
@@ -54,4 +59,35 @@ $(window).scroll(function () {
             paginate()
         }
     }
-});
+})
+
+var getTimer = (obj) => {
+    let rawDate = $(obj).data('dateend')
+    let now = new Date().getTime()
+    var countDownDate = new Date(rawDate)
+
+    var duration = countDownDate - now
+
+    var hours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+
+    if (duration > 0) {
+        data = hours + ':' + minutes
+    } else {
+        data = 'over'
+        $(obj).prev('.vote-card-img').removeClass('vote-card-img-active')
+        $(obj).prev('.vote-card-img').addClass('vote-card-img-depleted')
+    }
+    $(obj).html(data)
+}
+
+$(document).ready(() => {
+    $('.vote-timer-spoiler').each((index, elem) => {
+        getTimer(elem)
+    })
+    setInterval(() => {
+        $('.vote-timer-spoiler').each((index, elem) => {
+            getTimer(elem)
+        })
+    }, 30000)
+})
