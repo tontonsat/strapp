@@ -11,3 +11,24 @@
 .map-container {
     padding: 0;
 }
+.main-map-app {
+    padding-top: 2.6rem;
+    max-height: 100%;
+    overflow: hidden;
+}
+@media screen and (max-width: 908px) {
+    .row #map {
+        width: 100%;
+        height: 100vh;
+    }
+}
+@media screen and (max-width: 1442px) {
+    .main-map-app {
+        padding-top: 3.1rem;
+    }
+}
+@media screen and (max-width: 700px) {
+    .main-map-app {
+        padding-top: 3.2rem;
+    }
+}

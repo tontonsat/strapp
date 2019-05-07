@@ -35,7 +35,7 @@
                                             alt="vote author avatar" class="vote-avatar" data-path="{{ path('home_user', {'slug': vote.author.id})}}">
                                     {% endif %}@{{ vote.author.username }}</span> posted a new vote</h6>
                                 <p class="card-text">
-                                    <small class="text-muted">{{ vote.dateCreate|date('d/m/y H:i') }}</small>
+                                    <small class="text-muted">{{ vote.dateCreate|date('d/m/y H:i') }} ({{ vote.coord['city'] }} - {{ vote.coord['country'] }} / ending: {{ vote.dateEnd|date('M d Y H:i:s') }})</small>
                                 </p>
                                 <p class="card-text">
                                     {% if vote.content|length > 85 %}

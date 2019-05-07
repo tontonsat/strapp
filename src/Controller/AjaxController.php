@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\User;
+use App\Entity\Vote;
 use App\Entity\Friendship;
 
 class AjaxController extends Controller
@@ -260,5 +261,17 @@ class AjaxController extends Controller
                 'offset' => $offset
             ]);
         }
+    }
+
+    /**
+     * @route("/ajaxGetVotePins", name="ajax_getvotepins")
+     */
+    public function ajaxGetVotePins(Request $request)
+    {    
+        $em = $this->getDoctrine()->getManager();
+        $voteRepo = $em->getRepository(Vote::class);
+        $data = $em->createQuery('SELECT v FROM App\Entity\Vote v')->getArrayResult();
+
+        return $this->json($data);
     }
 }

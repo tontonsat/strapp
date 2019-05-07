@@ -195,7 +195,7 @@ class Vote
 
     public function getCoord(): ?array
     {
-        return $this->currentLocation;
+        return $this->coord;
     }
 
     public function setCoord(?string $coord = null): self

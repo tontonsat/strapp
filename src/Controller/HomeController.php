@@ -52,6 +52,14 @@ class HomeController extends Controller
     }
 
     /**
+     * @Route("/displayMap", name="home_displaymap")
+     */
+    public function displayMap()
+    {
+        return $this->render('home/map.html.twig');
+    }
+
+    /**
      * @Route("/displaynotifs", name="home_displaynotifs")
      */
     public function displayNotifs()
