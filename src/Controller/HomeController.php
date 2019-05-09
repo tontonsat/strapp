@@ -45,7 +45,6 @@ class HomeController extends Controller
         foreach($allFriends as $friend) {
             $friendsId[] = $friend->getUser()->getId();
         }
-
         $votes = $voteRepo->findByUserIdAndFriends([$this->getUser()->getId()],['friends' => $friendsId]);
 
         return $this->render('home/home.html.twig', ['votes' => $votes]);

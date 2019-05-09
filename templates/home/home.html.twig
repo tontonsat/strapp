@@ -17,27 +17,28 @@
         {% for vote in votes %}
             <a href="#" class="home-vote-link">
                 <div class="card">
-                    <div class="row no-gutters">
-                        <div class="col-md-auto">
-                            <figure class="vote-spoiler" >
+                    <div class="card-header">
+                        <h6 class="card-title">
+                            <span class='vote-author-link' data-path="{{ path('home_user', {'slug': vote.author.id})}}">
+                            {% if vote.author.media is null %}
+                                <img src="uploads/avatars/0.jpg" alt="profile picture" class="vote-avatar" data-path="{{ path('home_user', {'slug': vote.author.id})}}">
+                                {% else %}
+                                <img src="{{ asset('uploads/avatars/' ~ vote.author.media.imageName) | imagine_filter('avatar') }}"
+                                    alt="vote author avatar" class="vote-avatar" data-path="{{ path('home_user', {'slug': vote.author.id})}}">
+                            {% endif %}@{{ vote.author.username }}</span> posted a new story</h6>
+                            <small class="text-muted">{{ vote.dateCreate|date('d/m/y H:i') }} ({{ vote.coord['city'] }} - {{ vote.coord['country'] }} / ending: {{ vote.dateEnd|date('M d Y H:i:s') }})</small>
+                    </div>
+                    <div class="row no-gutters row-vote-data">
+                        <div class="col-md-auto col-spoiler-container">
+                            <figure class="vote-spoiler" >  
                                 <img src="{{ asset('uploads/votes/' ~ vote.imageName) | imagine_filter('vote_crop') }}" alt="vote picture" class="card-img vote-card-img vote-card-img-active" data-idvote="{{ vote.id }}">
                                 <figcaption class="vote-timer-spoiler" id="vote-{{ vote.id }}" data-dateend="{{ vote.dateEnd|date('D M d Y H:i:s O') }}"></figcaption>
                             </figure>
                         </div>
                         <div class="col-md-auto basic-info-col">
                             <div class="card-body user-info">
-                                <h6 class="card-title">
-                                    <span class='vote-author-link' data-path="{{ path('home_user', {'slug': vote.author.id})}}">
-                                    {% if vote.author.media is null %}
-                                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="vote-avatar" data-path="{{ path('home_user', {'slug': vote.author.id})}}">
-                                        {% else %}
-                                        <img src="{{ asset('uploads/avatars/' ~ vote.author.media.imageName) | imagine_filter('avatar') }}"
-                                            alt="vote author avatar" class="vote-avatar" data-path="{{ path('home_user', {'slug': vote.author.id})}}">
-                                    {% endif %}@{{ vote.author.username }}</span> posted a new vote</h6>
-                                <p class="card-text">
-                                    <small class="text-muted">{{ vote.dateCreate|date('d/m/y H:i') }} ({{ vote.coord['city'] }} - {{ vote.coord['country'] }} / ending: {{ vote.dateEnd|date('M d Y H:i:s') }})</small>
-                                </p>
-                                <p class="card-text">
+                                <h5 class="card-title">{{ vote.title }}</h5>
+                                <p class="card-text card-vote-content">
                                     {% if vote.content|length > 85 %}
                                     {{ vote.content[:85] }}...
                                     {% endif %}

@@ -16,6 +16,29 @@
     max-height: 100%;
     overflow: hidden;
 }
+.mapboxgl-popup-close-button {
+    z-index: 3;
+    color: #121212;
+}
+.mapboxgl-popup {
+    max-width: 422px;
+}
+.mapboxgl-popup-content {
+    padding: 0;
+}
+.row-pin-data {
+    flex-wrap: nowrap;
+}
+.pin-img {
+    border-radius: 45px;
+}
+.pin-spoiler {
+    width: 122px;
+}
+.basic-info-col {
+    width: auto;
+    flex: 0 1 auto;
+}
 @media screen and (max-width: 908px) {
     .row #map {
         width: 100%;

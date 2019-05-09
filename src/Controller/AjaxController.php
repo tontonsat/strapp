@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use App\Entity\Vote;
 use App\Entity\Friendship;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AjaxController extends Controller
 {
@@ -266,12 +267,38 @@ class AjaxController extends Controller
     /**
      * @route("/ajaxGetVotePins", name="ajax_getvotepins")
      */
-    public function ajaxGetVotePins(Request $request)
+    public function ajaxGetVotePins()
     {    
         $em = $this->getDoctrine()->getManager();
         $voteRepo = $em->getRepository(Vote::class);
         $data = $em->createQuery('SELECT v FROM App\Entity\Vote v')->getArrayResult();
 
         return $this->json($data);
+    }
+
+    /**
+     * @route("/ajaxGetUserPos", name="ajax_getcurrentuserpos")
+     */
+    public function ajaxGetUserPos()
+    {    
+        return new JsonResponse($this->getUser()->getCurrentLocation());
+    }
+
+    /**
+     * @route("/ajaxGetPinView/{slug}", name="ajax_getpinview")
+     */
+    public function ajaxGetPinView($slug = null)
+    {    
+        $em = $this->getDoctrine()->getManager();
+        $voteRepo = $em->getRepository(Vote::class);
+
+        $voteData = $voteRepo->createQueryBuilder('v')
+            ->where('v.id = :id')
+            ->setParameter('id', $slug)
+            ->getQuery()
+            ->getSingleResult();
+        dump($voteData);
+        return $this->render('ajax/ajaxPinView.html.twig', ['vote' => $voteData]
+        );
     }
 }

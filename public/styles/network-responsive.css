@@ -108,6 +108,11 @@
     .navbar-nav .nav-notif-show {
         max-height: 30vh;
     }
+
+    /* votes */ 
+    .col-spoiler-container {
+        width: auto;
+    }
 }
 
 @media screen and (max-width: 670px) {
