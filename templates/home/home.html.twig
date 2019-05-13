@@ -15,17 +15,17 @@
     </div>
     <div class="row">
         {% for vote in votes %}
-            <a href="#" class="home-vote-link">
+            <div class="home-vote-container home-vote-link" data-path="{{path('home_displayvote', {'vote': vote.id})}}">
                 <div class="card">
                     <div class="card-header">
                         <h6 class="card-title">
-                            <span class='vote-author-link' data-path="{{ path('home_user', {'slug': vote.author.id})}}">
+                            <a class='vote-author-link' href="{{ path('home_user', {'slug': vote.author.id})}}">
                             {% if vote.author.media is null %}
                                 <img src="uploads/avatars/0.jpg" alt="profile picture" class="vote-avatar" data-path="{{ path('home_user', {'slug': vote.author.id})}}">
                                 {% else %}
                                 <img src="{{ asset('uploads/avatars/' ~ vote.author.media.imageName) | imagine_filter('avatar') }}"
                                     alt="vote author avatar" class="vote-avatar" data-path="{{ path('home_user', {'slug': vote.author.id})}}">
-                            {% endif %}@{{ vote.author.username }}</span> posted a new story</h6>
+                            {% endif %}@{{ vote.author.username }}</a> posted a new story</h6>
                             <small class="text-muted">{{ vote.dateCreate|date('d/m/y H:i') }} ({{ vote.coord['city'] }} - {{ vote.coord['country'] }} / ending: {{ vote.dateEnd|date('M d Y H:i:s') }})</small>
                     </div>
                     <div class="row no-gutters row-vote-data">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
         {% endfor %}
     </div>
 </main>

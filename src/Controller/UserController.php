@@ -104,6 +104,7 @@ class UserController extends Controller
             'formBio'       => $formBio->createView(),
         ]);
     }
+
     /**
      * @Route("/user/{slug}", name="home_user")
      */
@@ -146,6 +147,15 @@ class UserController extends Controller
             'friends' => $friends,
             'friendship' => $friendship
         ]);
+    }
+
+    /**
+     * @Route("/settings", name="home_settings")
+     */
+    public function settings()
+    {
+
+        return $this->render('user/settings.html.twig');
     }
 
     /**

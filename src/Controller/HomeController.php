@@ -101,6 +101,19 @@ class HomeController extends Controller
     }
 
     /**
+     * @Route("/displayVote/{vote}", name="home_displayvote")
+     */
+    public function displayVote(Vote $vote = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $voteRepo = $em->getRepository(Vote::class);
+
+        $vote = $voteRepo->findOneBy(['id' => $vote]);
+
+        return $this->render('vote/displayVote.html.twig', ['vote' => $vote]);
+    }
+
+    /**
      * @route("/listUser/{slug}", name="home_listuser")
      */
     public function listUser(Request $request, $slug = null)

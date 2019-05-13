@@ -24,7 +24,6 @@ class VoteRepository extends ServiceEntityRepository
     //  */
     public function findByUserIdAndFriends($id, $friends)
     {
-        dump($friends);
         return $this->createQueryBuilder('v')
             ->andWhere('v.author = :id OR v.author IN (:friends)')
             ->setParameter('id', $id)

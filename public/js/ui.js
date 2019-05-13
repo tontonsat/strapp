@@ -23,8 +23,8 @@ $(document).ready(function () {
     })
 })
 
-$('.vote-author-link').on('click', (e) => {
-    var path = $(e.target).data('path')
+$('.home-vote-container').on('click', (e) => {
+    var path = $(e.currentTarget).data('path')
     window.location = path
 })
 

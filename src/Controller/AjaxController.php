@@ -297,7 +297,6 @@ class AjaxController extends Controller
             ->setParameter('id', $slug)
             ->getQuery()
             ->getSingleResult();
-        dump($voteData);
         return $this->render('ajax/ajaxPinView.html.twig', ['vote' => $voteData]
         );
     }
