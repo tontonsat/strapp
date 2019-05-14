@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\User;
 use App\Entity\Friendship;
-use App\Repository\UserRepository;
 use App\Repository\VoteRepository;
 use App\Repository\FriendshipRepository;
 use App\Form\VoteType;

@@ -122,12 +122,18 @@ class User implements UserInterface, NotifiableInterface
      */
     private $votes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author", orphanRemoval=true)
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->setCurrentLocation();
         $this->roles[] = 'ROLE_USER';
         $this->friendships = new ArrayCollection();
         $this->votes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function __toString(): ?string
@@ -404,6 +410,37 @@ class User implements UserInterface, NotifiableInterface
             // set the owning side to null (unless already changed)
             if ($vote->getAuthor() === $this) {
                 $vote->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getAuthor() === $this) {
+                $comment->setAuthor(null);
             }
         }
 

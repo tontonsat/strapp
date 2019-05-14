@@ -40,6 +40,17 @@
                     </div>
                 </div>
             </div>
+            <div class="card-footer text-muted">
+                <div class="row">
+                        <div class="col text-center">0 votes</div>
+                        <div class="col text-center">{{ vote.comments|length }} comments</div>
+                        <div class="col text-center">Comment</div></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card w-100">
+            <div class="comments-container"></div>
         </div>
     </div>
 </main>
@@ -61,4 +72,5 @@
 <script src={{ asset("js/locateMe.js") }}></script>
 <script src={{ asset("ajax/notification.js") }}></script>
 <script src={{ asset("ajax/search.js") }}></script>
+<script src={{ asset("ajax/comment.js") }}></script>
 {% endblock %}

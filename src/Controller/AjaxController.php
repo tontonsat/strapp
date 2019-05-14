@@ -11,7 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use App\Entity\Vote;
 use App\Entity\Friendship;
+use App\Entity\Comment;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Form\CommentType;
 
 class AjaxController extends Controller
 {
@@ -298,6 +300,23 @@ class AjaxController extends Controller
             ->getQuery()
             ->getSingleResult();
         return $this->render('ajax/ajaxPinView.html.twig', ['vote' => $voteData]
+        );
+    }
+    
+    /**
+     * @route("/ajaxComment", name="ajax_comment")
+     */
+    public function ajaxComment()
+    {    
+        $comment = new Comment();
+        $formComment = $this->createForm(CommentType::class, $comment);
+
+        $em = $this->getDoctrine()->getManager();
+        $voteRepo = $em->getRepository(Vote::class);
+        $comments = [];
+
+        return $this->render('ajax/ajaxComments.html.twig', ['comments' => $comments, 
+                                                            'commentForm' => $formComment->createView()]
         );
     }
 }
