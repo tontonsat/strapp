@@ -7,7 +7,7 @@
     <h2>Settings</h2>
     <div class="row">
         <div class="card w-100">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+            <button type="button" class="btn btn-standard" data-toggle="modal" data-target="#exampleModalLong">
                 Delete account
             </button>
             <!-- Modal -->
@@ -16,17 +16,17 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Account closing</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            ...
+                            <i class="fas fa-exclamation-triangle"></i> You are about to close your account. Your profile, profile picture, posts, votes and commentaries will be deleted in the process. Do you wish to continue?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <a href="{{path('home_deleteaccount')}}" class="btn btn-danger">I understand, close my account</a>
                         </div>
                     </div>
                 </div>

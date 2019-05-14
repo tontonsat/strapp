@@ -690,6 +690,9 @@ nav {
     transition: .2s ease-in-out;
     background-color: rgba(0, 0, 0, 0.6);
 }
+.col-spoiler-container {
+    max-height: 122px;
+}
 .vote-avatar {
     height: 32px;
     width: 32px;

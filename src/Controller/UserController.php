@@ -154,8 +154,26 @@ class UserController extends Controller
      */
     public function settings()
     {
-
         return $this->render('user/settings.html.twig');
+    }
+
+    /**
+     * @Route("/deleteAccount", name="home_deleteaccount")
+     */
+    public function deleteAccount()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fsRepo = $em->getRepository(Friendship::class);
+        $allFriendships = $fsRepo->findAllMyFriendships();
+        foreach($allFriendships as $fs) {
+            $em->remove($fs);
+        }
+        $em->remove($this->getUser());
+        $em->flush();
+        
+        $this->get('security.token_storage')->setToken(null);
+        $this->get('session')->invalidate();
+        return $this->redirectToRoute('home_root');
     }
 
     /**

@@ -19,22 +19,29 @@ class FriendshipRepository extends ServiceEntityRepository
         parent::__construct($registry, Friendship::class);
     }
 
-    // /**
-    //  * @return Friendship[] Returns an array of Friendship objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+    /**
+    * @return Friendship[] Returns an array of Friendship objects
     */
+    public function findAllMyFriendships()
+    {
+        return $this->createQueryBuilder('fs')
+        ->where('fs.user = :user OR fs.friend = :user')
+        ->setParameter('user', $this->getUser()->getId())
+        ->getQuery()
+        ->getResult();
+    }
+
+    /**
+    * @return Friendship[] Returns an array of Friendship objects
+    */
+    public function findMyValidFriends($user)
+    {
+        return $this->createQueryBuilder('fs')
+        ->where('fs.user = :user AND fs.status = 1')
+        ->setParameter('user', $user)
+        ->getQuery()
+        ->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Friendship

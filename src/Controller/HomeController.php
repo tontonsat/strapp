@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Entity\Friendship;
 use App\Repository\UserRepository;
 use App\Repository\VoteRepository;
+use App\Repository\FriendshipRepository;
 use App\Form\VoteType;
 use App\Entity\Vote;
 
@@ -41,11 +42,15 @@ class HomeController extends Controller
         ->setParameter('currentuser', $this->getUser()->getId())
         ->getQuery()
         ->getResult();
-        
-        foreach($allFriends as $friend) {
-            $friendsId[] = $friend->getUser()->getId();
+        if(!empty($allFriends)) {
+            foreach($allFriends as $friend) {
+                $friendsId[] = $friend->getUser()->getId();
+            }
+            $votes = $voteRepo->findByUserIdAndFriends([$this->getUser()->getId()],['friends' => $friendsId]);
         }
-        $votes = $voteRepo->findByUserIdAndFriends([$this->getUser()->getId()],['friends' => $friendsId]);
+        else {
+            $votes = [];
+        }
 
         return $this->render('home/home.html.twig', ['votes' => $votes]);
     }
@@ -69,7 +74,7 @@ class HomeController extends Controller
     /**
      * @Route("/vote/{vote}", name="home_vote")
      */
-    public function vote(VoteRepository $repo, ObjectManager $manager, Request $request, Vote $vote = null)
+    public function vote(VoteRepository $repo, FriendshipRepository $fsRepo, ObjectManager $manager, Request $request, Vote $vote = null)
     {
         if(is_null($vote)) {
             $vote = new Vote();
@@ -79,6 +84,7 @@ class HomeController extends Controller
         }
 
         $formVote = $this->createForm(VoteType::class, $vote);
+        $managerNotif = $this->get('mgilet.notification');
 
         $formVote->handleRequest($request);
         if ( $formVote->isSubmitted() && $formVote->isValid()) {
@@ -92,6 +98,16 @@ class HomeController extends Controller
 
             $manager->persist($vote);
             $manager->flush();
+
+            $url = $this->generateUrl('home_displayvote', ['vote' => $vote->getId()]);
+            $myfriends = $fsRepo->findMyValidFriends($this->getUser()->getId());
+            $notif = $managerNotif->createNotification($this->getUser()->getName() . ' ' . $this->getUser()->getLastname());
+            $notif->setMessage('posted a new story!');
+            $notif->setLink($url);
+
+            foreach($myfriends as $friendship) {
+                $managerNotif->addNotification([$friendship->getFriend()], $notif, true);
+            }
 
             $this->addFlash('notice-vote-submit', 'Story submitted with success!');
             return $this->redirectToRoute("home_home");

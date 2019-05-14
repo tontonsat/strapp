@@ -14,7 +14,8 @@
         {% endfor %}
     </div>
     <div class="row">
-        {% for vote in votes %}
+        {% if votes is not empty %}
+            {% for vote in votes %}
             <div class="home-vote-container home-vote-link" data-path="{{path('home_displayvote', {'vote': vote.id})}}">
                 <div class="card">
                     <div class="card-header">
@@ -51,7 +52,8 @@
                     </div>
                 </div>
             </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
     </div>
 </main>
 {% endblock %}
