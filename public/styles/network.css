@@ -677,6 +677,20 @@ nav {
 .vote-card-img:hover .vote-timer-spoiler {
     display: none;
 }
+/* Vote img modal */
+.vote-card-img-enhanced {
+    width: 100%;
+}
+.modal-vote-image {
+    width: 100%;
+}
+.vote-modal-wrapper {
+    background-color: transparent;
+    border: none;
+}
+.vote-modal-close {
+    color: #ffda00;
+}
 .vote-timer-spoiler {
     position: absolute;
     text-align: center;
@@ -698,6 +712,16 @@ nav {
     width: 32px;
     border-radius: 20px;
 }
+.comment-avatar {
+    height: 26px;
+    width: 26px;
+    border-radius: 20px;
+}
 .vote-author-link:hover {
     text-decoration: underline;
+}
+.col .vote-menu-dropdown {
+    right: 0px;
+    left: auto;
+    background-color: #ffffff;
 }

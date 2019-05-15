@@ -4,10 +4,10 @@
 
 {% block body %}
 <main role="main" class="container-fluid main-content">
-    <h2>{{vote.title}}</h2>
     <div class="row">
         <div class="card w-100">
             <div class="card-header">
+                <h2>{{vote.title}}</h2>
                 <h6 class="card-title">
                     <a class='vote-author-link' href="{{ path('home_user', {'slug': vote.author.id})}}">
                         {% if vote.author.media is null %}
@@ -17,12 +17,14 @@
                         <img src="{{ asset('uploads/avatars/' ~ vote.author.media.imageName) | imagine_filter('avatar') }}"
                             alt="vote author avatar" class="vote-avatar"
                             data-path="{{ path('home_user', {'slug': vote.author.id})}}">
-                        {% endif %}@{{ vote.author.username }}</a> posted a new story</h6>
-                <small class="text-muted">{{ vote.dateCreate|date('d/m/y H:i') }} ({{ vote.coord['city'] }} -
-                    {{ vote.coord['country'] }} / ending: {{ vote.dateEnd|date('M d Y H:i:s') }})</small>
+                        {% endif %}@{{ vote.author.username }}</a></h6>
+                <small class="text-muted">{{ vote.dateCreate|date('d/m/y H:i') }} -
+                    {{ vote.dateEnd|date('M d Y H:i:s') }} ({{ vote.coord['city'] }})
+                </small>
             </div>
             <div class="row no-gutters row-vote-data">
                 <div class="col-md-auto col-spoiler-container">
+                    {% if vote.status == 1 %}
                     <figure class="vote-spoiler">
                         <img src="{{ asset('uploads/votes/' ~ vote.imageName) | imagine_filter('vote_crop') }}"
                             alt="vote picture" class="card-img vote-card-img vote-card-img-active"
@@ -30,10 +32,32 @@
                         <figcaption class="vote-timer-spoiler" id="vote-{{ vote.id }}"
                             data-dateend="{{ vote.dateEnd|date('D M d Y H:i:s O') }}"></figcaption>
                     </figure>
+                    {% else %}
+                    <figure class="vote-spoiler" data-toggle="modal" data-target="#imgModal">
+                        <img src="{{ asset('uploads/votes/' ~ vote.imageName) | imagine_filter('avatar')}}"
+                            alt="story picture" class="card-img vote-card-img">
+                    </figure>
+                    <div class="modal fade" id="imgModal" tabindex="-1" role="dialog" aria-labelledby="imgModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg modal-vote-image" role="document">
+                            <div class="modal-content vote-modal-wrapper">
+                                <div class="modal-body vote-modal-body">
+                                    <button type="button" class="close vote-modal-close" data-dismiss="modal"
+                                        aria-label="Close">
+                                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                                    </button>
+                                    <figure class="vote-spoiler" data-toggle="modal" data-target="#imgModal">
+                                        <img src="{{ asset('uploads/votes/' ~ vote.imageName) }}" alt="story picture"
+                                            class="card-img vote-card-img-enhanced">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="col-md-auto basic-info-col">
                     <div class="card-body user-info">
-                        <h5 class="card-title">{{ vote.title }}</h5>
                         <p class="card-text card-vote-content">
                             {{ vote.content }}
                         </p>
@@ -42,15 +66,50 @@
             </div>
             <div class="card-footer text-muted">
                 <div class="row">
-                        <div class="col text-center">0 votes</div>
-                        <div class="col text-center">{{ vote.comments|length }} comments</div>
-                        <div class="col text-center">Comment</div></div>
+                    <div class="col text-center">0 votes</div>
+                    <div class="col text-center">{{ vote.comments|length }} comments</div>
+                    {% if app.user.id == vote.author.id %}
+                    <div class="col text-center">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </a>
+                        <div class="dropdown-menu vote-menu-dropdown" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{{path('home_deletevote', {'vote': vote.id})}}">Delete vote</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="card w-100">
-            <div class="comments-container"></div>
+            <div class="comments-container">
+                <div class="comment-form-container">
+                    {{ form_start(commentForm) }}
+                    {{ form_row(commentForm.content, {'attr': {'class': 'form-control', 'maxLength': '250'}}) }}
+                    {{ form_row(commentForm.save, {'attr': {'class': 'btn btn-primary form-control btn-standard'}}) }}
+                    {{ form_end(commentForm) }}
+                </div>
+                <div class="comment-list-container">
+                    {% for comment in vote.comments|sort %}
+                    <div class="card">
+                        <p>
+                            <a class='vote-author-link' href="{{ path('home_user', {'slug': comment.author.id})}}">
+                                {% if comment.author.media is null %}
+                                <img src="{{asset('uploads/avatars/0.jpg')}}" alt="profile picture"
+                                    class="comment-avatar"
+                                    data-path="{{ path('home_user', {'slug': comment.author.id})}}">
+                                {% else %}
+                                <img src="{{ asset('uploads/avatars/' ~ comment.author.media.imageName) | imagine_filter('avatar') }}"
+                                    alt="comment author avatar" class="comment-avatar"
+                                    data-path="{{ path('home_user', {'slug': comment.author.id})}}">
+                                {% endif %}@{{ comment.author.username }}</a> {{ comment.content }} <small
+                                class="text-muted">({{ comment.dateCreate|date('h:i d/m/y') }})</small> </p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 </main>

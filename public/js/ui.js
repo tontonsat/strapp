@@ -23,7 +23,7 @@ $(document).ready(function () {
     })
 })
 
-$('.home-vote-container').on('click', (e) => {
+$(document).on('click', '.home-vote-container', (e) => {    
     var path = $(e.currentTarget).data('path')
     window.location = path
 })
@@ -41,15 +41,33 @@ var paginate = () => {
         type: 'GET',
         success: (data) => {
             $('.list-bottom-ajax').html('')
-            $('.list-bottom-ajax').data('offset', offset + 48)
+            if(path == '/ajaxListVotesScroll') {
+                $('.list-bottom-ajax').data('offset', offset + 3)
+            }
+            else {
+                $('.list-bottom-ajax').data('offset', offset + 48)
+            }
             if (data !== '' && data !== null) {
-                $('.user-list-row').append(data)
+                if(path == '/ajaxListVotesScroll') {
+                    $('.row-list-votes').append(data)
+                }
+                else {
+                    $('.user-list-row').append(data)
+                }
                 trigger = 1
 
             } else {
+                if(path == '/ajaxListVotesScroll') {
+                    $('.row-list-votes').append('<div class="end-result">No more results</div>')
+                }
+                else {
+                    $('.user-list-row').append('<div class="end-result">No more results</div>')
+                }
                 trigger = 0
-                $('.user-list-row').append('<div class="end-result">No more results</div>')
             }
+            $('.vote-timer-spoiler').each((index, elem) => {
+                getTimer(elem)
+            })
         }
     })
 }

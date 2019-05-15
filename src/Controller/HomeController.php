@@ -13,6 +13,8 @@ use App\Repository\VoteRepository;
 use App\Repository\FriendshipRepository;
 use App\Form\VoteType;
 use App\Entity\Vote;
+use App\Entity\Comment;
+use App\Form\CommentType;
 
 class HomeController extends Controller
 {
@@ -27,12 +29,11 @@ class HomeController extends Controller
     /**
      * @Route("/home", name="home_home")
      */
-    public function home(VoteRepository $voteRepo, ObjectManager $manager, Request $request)
+    public function home(VoteRepository $voteRepo)
     {
         $em = $this->getDoctrine()->getManager();
         $fsRepo = $em->getRepository(Friendship::class);
 
-        
         $allFriends = $fsRepo->createQueryBuilder('fs')
         ->select('partial fs.{id, user}')
         ->leftJoin('fs.user', 'user')
@@ -51,7 +52,22 @@ class HomeController extends Controller
             $votes = [];
         }
 
-        return $this->render('home/home.html.twig', ['votes' => $votes]);
+        $now = new \Datetime('now');
+
+        $voteData = [];
+
+        foreach($votes as $vote) {
+            if($vote->getStatus() == 1 && $vote->getDateEnd() <= $now) {
+                $vote->setStatus(0);
+                $voteData[] = $vote;
+            }
+            else {
+                $voteData[] = $vote;
+            }
+        }
+        $em->flush();
+
+        return $this->render('home/home.html.twig', ['votes' => $voteData]);
     }
 
     /**
@@ -118,14 +134,48 @@ class HomeController extends Controller
     /**
      * @Route("/displayVote/{vote}", name="home_displayvote")
      */
-    public function displayVote(Vote $vote = null)
+    public function displayVote(Vote $vote = null, Request $request, ObjectManager $manager)
     {
         $em = $this->getDoctrine()->getManager();
         $voteRepo = $em->getRepository(Vote::class);
 
         $vote = $voteRepo->findOneBy(['id' => $vote]);
+        if($vote->getStatus() == 1 && $vote->getDateEnd() <= new \Datetime('now')) {
+            $vote->setStatus(0);
+            $em->flush();
+        }
+        
+        $comment = new Comment();
+        $formComment = $this->createForm(CommentType::class, $comment);
 
-        return $this->render('vote/displayVote.html.twig', ['vote' => $vote]);
+        $formComment->handleRequest($request);
+        if ($formComment->isSubmitted() && $formComment->isValid()) {
+            $comment->setAuthor($this->getUser());
+            $comment->setDateCreate(new \Datetime('now'));
+            $vote->addComment($comment);
+            $manager->persist($comment);
+            $manager->flush();
+            
+            return $this->redirectToRoute('home_displayvote', ['vote' => $vote->getId()]);
+        }
+
+        return $this->render('vote/displayVote.html.twig', ['vote' => $vote, 'commentForm' => $formComment->createView()]);
+    }
+
+    /**
+     * @Route("/deleteVote/{vote}", name="home_deletevote")
+     */
+    public function deleteVote(Vote $vote = null, ObjectManager $manager)
+    {
+        $voteRepo = $manager->getRepository(Vote::class);
+
+        $vote = $voteRepo->findOneBy(['id' => $vote]);
+        if($this->getUser()->getId() == $vote->getAuthor()->getId()) {
+            $manager->remove($vote);
+            $manager->flush();
+            $this->addFlash('notice-vote-submit', 'Story deleted with success!');
+        }
+        return $this->redirectToRoute('home_home');
     }
 
     /**

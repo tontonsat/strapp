@@ -19,9 +19,9 @@ class VoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Vote::class);
     }
 
-    // /**
-    //  * @return Vote[] Returns an array of Vote objects
-    //  */
+    /**
+    * @return Vote[] Returns an array of Vote objects
+    */
     public function findByUserIdAndFriends($id, $friends)
     {
         return $this->createQueryBuilder('v')
@@ -29,7 +29,24 @@ class VoteRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->setParameter('friends', $friends['friends'])
             ->orderBy('v.id', 'DESC')
-            ->setMaxResults(60)
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+    * @return Vote[] Returns an array of Vote objects
+    */
+    public function findByUserIdAndFriendsOffset($id, $friends, $offset)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.author = :id OR v.author IN (:friends)')
+            ->setParameter('id', $id)
+            ->setParameter('friends', $friends)
+            ->orderBy('v.id', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults(3)
             ->getQuery()
             ->getResult()
         ;

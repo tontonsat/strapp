@@ -13,7 +13,7 @@
             </div>
         {% endfor %}
     </div>
-    <div class="row">
+    <div class="row row-list-votes">
         {% if votes is not empty %}
             {% for vote in votes %}
             <div class="home-vote-container home-vote-link" data-path="{{path('home_displayvote', {'vote': vote.id})}}">
@@ -31,10 +31,18 @@
                     </div>
                     <div class="row no-gutters row-vote-data">
                         <div class="col-md-auto col-spoiler-container">
+                            {% if vote.status == 1 %}
                             <figure class="vote-spoiler" >  
                                 <img src="{{ asset('uploads/votes/' ~ vote.imageName) | imagine_filter('vote_crop') }}" alt="vote picture" class="card-img vote-card-img vote-card-img-active" data-idvote="{{ vote.id }}">
                                 <figcaption class="vote-timer-spoiler" id="vote-{{ vote.id }}" data-dateend="{{ vote.dateEnd|date('D M d Y H:i:s O') }}"></figcaption>
                             </figure>
+                            {% else %}
+                            <figure class="vote-spoiler" >  
+                                <img src="{{ asset('uploads/votes/' ~ vote.imageName) | imagine_filter('avatar') }}" alt="vote picture" class="card-img vote-card-img vote-card-img-active" data-idvote="{{ vote.id }}">
+                                <figcaption class="vote-timer-spoiler" id="vote-{{ vote.id }}" data-dateend="{{ vote.dateEnd|date('D M d Y H:i:s O') }}"></figcaption>
+                            </figure>
+                                
+                            {% endif %}
                         </div>
                         <div class="col-md-auto basic-info-col">
                             <div class="card-body user-info">
@@ -50,10 +58,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col text-center"><small class="text-muted">0 votes</small></div>
+                            <div class="col text-center"><small class="text-muted">{{ vote.comments|length }} comments</small></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             {% endfor %}
         {% endif %}
     </div>
+    <div class="row list-bottom-ajax text-center" data-path="/ajaxListVotesScroll" data-offset="10">
 </main>
 {% endblock %}

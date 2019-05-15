@@ -90,9 +90,15 @@ class Vote
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="target")
+     */
+    private $ratings;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     /**
@@ -260,6 +266,37 @@ class Vote
             // set the owning side to null (unless already changed)
             if ($comment->getVote() === $this) {
                 $comment->setVote(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rating[]
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setTarget($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->contains($rating)) {
+            $this->ratings->removeElement($rating);
+            // set the owning side to null (unless already changed)
+            if ($rating->getTarget() === $this) {
+                $rating->setTarget(null);
             }
         }
 

@@ -7,4 +7,4 @@ var getComments = () => {
         }
     })
 }
-$(document).ready(getComments())
+//$(document).ready(getComments())

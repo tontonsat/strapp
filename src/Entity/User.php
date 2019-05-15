@@ -127,6 +127,11 @@ class User implements UserInterface, NotifiableInterface
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Rating", mappedBy="author", orphanRemoval=true)
+     */
+    private $ratings;
+
     public function __construct()
     {
         $this->setCurrentLocation();
@@ -134,6 +139,7 @@ class User implements UserInterface, NotifiableInterface
         $this->friendships = new ArrayCollection();
         $this->votes = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function __toString(): ?string
@@ -441,6 +447,37 @@ class User implements UserInterface, NotifiableInterface
             // set the owning side to null (unless already changed)
             if ($comment->getAuthor() === $this) {
                 $comment->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rating[]
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->contains($rating)) {
+            $this->ratings->removeElement($rating);
+            // set the owning side to null (unless already changed)
+            if ($rating->getAuthor() === $this) {
+                $rating->setAuthor(null);
             }
         }
 

@@ -35,7 +35,7 @@
 .pin-spoiler {
     width: 122px;
 }
-.basic-info-col {
+.basic-info-col { 
     width: auto;
     flex: 0 1 auto;
 }

@@ -11,9 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use App\Entity\Vote;
 use App\Entity\Friendship;
-use App\Entity\Comment;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Form\CommentType;
+use App\Repository\VoteRepository;
 
 class AjaxController extends Controller
 {
@@ -265,6 +264,52 @@ class AjaxController extends Controller
             ]);
         }
     }
+    /**
+     * @route("/ajaxListVotesScroll/{offset}", name="ajax_ajaxlistvotesscroll")
+     */
+    public function ajaxListVotesScroll(VoteRepository $voteRepo , $offset = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fsRepo = $em->getRepository(Friendship::class);
+
+        $allFriends = $fsRepo->createQueryBuilder('fs')
+        ->select('partial fs.{id, user}')
+        ->leftJoin('fs.user', 'user')
+        ->addSelect('user')
+        ->where('fs.friend = :currentuser AND fs.status = 1')
+        ->setParameter('currentuser', $this->getUser()->getId())
+        ->getQuery()
+        ->getResult();
+        if(!empty($allFriends)) {
+            foreach($allFriends as $friend) {
+                $friendsId[] = $friend->getUser()->getId();
+            }
+            $votes = $voteRepo->findByUserIdAndFriendsOffset($this->getUser()->getId(), $friendsId,$offset);
+        }
+        else {
+            $votes = [];
+        }
+
+        $now = new \Datetime('now');
+        $voteData = [];
+        foreach($votes as $vote) {
+            if($vote->getStatus() == 1 && $vote->getDateEnd() <= $now) {
+                $vote->setStatus(0);
+                $voteData[] = $vote;
+            }
+            else {
+                $voteData[] = $vote;
+            }
+        }
+        $em->flush();
+
+        $offset += 10;
+
+        return $this->render('ajax/ajaxListVotesScroll.html.twig', [
+            'votes' => $voteData,
+            'offset' => $offset
+        ]);
+    }
 
     /**
      * @route("/ajaxGetVotePins", name="ajax_getvotepins")
@@ -308,11 +353,6 @@ class AjaxController extends Controller
      */
     public function ajaxComment()
     {    
-        $comment = new Comment();
-        $formComment = $this->createForm(CommentType::class, $comment);
-
-        $em = $this->getDoctrine()->getManager();
-        $voteRepo = $em->getRepository(Vote::class);
         $comments = [];
 
         return $this->render('ajax/ajaxComments.html.twig', ['comments' => $comments, 
