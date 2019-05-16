@@ -8,7 +8,7 @@
                 {% else %}
                 <img src="{{ asset('uploads/avatars/' ~ vote.author.media.imageName) | imagine_filter('avatar') }}"
                     alt="vote author avatar" class="vote-avatar" data-path="{{ path('home_user', {'slug': vote.author.id})}}">
-            {% endif %}@{{ vote.author.username }}</a> posted a new vote</h6>
+            {% endif %}@{{ vote.author.username }}</a></h6>
             <small class="text-muted">{{ vote.dateCreate|date('d/m/y H:i') }} ({{ vote.coord['city'] }} - {{ vote.coord['country'] }} / ending: {{ vote.dateEnd|date('M d Y H:i:s') }})</small>
     </div>
     <div class="row no-gutters row-pin-data">

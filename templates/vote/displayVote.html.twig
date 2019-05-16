@@ -4,6 +4,16 @@
 
 {% block body %}
 <main role="main" class="container-fluid main-content">
+    <div class="row user-list-row main-flash-container refresh-pos-home-btn">
+        <button href="" class="btn btn-standard form-control updateCoordBtn"><i class="fas fa-map-marker-alt"></i>
+            Update location</button>
+        {% for message in app.flashes('notice-vote-submit') %}
+        <div class="alert alert-dismissible alert-success main-alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="fas fa-user-circle"></i> {{ message }}
+        </div>
+        {% endfor %}
+    </div>
     <div class="row">
         <div class="card w-100">
             <div class="card-header">
@@ -11,7 +21,7 @@
                 <h6 class="card-title">
                     <a class='vote-author-link' href="{{ path('home_user', {'slug': vote.author.id})}}">
                         {% if vote.author.media is null %}
-                        <img src="uploads/avatars/0.jpg" alt="profile picture" class="vote-avatar"
+                        <img src="{{asset('uploads/avatars/0.jpg')}}" alt="profile picture" class="vote-avatar"
                             data-path="{{ path('home_user', {'slug': vote.author.id})}}">
                         {% else %}
                         <img src="{{ asset('uploads/avatars/' ~ vote.author.media.imageName) | imagine_filter('avatar') }}"
@@ -66,7 +76,7 @@
             </div>
             <div class="card-footer text-muted">
                 <div class="row">
-                    <div class="col text-center">0 votes</div>
+                    <div class="col text-center">{{ vote.ratings|length }} votes</div>
                     <div class="col text-center">{{ vote.comments|length }} comments</div>
                     {% if app.user.id == vote.author.id %}
                     <div class="col text-center">
@@ -82,6 +92,24 @@
             </div>
         </div>
     </div>
+    {% if app.user.id != vote.author.id and vote.status == 1 %}
+        <div class="row">
+            <div class="col">
+                {% if canVote is not null and canVote.value == true %}
+                <span class="btn btn-standard btn-checked">Real</span>
+                {% else %}
+                <a href="{{path('home_ratevote', {'vote': vote.id, 'slug': '1'})}}" class="btn btn-standard">Real</a>
+                {% endif %}
+            </div>
+            <div class="col">
+                {% if canVote is not null and canVote.value == false %}
+                <span class="btn btn-standard btn-checked">Fake</span>
+                {% else %}
+                <a href="{{path('home_ratevote', {'vote': vote.id, 'slug': '0'})}}" class="btn btn-standard">Fake</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
     <div class="row">
         <div class="card w-100">
             <div class="comments-container">

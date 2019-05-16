@@ -75,12 +75,32 @@ var loadMap = () => {
             })
         }
     })
-
-
 }
 
-$(document).ready(loadMap())
+var getTimer = (obj) => {
+    let rawDate = $(obj).data('dateend')
+    let now = new Date().getTime()
+    var countDownDate = new Date(rawDate)
 
+    var duration = countDownDate - now
+
+    var hours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+
+    if (duration > 0) {
+        data = hours + ':' + minutes
+    } else {
+        data = 'over'
+        $(obj).prev('.vote-card-img').removeClass('vote-card-img-active')
+        $(obj).prev('.vote-card-img').addClass('vote-card-img-depleted')
+    }
+    $(obj).html(data)
+}
+
+$(document).ready(() => {
+    loadMap()
+    getTimer()
+})
 /* map.on('mousemove', function (e) {
   document.getElementById('info').innerHTML =
   // e.point is the x, y coordinates of the mousemove event relative

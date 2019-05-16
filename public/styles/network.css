@@ -725,3 +725,6 @@ nav {
     left: auto;
     background-color: #ffffff;
 }
+.btn-checked {
+    background-color: #ffda00;
+}

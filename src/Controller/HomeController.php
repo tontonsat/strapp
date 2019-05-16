@@ -11,10 +11,12 @@ use App\Entity\User;
 use App\Entity\Friendship;
 use App\Repository\VoteRepository;
 use App\Repository\FriendshipRepository;
+use App\Repository\RatingRepository;
 use App\Form\VoteType;
 use App\Entity\Vote;
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Entity\Rating;
 
 class HomeController extends Controller
 {
@@ -33,7 +35,7 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $fsRepo = $em->getRepository(Friendship::class);
-
+        
         $allFriends = $fsRepo->createQueryBuilder('fs')
         ->select('partial fs.{id, user}')
         ->leftJoin('fs.user', 'user')
@@ -49,7 +51,7 @@ class HomeController extends Controller
             $votes = $voteRepo->findByUserIdAndFriends([$this->getUser()->getId()],['friends' => $friendsId]);
         }
         else {
-            $votes = [];
+            $votes = $voteRepo->findBy(['author' => $this->getUser()->getId()]);
         }
 
         $now = new \Datetime('now');
@@ -138,11 +140,20 @@ class HomeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $voteRepo = $em->getRepository(Vote::class);
+        $ratingRepo = $manager->getRepository(Rating::class);
 
         $vote = $voteRepo->findOneBy(['id' => $vote]);
         if($vote->getStatus() == 1 && $vote->getDateEnd() <= new \Datetime('now')) {
             $vote->setStatus(0);
             $em->flush();
+        }
+        
+        $hasVoted = $ratingRepo->findOneBy(['author' => $this->getUser()->getId(), 'target' => $vote->getId()]);
+        if(!is_null($hasVoted)) {
+            $canVote = $hasVoted;
+        }
+        else {
+            $canVote = null;
         }
         
         $comment = new Comment();
@@ -159,7 +170,56 @@ class HomeController extends Controller
             return $this->redirectToRoute('home_displayvote', ['vote' => $vote->getId()]);
         }
 
-        return $this->render('vote/displayVote.html.twig', ['vote' => $vote, 'commentForm' => $formComment->createView()]);
+        return $this->render('vote/displayVote.html.twig', ['vote' => $vote, 'commentForm' => $formComment->createView(), 'canVote' => $canVote]);
+    }
+
+    /**
+     * @Route("/rateVote/{vote}/{slug}", name="home_ratevote")
+     */
+    public function rateVote(Vote $vote, $slug = null, Request $request, ObjectManager $manager)
+    {
+        $voteRepo = $manager->getRepository(Vote::class);
+        $ratingRepo = $manager->getRepository(Rating::class);
+
+        $vote = $voteRepo->findOneBy(['id' => $vote]);
+        $hasVoted = $ratingRepo->findOneBy(['target' => $vote->getId(), 'author' => $this->getUser()->getId()]);
+        
+        if($vote->getStatus() == 1 && $vote->getDateEnd() <= new \Datetime('now')) {
+            $vote->setStatus(0);
+            $manager->flush();
+            
+            $this->addFlash('notice-vote-submit', 'Votes for this story have ended!');
+            return $this->redirectToRoute('home_displayvote', ['vote' => $vote->getId()]);
+        }
+
+        $rating = new Rating();
+        $rating->setAuthor($this->getUser())
+                ->setDateCreate(new \Datetime('now'))
+                ->setTarget($vote)
+                ->setValue($slug);
+
+        if(empty($hasVoted)) {
+            $manager->persist($rating);
+            $vote->addRating($rating);
+            $this->getUser()->addRating($rating);
+            $manager->flush();
+    
+            $this->addFlash('notice-vote-submit', 'Vote submitted with success!');
+        }
+        if(!empty($hasVoted)) {
+            if($hasVoted->getValue() == $rating->getValue()) {
+                $this->addFlash('notice-vote-submit', 'Vote already registered');
+            }
+            else {
+                $rating = $hasVoted;
+                $rating->setValue($slug);
+                $manager->flush();
+        
+                $this->addFlash('notice-vote-submit', 'Vote submitted with success!');
+            }
+        }
+
+        return $this->redirectToRoute('home_displayvote', ['vote' => $vote->getId()]);
     }
 
     /**
@@ -172,6 +232,12 @@ class HomeController extends Controller
         $vote = $voteRepo->findOneBy(['id' => $vote]);
         if($this->getUser()->getId() == $vote->getAuthor()->getId()) {
             $manager->remove($vote);
+            foreach($vote->getComments() as $comment) {
+                $vote->removeComment($comment);
+            }
+            foreach($vote->getRatings() as $rating) {
+                $vote->removeRating($rating);
+            }
             $manager->flush();
             $this->addFlash('notice-vote-submit', 'Story deleted with success!');
         }
