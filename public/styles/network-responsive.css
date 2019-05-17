@@ -89,10 +89,12 @@
     .left-login {
         width: 100%;
         max-width: 100%;
+        max-height: 55vh;
     }
 
     .map-container {
         width: 100%;
+        max-height: 45vh;
     }
 
     #map {
