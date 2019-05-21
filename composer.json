@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "knplabs/knp-paginator-bundle": "^3.0",
+        "knplabs/knp-time-bundle": "^1.9",
         "liip/imagine-bundle": "^2.1",
         "mgilet/notification-bundle": "^3.1",
         "sensio/framework-extra-bundle": "^5.1",
@@ -26,6 +27,7 @@
         "symfony/validator": "4.2.*",
         "symfony/web-link": "4.2.*",
         "symfony/yaml": "4.2.*",
+        "twig/extensions": "^1.5",
         "vich/uploader-bundle": "^1.9"
     },
     "require-dev": {

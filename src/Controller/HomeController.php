@@ -149,6 +149,26 @@ class HomeController extends Controller
         }
         
         $hasVoted = $ratingRepo->findOneBy(['author' => $this->getUser()->getId(), 'target' => $vote->getId()]);
+        if($hasVoted != null && $vote->getStatus() == 0) {
+            $managerNotif = $this->get('mgilet.notification');       
+            $url = $this->generateUrl('home_displayvote', ['vote' => $vote->getId()]); 
+            if($hasVoted->getValue() == $vote->getResult()) {    
+                $notif = $managerNotif->createNotification('You were right!');
+                $notif->setMessage(' (a story ended, see the result)');
+                $notif->setLink($url);
+                $this->getuser()->addMmr();
+            }
+            if($hasVoted->getValue() != $vote->getResult()) {   
+                $notif = $managerNotif->createNotification('You were wrong...');
+                $notif->setMessage(' (a story ended, see the result)');
+                $notif->setLink($url);
+                $this->getuser()->removeMmr();
+            }
+            $managerNotif->addNotification([$this->getUser()], $notif, true);
+            $manager->remove($hasVoted);
+            $manager->flush();
+        }
+
         if(!is_null($hasVoted)) {
             $canVote = $hasVoted;
         }

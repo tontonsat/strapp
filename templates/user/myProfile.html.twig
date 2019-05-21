@@ -27,12 +27,11 @@
                     </div>
                     <div class="col">
                         <div class="card-body user-info">
-                            <h5 class="card-title">{{ app.user.name }} {{ app.user.lastname }}</h5>
+                            <h5 class="card-title">{{ app.user.name }} {{ app.user.lastname }} ({{ app.user.mmr }})</h5>
                             <p class="card-text"><small class="text-muted muted-mood">
                                     {{ form_start(updateCoord) }}
                                     {{ form_row(updateCoord.coord) }}
-                                    <a class="refresh-loc-link" href="#" onclick="document.form.submit();"><i
-                                            class="fas fa-sync-alt"></i></a>
+                                    <a class="refresh-loc-link" href="#" onclick="document.form.submit();"><i class="fas fa-sync-alt"></i></a>
                                     {{ form_end(updateCoord) }} {{ app.user.currentLocation.city }} - {{
                                     app.user.currentLocation.country }}
                                     {% if app.flashes('notice-coord') %}
@@ -71,32 +70,6 @@
                     </div>
                 </div>
                 {{ form_end(formBio) }}
-            </div>
-        </div>
-    </div>
-    <div class="row profile-card">
-        <div class="col col-profile">
-            <div class="card user-card ">
-                <div class="card-body user-info">
-                    <div class="progress rating-profile">
-                        <div class="progress-bar progress-bar-writer" role="progressbar"
-                            style="width: {{ app.user.ratingWriter }}%" aria-valuenow="{{ app.user.ratingWriter }}"
-                            aria-valuemin="0" aria-valuemax="100">{{ app.user.ratingWriter }}</div>
-                        <div class="progress-bar progress-bar-reader" role="progressbar"
-                            style="width: {{ 100 - app.user.ratingWriter }}%"
-                            aria-valuenow="{{ 100 - app.user.ratingWriter }}" aria-valuemin="0" aria-valuemax="100">
-                            {{ 100 - app.user.ratingWriter }}</div>
-                    </div><br />
-                    <div class="progress rating-profile">
-                        <div class="progress-bar progress-bar-writer" role="progressbar"
-                            style="width: {{ app.user.ratingReader }}%" aria-valuenow="{{ app.user.ratingReader }}"
-                            aria-valuemin="0" aria-valuemax="100">{{ app.user.ratingReader }}</div>
-                        <div class="progress-bar progress-bar-reader" role="progressbar"
-                            style="width: {{ 100 - app.user.ratingReader }}%"
-                            aria-valuenow="{{ 100 - app.user.ratingReader }}" aria-valuemin="0" aria-valuemax="100">
-                            {{ 100 - app.user.ratingReader }}</div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

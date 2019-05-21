@@ -36,7 +36,6 @@
 {% endfor %}
 {% endif %}
 {% if friendships is defined %}
-<h5 class="title-friends-container">My friends</h5>
 {% for fs in friendships %}
 {% if fs.status == 0 and fs.origin != app.user.id %}
 <div class="user-list-link" href="{{ path('home_user', {'slug': fs.user.id}) }}">

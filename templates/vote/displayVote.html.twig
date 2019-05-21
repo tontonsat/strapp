@@ -28,8 +28,8 @@
                             alt="vote author avatar" class="vote-avatar"
                             data-path="{{ path('home_user', {'slug': vote.author.id})}}">
                         {% endif %}@{{ vote.author.username }}</a></h6>
-                <small class="text-muted">{{ vote.dateCreate|date('d/m/y H:i') }} -
-                    {{ vote.dateEnd|date('M d Y H:i:s') }} ({{ vote.coord['city'] }})
+                <small class="text-muted">{{ vote.dateCreate|ago }} -
+                    end: {{ vote.dateEnd|date('M d Y H:i:s') }} ({{ vote.coord['city'] }})
                 </small>
             </div>
             <div class="row no-gutters row-vote-data">
@@ -140,8 +140,8 @@
                                 <img src="{{ asset('uploads/avatars/' ~ comment.author.media.imageName) | imagine_filter('avatar') }}"
                                     alt="comment author avatar" class="comment-avatar"
                                     data-path="{{ path('home_user', {'slug': comment.author.id})}}">
-                                {% endif %}@{{ comment.author.username }}</a> {{ comment.content }} <small
-                                class="text-muted">({{ comment.dateCreate|date('h:i d/m/y') }})</small> </p>
+                                {% endif %}@{{ comment.author.username }}</a> <span class="comment-content">{{ comment.content }}</span> <small
+                                class="text-muted">({{ comment.dateCreate|ago }})</small> </p>
                     </div>
                     {% endfor %}
                 </div>

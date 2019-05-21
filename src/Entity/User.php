@@ -132,6 +132,11 @@ class User implements UserInterface, NotifiableInterface
      */
     private $ratings;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $mmr;
+
     public function __construct()
     {
         $this->setCurrentLocation();
@@ -480,6 +485,32 @@ class User implements UserInterface, NotifiableInterface
                 $rating->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMmr(): ?int
+    {
+        return $this->mmr;
+    }
+
+    public function setMmr(?int $mmr): self
+    {
+        $this->mmr = $mmr;
+
+        return $this;
+    }
+
+    public function addMmr(): self
+    {
+        $this->mmr += 1;
+
+        return $this;
+    }
+
+    public function removeMmr(): self
+    {
+        $this->mmr -= 1;
 
         return $this;
     }

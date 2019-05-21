@@ -717,6 +717,9 @@ nav {
     width: 26px;
     border-radius: 20px;
 }
+.comment-content {
+    font-size: .8rem;
+}
 .vote-author-link:hover {
     text-decoration: underline;
 }
