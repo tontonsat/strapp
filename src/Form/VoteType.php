@@ -19,6 +19,10 @@ class VoteType extends AbstractType
         $builder
             ->add('title')
             ->add('content', TextareaType::class)
+            ->add('result', ChoiceType::class, ['choices' => [
+                'real' => true,
+                'fake' => false
+            ],'empty_data' => true])
             ->add('imageFile', VichImageType::class, [
                 'required' => true,
                 'allow_delete' => false,

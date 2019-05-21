@@ -84,7 +84,8 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </a>
                         <div class="dropdown-menu vote-menu-dropdown" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="{{path('home_deletevote', {'vote': vote.id})}}">Delete vote</a>
+                            <a class="dropdown-item" href="{{path('home_deletevote', {'vote': vote.id})}}">Delete
+                                story</a>
                         </div>
                     </div>
                     {% endif %}
@@ -93,22 +94,29 @@
         </div>
     </div>
     {% if app.user.id != vote.author.id and vote.status == 1 %}
-        <div class="row">
-            <div class="col">
-                {% if canVote is not null and canVote.value == true %}
-                <span class="btn btn-standard btn-checked">Real</span>
-                {% else %}
-                <a href="{{path('home_ratevote', {'vote': vote.id, 'slug': '1'})}}" class="btn btn-standard">Real</a>
-                {% endif %}
-            </div>
-            <div class="col">
-                {% if canVote is not null and canVote.value == false %}
-                <span class="btn btn-standard btn-checked">Fake</span>
-                {% else %}
-                <a href="{{path('home_ratevote', {'vote': vote.id, 'slug': '0'})}}" class="btn btn-standard">Fake</a>
-                {% endif %}
-            </div>
+    <div class="row">
+        <div class="col">
+            {% if canVote is not null and canVote.value == true %}
+            <span class="btn btn-standard btn-checked">Real</span>
+            {% else %}
+            <a href="{{path('home_ratevote', {'vote': vote.id, 'slug': '1'})}}" class="btn btn-standard">Real</a>
+            {% endif %}
         </div>
+        <div class="col">
+            {% if canVote is not null and canVote.value == false %}
+            <span class="btn btn-standard btn-checked">Fake</span>
+            {% else %}
+            <a href="{{path('home_ratevote', {'vote': vote.id, 'slug': '0'})}}" class="btn btn-standard">Fake</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    {% if vote.status == 0 %}
+        {% if vote.result == false %}
+            <span class="btn btn-standard btn-checked-dark">This story was a fake!</span>
+        {% else %}
+            <span class="btn btn-standard btn-checked">This story was real!</span>
+        {% endif %}
     {% endif %}
     <div class="row">
         <div class="card w-100">

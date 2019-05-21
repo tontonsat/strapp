@@ -95,6 +95,11 @@ class Vote
      */
     private $ratings;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $result;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -299,6 +304,18 @@ class Vote
                 $rating->setTarget(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getResult(): ?bool
+    {
+        return $this->result;
+    }
+
+    public function setResult(bool $result): self
+    {
+        $this->result = $result;
 
         return $this;
     }

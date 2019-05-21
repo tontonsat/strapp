@@ -728,3 +728,7 @@ nav {
 .btn-checked {
     background-color: #ffda00;
 }
+.btn-checked-dark {
+    background-color: #191919;
+    color: #ffffff;
+}

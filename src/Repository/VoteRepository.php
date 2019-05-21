@@ -29,7 +29,7 @@ class VoteRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->setParameter('friends', $friends['friends'])
             ->orderBy('v.id', 'DESC')
-            ->setMaxResults(5)
+            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
