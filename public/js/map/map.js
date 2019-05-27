@@ -1,7 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoidG9udG9uc2F0IiwiYSI6ImNqc25jNTIwNjA5bDc0M280dGt4ejJtNXkifQ.h_Ox7WHHtfhpQK9Qr0oTlw';
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
+    style: 'mapbox://styles/tontonsat/cjvxkv3sy03s11cnyqwangaws',
     continuousWorld: false,
     noWrap: true,
     center: [-73.98, 40.73],
