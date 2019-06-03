@@ -355,8 +355,7 @@ class AjaxController extends Controller
     {    
         $comments = [];
 
-        return $this->render('ajax/ajaxComments.html.twig', ['comments' => $comments, 
-                                                            'commentForm' => $formComment->createView()]
+        return $this->render('ajax/ajaxComments.html.twig', ['comments' => $comments]
         );
     }
 }

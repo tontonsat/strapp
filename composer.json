@@ -10,6 +10,7 @@
         "liip/imagine-bundle": "^2.1",
         "mgilet/notification-bundle": "^3.1",
         "sensio/framework-extra-bundle": "^5.1",
+        "symfony/apache-pack": "^1.0",
         "symfony/asset": "4.2.*",
         "symfony/console": "4.2.*",
         "symfony/dotenv": "4.2.*",
