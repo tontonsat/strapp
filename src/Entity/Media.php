@@ -54,8 +54,6 @@ class Media implements \Serializable
      */
     private $webPath;
 
-    private $nameSlug;
-
     public function getId(): ?int
     {
         return $this->id;

@@ -37,6 +37,8 @@ class VoteRepository extends ServiceEntityRepository
 
     /**
     * @return Vote[] Returns an array of Vote objects
+    * finds user votes and friends votes
+    * used for ajax pagination
     */
     public function findByUserIdAndFriendsOffset($id, $friends, $offset)
     {

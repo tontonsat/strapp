@@ -7,6 +7,7 @@
 }
 .index-container {
     padding-right: 0;
+    max-height: 100vh;
 }
 .map-container {
     padding: 0;

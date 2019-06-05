@@ -326,15 +326,23 @@ class User implements UserInterface, NotifiableInterface
         return $this->currentLocation;
     }
 
+    /**
+     * set user location with Mapbox API
+     *
+     * @param string|null $coord
+     * @return self
+     */
     public function setCurrentLocation(?string $coord = null): self
     {
         if ($coord != null) {
             $data = json_decode(file_get_contents("https://api.mapbox.com/geocoding/v5/mapbox.places/{$coord}.json?access_token=pk.eyJ1IjoidG9udG9uc2F0IiwiYSI6ImNqc25jNTIwNjA5bDc0M280dGt4ejJtNXkifQ.h_Ox7WHHtfhpQK9Qr0oTlw"));
 
-            $this->currentLocation['city'] = $data->features[2]->text;
-            $this->currentLocation['state'] = $data->features[3]->text;
-            $this->currentLocation['country'] = $data->features[4]->text;
-            $this->currentLocation['coord'] = $coord;
+            if(!empty($data)) {
+                $this->currentLocation['city'] = $data->features[2]->text;
+                $this->currentLocation['state'] = $data->features[3]->text;
+                $this->currentLocation['country'] = $data->features[4]->text;
+                $this->currentLocation['coord'] = $coord;
+            }
         }
         return $this;
     }

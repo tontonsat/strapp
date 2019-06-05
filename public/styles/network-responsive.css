@@ -84,6 +84,7 @@
     .index-row {
         flex-direction: column;
         height: 100vh;
+        overflow-y: hidden;
     }
 
     .left-login {

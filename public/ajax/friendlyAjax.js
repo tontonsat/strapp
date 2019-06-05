@@ -1,3 +1,7 @@
+/**
+ * call ajaxAddfriend
+ * returns twig template
+ */
 $(".btn-add-friend-profile").click(function () {
     $.ajax({
         url: '/addFriend/' + $(".btn-add-friend-profile").data('target'),

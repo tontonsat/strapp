@@ -177,9 +177,15 @@ class UserController extends Controller
     }
 
     /**
+     * Add friend function
+     *
+     * @param UserRepository $repo
+     * @param ObjectManager $manager
+     * @param [type] $slug
+     * @return Response
      * @Route("/addFriend/{slug}", name="home_addFriend")
      */
-    public function ajaxAddFriend(UserRepository $repo, Request $request, ObjectManager $manager, $slug = null): Response
+    public function ajaxAddFriend(UserRepository $repo, ObjectManager $manager, $slug = null): Response
     {
         if ($slug == null) {
             return $this->redirectToRoute("home_userList");
