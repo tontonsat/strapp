@@ -119,7 +119,7 @@ class AjaxController extends Controller
     /**
      * @route("/ajaxSearch/{query}", name="ajax_ajaxsearch")
      */
-    public function ajaxSearch(Request $request, $query = null)
+    public function ajaxSearch($query = null)
     {
         $em = $this->getDoctrine()->getManager();
         $userRepo = $em->getRepository(User::class);

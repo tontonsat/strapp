@@ -274,9 +274,6 @@ class HomeController extends Controller
             $slug = 'mine';
         }
 
-        /* @var $paginator \Knp\Component\Pager\Paginator */
-        $paginator  = $this->get('knp_paginator');
-
         $currentUserCity = $this->getuser()->getCurrentLocation()['city'];
         $em = $this->getDoctrine()->getManager();
         $fsRepo = $em->getRepository(Friendship::class);

@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 use App\Repository\UserRepository;
