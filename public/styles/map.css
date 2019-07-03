@@ -8,6 +8,7 @@
 .index-container {
     padding-right: 0;
     max-height: 100vh;
+    overflow-y: hidden;
 }
 .map-container {
     padding: 0;
